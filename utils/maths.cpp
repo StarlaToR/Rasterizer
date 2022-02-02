@@ -102,8 +102,8 @@ Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, con
     Mat4 rotateZ  = CreateZRotationMatrix(rotation.z);
     Mat4 scaling = CreateScaleMatrix(scale);
 
-    Mat4 transform = translation * rotateX;
-    transform *= rotateY;
+    Mat4 transform = translation * rotateY;
+    transform *= rotateX;
     transform *= rotateZ;
     transform *= scaling;
 
