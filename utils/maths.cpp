@@ -50,7 +50,6 @@ void Vec4::Homogenize()
 //Working
 float Vec4::GetMagnitude()
 {
-    Homogenize();
     return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
 }
 
