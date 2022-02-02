@@ -116,11 +116,7 @@ static Mat4 CreateZRotationMatrix(float angle)
 
 Mat4& operator*(Mat4& a, Mat4& b)
 {
-    Vec4 c1(
-        a.tab[0][0] * b.tab[0][0] + a.tab[0][1] * b.tab[1][0] + a.tab[0][2] * b.tab[2][0] + a.tab[0][3] * b.tab[3][0],
-    );
-
-    Mat4 c();
+    Mat4 c = Mat4();
 
     for (int i = 0; i < 4; i++)
     {
@@ -128,13 +124,25 @@ Mat4& operator*(Mat4& a, Mat4& b)
         {
             for (int k = 0; k < 4; k++)
             {
-                
+                c.tab[i][j] += a.tab[i][k] * b.tab[k][j];
             }
         }
     }
+
+    return c;
 }
 
 Mat4& operator*(Mat4& a, float& b)
 {
+    Mat4 c = Mat4();
 
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            c.tab[i][j] = a.tab[i][j] + b;
+        }
+    }
+
+    return c;
 }
