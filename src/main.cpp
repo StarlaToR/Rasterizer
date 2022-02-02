@@ -45,8 +45,9 @@ int main()
     mat2.tab[0][15]=8;
 
     mat2.PrintMatrix();
-
     mat2*=2.f;
-    mat.PrintMatrix();
+    //mat2=mat2*mat;
+    mat2.PrintMatrix();
 
+    
 }

@@ -214,6 +214,7 @@ void Mat4::operator*=(Mat4& a)
     *this = c;
 }
 
+//Working
 void Mat4::operator*=(float a)
 {
     for (int i = 0; i < 4; i++)
