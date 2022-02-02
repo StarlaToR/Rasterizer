@@ -1,10 +1,12 @@
 #include "maths.hpp"
 
+//Working
 float Vec3::GetMagnitude()
 {
-    return sqrt(pow(x, 2) + pow(y, 2) + pow(y, 2));
+    return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
 }
 
+//Working kinda.. Magnitude of the vector isnt always 1 but rather between 1.0 and 1.4 not sure about it
 void Vec3::Normalize()
 {
     x /= GetMagnitude();
@@ -12,7 +14,8 @@ void Vec3::Normalize()
     z /= GetMagnitude();
 }
 
-Vec3& operator+(Vec3& a, Vec3& b)
+//Working
+Vec3 operator+(Vec3& a, Vec3& b)
 {
     Vec3 c(
         a.x + b.x,
@@ -22,7 +25,8 @@ Vec3& operator+(Vec3& a, Vec3& b)
     return c;
 }
 
-Vec3& operator*(Vec3& a, float& b)
+//Working
+Vec3 operator*(Vec3& a, float b)
 {
     Vec3 c(
         a.x * b,
@@ -32,6 +36,7 @@ Vec3& operator*(Vec3& a, float& b)
     return c;
 }
 
+//
 void Vec4::Homogenize()
 {
     if(w!=0)
@@ -42,19 +47,23 @@ void Vec4::Homogenize()
     }
 }
 
+//Working
 float Vec4::GetMagnitude()
 {
-    return sqrt(pow(x, 2) + pow(y, 2) + pow(y, 2));
+    return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
 }
 
+//Working kinda.. Magnitude of the vector isnt always 1 but rather between 1.0 and 1.4 not sure about it
 void Vec4::Normalize()
 {
     x /= GetMagnitude();
     y /= GetMagnitude();
     z /= GetMagnitude();
+  //  w /= GetMagnitude();
 }
 
-Vec4& operator+(Vec4& a, Vec4& b)
+//Working
+Vec4 operator+(Vec4& a, Vec4& b)
 {
     Vec4 c(
         a.x + b.x,
@@ -65,7 +74,8 @@ Vec4& operator+(Vec4& a, Vec4& b)
     return c;
 }
 
-Vec4& operator*(Vec4& a, float& b)
+//Working
+Vec4 operator*(Vec4& a, float b)
 {
     Vec4 c(
         a.x * b,

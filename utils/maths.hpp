@@ -25,12 +25,12 @@ public:
     float GetMagnitude();
     void Normalize();
 
-    friend Vec3& operator+(Vec3& a, Vec3& b);
-    friend Vec3& operator*(Vec3& a, float& b);
+    friend Vec3 operator+(Vec3& a, Vec3& b);
+    friend Vec3 operator*(Vec3& a, float& b);
 };
 
-Vec3& operator+(Vec3& a, Vec3& b);
-Vec3& operator*(Vec3& a, float& b);
+Vec3 operator+(Vec3& a, Vec3& b);
+Vec3 operator*(Vec3& a, float b);
 
 class Vec4
 {
@@ -68,12 +68,12 @@ public:
     float GetMagnitude();
     void Normalize();
 
-    friend Vec4& operator+(Vec4& a, Vec4& b);
-    friend Vec4& operator*(Vec4& a, float& b);
+    friend Vec4 operator+(Vec4& a, Vec4& b);
+    friend Vec4 operator*(Vec4& a, float b);
 };
 
-Vec4& operator+(Vec4& a, Vec4& b);
-Vec4& operator*(Vec4& a, float& b);
+Vec4 operator+(Vec4& a, Vec4& b);
+Vec4 operator*(Vec4& a, float& b);
 
 class Mat4
 {
@@ -98,10 +98,10 @@ public:
     static Mat4 CreateYRotationMatrix(float angle);
     static Mat4 CreateZRotationMatrix(float angle); 
 
-    friend Mat4& operator*(Mat4& a, Mat4& b);
-    friend Mat4& operator*(Mat4& a, float& b);
+    friend Mat4 operator*(Mat4& a, Mat4& b);
+    friend Mat4 operator*(Mat4& a, float& b);
 };
 
 
-Mat4& operator*(Mat4& a, Mat4& b);
-Mat4& operator*(Mat4& a, float& b);
+Mat4 operator*(Mat4& a, Mat4& b);
+Mat4 operator*(Mat4& a, float& b);
