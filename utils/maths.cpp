@@ -182,6 +182,20 @@ Mat4& Mat4::operator*=(Mat4& a)
     *this = c;
 }
 
+void Mat4::operator*=(float& a)
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                this->tab[i][j] *= a;
+            }
+        }
+    }
+}
+
 Mat4 operator*(Mat4& a, Mat4& b)
 {
     Mat4 c = Mat4();
