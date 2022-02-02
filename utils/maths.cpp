@@ -36,7 +36,7 @@ Vec3 operator*(Vec3& a, float b)
     return c;
 }
 
-//
+//Working
 void Vec4::Homogenize()
 {
     if(w!=0)
