@@ -95,7 +95,10 @@ Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, con
     Mat4 rotateZ  = CreateZRotationMatrix(rotation.z);
     Mat4 scaling = CreateScaleMatrix(scale);
 
-    Mat4 transform = translation * rotateX * rotateY * rotateZ * scaling;
+    Mat4 transform = translation * rotateX;
+    transform *= rotateY;
+    transform *= rotateZ;
+    transform *= scaling;
 
     return transform;
 }
@@ -152,18 +155,13 @@ static Mat4 CreateZRotationMatrix(float angle)
 
 Mat4& Mat4::operator=(Mat4& a)
 {
-    Mat4 c = Mat4();
-
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
         {
-            *this.tab[i][j] = a.tab[i][j];
-            
+            this->tab[i][j] = a.tab[i][j];
         }
     }
-
-    a = c;
 }
 
 Mat4& Mat4::operator*=(Mat4& a)
@@ -176,12 +174,12 @@ Mat4& Mat4::operator*=(Mat4& a)
         {
             for (int k = 0; k < 4; k++)
             {
-                c.tab[i][j] += a.tab[i][k] * b.tab[k][j];
+                c.tab[i][j] += this->tab[i][k] * a.tab[k][j];
             }
         }
     }
 
-    a = c;
+    *this = c;
 }
 
 Mat4 operator*(Mat4& a, Mat4& b)
