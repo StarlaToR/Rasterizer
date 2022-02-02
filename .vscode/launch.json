@@ -9,7 +9,7 @@
             "name": "g++ - Build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${workspaceFolder}/rasterizer",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
