@@ -48,6 +48,14 @@ public:
         w = _w;
     }
 
+    Vec4(float a, float b, float c, float d)
+    {
+        x = a;
+        y = b;
+        z = c;
+        w = d;
+    }
+
     Vec4()
     {
         x = 0;
@@ -83,15 +91,15 @@ public:
         }
     }
 
-    friend Mat4& operator*(Mat4& a, Mat4& b);
-    friend Mat4& operator*(Mat4& a, float& b);
-
     static Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale);
     static Mat4 CreateTranslationMatrix(const Vec3& translation);
     static Mat4 CreateScaleMatrix(const Vec3& scale);
     static Mat4 CreateXRotationMatrix(float angle);
     static Mat4 CreateYRotationMatrix(float angle);
     static Mat4 CreateZRotationMatrix(float angle); 
+
+    friend Mat4& operator*(Mat4& a, Mat4& b);
+    friend Mat4& operator*(Mat4& a, float& b);
 };
 
 
