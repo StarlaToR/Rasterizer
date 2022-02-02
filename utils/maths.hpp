@@ -100,8 +100,9 @@ public:
 
     friend Mat4 operator*(Mat4& a, Mat4& b);
     friend Mat4 operator*(Mat4& a, float& b);
+    Mat4& operator*=(Mat4& a);
+    Mat4 operator=(Mat4& a);
 };
-
 
 Mat4 operator*(Mat4& a, Mat4& b);
 Mat4 operator*(Mat4& a, float& b);

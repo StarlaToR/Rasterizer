@@ -50,6 +50,7 @@ void Vec4::Homogenize()
 //Working
 float Vec4::GetMagnitude()
 {
+    Homogenize();
     return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
 }
 
@@ -85,46 +86,105 @@ Vec4 operator*(Vec4& a, float b)
     );
     return c;
 }
-/*
-static Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
+
+Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
 {
-    Mat4 transformMat;
-
     Mat4 translation = CreateTranslationMatrix(position);
-    Mat4 scale = CreateScaleMatrix(scale);
-    rotation;
+    Mat4 rotateX = CreateXRotationMatrix(rotation.x);
+    Mat4 rotateY = CreateYRotationMatrix(rotation.y);
+    Mat4 rotateZ  = CreateZRotationMatrix(rotation.z);
+    Mat4 scaling = CreateScaleMatrix(scale);
 
+    Mat4 transform = translation * rotateX * rotateY * rotateZ * scaling;
 
-
-    return transformMat;
-
+    return transform;
 }
 
 static Mat4 CreateTranslationMatrix(const Vec3& translation)
 {
-
+    Mat4 matrix = Mat4();
+    matrix.tab[1][1] = translation.x;
+    matrix.tab[2][2] = translation.y;
+    matrix.tab[3][3] = translation.z;
+    matrix.tab[4][4] = 1;
+    return matrix;
 }
+
 static Mat4 CreateScaleMatrix(const Vec3& scale)
 {
-
+    Mat4 matrix = Mat4();
+    matrix.tab[1][1] = scale.x;
+    matrix.tab[2][2] = scale.y;
+    matrix.tab[3][3] = scale.z;
+    matrix.tab[4][4] = 1;
+    return matrix;
 }
 
 static Mat4 CreateXRotationMatrix(float angle)
 {
-
+    Mat4 matrix = Mat4();
+    matrix.tab[1][1] = 1;
+    matrix.tab[2][2] = sin(angle);
+    matrix.tab[3][3] = cos(angle);
+    matrix.tab[4][4] = 1;
+    return matrix;
 }
 
 static Mat4 CreateYRotationMatrix(float angle)
 {
-
+    Mat4 matrix = Mat4();
+    matrix.tab[1][1] = sin(angle);
+    matrix.tab[2][2] = 1;
+    matrix.tab[3][3] = cos(angle);
+    matrix.tab[4][4] = 1;
+    return matrix;
 }
 
 static Mat4 CreateZRotationMatrix(float angle)
 {
-
+    Mat4 matrix = Mat4();
+    matrix.tab[1][1] = sin(angle);
+    matrix.tab[2][2] = cos(angle);
+    matrix.tab[3][3] = 1;
+    matrix.tab[4][4] = 1;
+    return matrix;
 }
 
-Mat4& operator*(Mat4& a, Mat4& b)
+Mat4& Mat4::operator=(Mat4& a)
+{
+    Mat4 c = Mat4();
+
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            *this.tab[i][j] = a.tab[i][j];
+            
+        }
+    }
+
+    a = c;
+}
+
+Mat4& Mat4::operator*=(Mat4& a)
+{
+    Mat4 c = Mat4();
+
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                c.tab[i][j] += a.tab[i][k] * b.tab[k][j];
+            }
+        }
+    }
+
+    a = c;
+}
+
+Mat4 operator*(Mat4& a, Mat4& b)
 {
     Mat4 c = Mat4();
 
@@ -142,7 +202,7 @@ Mat4& operator*(Mat4& a, Mat4& b)
     return c;
 }
 
-Mat4& operator*(Mat4& a, float& b)
+Mat4 operator*(Mat4& a, float& b)
 {
     Mat4 c = Mat4();
 
@@ -156,4 +216,3 @@ Mat4& operator*(Mat4& a, float& b)
 
     return c;
 }
-*/
