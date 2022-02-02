@@ -75,7 +75,7 @@ Vec4& operator*(Vec4& a, float& b)
     );
     return c;
 }
-
+/*
 static Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
 {
     Mat4 transformMat;
@@ -138,3 +138,4 @@ Mat4& operator*(Mat4& a, float& b)
 {
 
 }
+*/
