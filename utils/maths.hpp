@@ -105,7 +105,7 @@ public:
     friend Mat4 operator*(Mat4& a, Mat4& b);
     friend Mat4 operator*(Mat4& a, float& b);
     void operator*=(Mat4& a);
-    void operator*=(float& a);
+    void operator*=(float a);
     void operator=(Mat4& a);
 };
 

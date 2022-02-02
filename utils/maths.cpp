@@ -86,6 +86,7 @@ Vec4 operator*(Vec4& a, float b)
     );
     return c;
 }
+
 /*
 Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
 {
@@ -103,6 +104,8 @@ Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, con
     return transform;
 }
 */
+
+//Working
 void Mat4::PrintMatrix()
 {
     for(int i=0;i<4;i++)
@@ -113,7 +116,9 @@ void Mat4::PrintMatrix()
         printf("%f }\n",this->tab[i][3]);
 
     }
+    printf("\n\n");
 }
+
 /*
 static Mat4 CreateTranslationMatrix(const Vec3& translation)
 {
@@ -165,6 +170,8 @@ static Mat4 CreateZRotationMatrix(float angle)
     return matrix;
 }
 */
+
+//Working
 void Mat4::operator=(Mat4& a)
 {
     for (int i = 0; i < 4; i++)
@@ -175,6 +182,7 @@ void Mat4::operator=(Mat4& a)
         }
     }
 }
+
 
 void Mat4::operator*=(Mat4& a)
 {
@@ -194,16 +202,13 @@ void Mat4::operator*=(Mat4& a)
     *this = c;
 }
 
-void Mat4::operator*=(float& a)
+void Mat4::operator*=(float a)
 {
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
         {
-            for (int k = 0; k < 4; k++)
-            {
-                this->tab[i][j] *= a;
-            }
+            this->tab[i][j] *= a;
         }
     }
 }
