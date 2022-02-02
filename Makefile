@@ -3,8 +3,6 @@ TARGET?=$(shell $(CXX) -dumpmachine)
 BIN=rasterizer
 CXXFLAGS=-Wall -Wno-unused-variable -O0 -g
 CFLAGS=$(CXXFLAGS)
-#CPPFLAGS=-Iexternals/include -MMD
-#LDFLAGS=-Lexternals/libs-$(TARGET)
 
 OBJS=src/main.o utils/maths.o
 DEPS=$(OBJS:.o=.d)
