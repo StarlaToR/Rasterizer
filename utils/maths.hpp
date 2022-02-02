@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <stdio.h>
 
 class Vec3
 {
@@ -90,19 +91,22 @@ public:
             }
         }
     }
+    void PrintMatrix();
 
+/*
     static Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale);
     static Mat4 CreateTranslationMatrix(const Vec3& translation);
     static Mat4 CreateScaleMatrix(const Vec3& scale);
     static Mat4 CreateXRotationMatrix(float angle);
     static Mat4 CreateYRotationMatrix(float angle);
     static Mat4 CreateZRotationMatrix(float angle); 
+*/
 
     friend Mat4 operator*(Mat4& a, Mat4& b);
     friend Mat4 operator*(Mat4& a, float& b);
-    Mat4& operator*=(Mat4& a);
+    void operator*=(Mat4& a);
     void operator*=(float& a);
-    Mat4& operator=(Mat4& a);
+    void operator=(Mat4& a);
 };
 
 Mat4 operator*(Mat4& a, Mat4& b);

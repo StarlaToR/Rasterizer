@@ -31,6 +31,8 @@ int main()
 
    // Mat4 translationMatrix = Mat4::CreateTranslationMatrix({3,0,0});
     
+    Mat4 mat = Mat4();
 
+    mat.PrintMatrix();
 
 }

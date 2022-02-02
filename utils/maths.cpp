@@ -86,7 +86,7 @@ Vec4 operator*(Vec4& a, float b)
     );
     return c;
 }
-
+/*
 Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
 {
     Mat4 translation = CreateTranslationMatrix(position);
@@ -102,7 +102,19 @@ Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, con
 
     return transform;
 }
+*/
+void Mat4::PrintMatrix()
+{
+    for(int i=0;i<4;i++)
+    {
+        printf("{ ");
+        for(int j=0;j<3;j++)
+            printf("%f, ",this->tab[i][j]);
+        printf("%f }\n",this->tab[i][3]);
 
+    }
+}
+/*
 static Mat4 CreateTranslationMatrix(const Vec3& translation)
 {
     Mat4 matrix = Mat4();
@@ -152,8 +164,8 @@ static Mat4 CreateZRotationMatrix(float angle)
     matrix.tab[4][4] = 1;
     return matrix;
 }
-
-Mat4& Mat4::operator=(Mat4& a)
+*/
+void Mat4::operator=(Mat4& a)
 {
     for (int i = 0; i < 4; i++)
     {
@@ -164,7 +176,7 @@ Mat4& Mat4::operator=(Mat4& a)
     }
 }
 
-Mat4& Mat4::operator*=(Mat4& a)
+void Mat4::operator*=(Mat4& a)
 {
     Mat4 c = Mat4();
 
