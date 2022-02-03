@@ -2,6 +2,7 @@
 
 bool testVec3()
 {
+    //DON'T TOUCH THESE VALUES OR THE TEST WON'T WORK   
     Vec3 v1 = {0.f,10.f,78.f};
     Vec3 v2 = {41.f,1.4f,1.f};
     Vec3 v3 = v1+v2;
@@ -37,6 +38,7 @@ bool testVec3()
 
 bool testVec4()
 {
+    //DON'T TOUCH THESE VALUES OR THE TEST WON'T WORK
     Vec4 v1 = {40.1f,1.45f,780.f,1023.5f};
     Vec4 v2 = {12.f,63.11f,0.f,9876.f};
     Vec4 v3 = v1+v2;
@@ -68,11 +70,16 @@ bool testVec4()
     }
 
     v2.Homogenize();
-    if(!(v2.x==0.0012150668f and v2.y==0.006390239f and v2.z==0.f))
+    if(!(v2.x==12.f/9876.f and v2.y==63.11f/9876.f and v2.z==0.f/9876.f))
     {
         printf("ERROR in testVec4 : HOMOGENIZE NOT WORKING\n");
         return false;
     }
 
     return true;
+}
+
+bool testMat4()
+{
+    
 }
