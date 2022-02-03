@@ -27,4 +27,9 @@ int main()
     mat2.PrintMatrix();
 */
     
+
+    Mat4 matrix = Mat4();
+    //matrix.getIdentityMat4();
+    matrix.CreateTransformMatrix({6, 7, 9}, {1, 0, 0}, {1, 1, 1});
+    matrix.PrintMatrix();
 }

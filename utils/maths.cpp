@@ -88,10 +88,10 @@ Vec4 operator*(Vec4& a, float b)
 
 void Mat4::getIdentityMat4()
 {
+    this->tab[0][0] = 1;
     this->tab[1][1] = 1;
     this->tab[2][2] = 1;
     this->tab[3][3] = 1;
-    this->tab[4][4] = 1;
 }
 
 Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
