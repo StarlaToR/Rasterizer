@@ -194,48 +194,45 @@ bool testMat4()
         working=false;            
     }
 
-    Mat4 rotateXMat = CreateXRotationMatrix(M_PI/2);
-    rotateXMat.PrintMatrix();
-    int i=2,j=1;
-    printf("rotateXMat[%d][%d] = %f\n",i,j,rotateXMat.tab[i][j]);
+
+    Mat4 rotateXMat = CreateXRotationMatrix(M_PI/16);
     if(
-        rotateXMat.tab[0][0]!=1 or rotateXMat.tab[0][1]!=0 or rotateXMat.tab[0][2]!=0 or rotateXMat.tab[0][3]!=0 or
-        rotateXMat.tab[1][0]!=0 or rotateXMat.tab[1][1]!=cos(M_PI/2) or rotateXMat.tab[1][2]!=-sin(M_PI/2) or rotateXMat.tab[1][3]!=0 or
-        rotateXMat.tab[2][0]!=0 or rotateXMat.tab[2][1]!=sin(M_PI/2) or rotateXMat.tab[2][2]!=cos(M_PI/2) or rotateXMat.tab[2][3]!=0 or
-        rotateXMat.tab[3][0]!=0 or rotateXMat.tab[3][1]!=0 or rotateXMat.tab[3][2]!=0 or rotateXMat.tab[3][3]!=1     
-        )
+        rotateXMat.tab[0][0]!=1.f or rotateXMat.tab[0][1]!=0.f or rotateXMat.tab[0][2]!=0.f or rotateXMat.tab[0][3]!=0.f or
+        rotateXMat.tab[1][0]!=0.f or rotateXMat.tab[1][1]!=(float)cos(M_PI/16) or rotateXMat.tab[1][2]!=(float)-sin(M_PI/16) or rotateXMat.tab[1][3]!=0.f or
+        rotateXMat.tab[2][0]!=0.f or rotateXMat.tab[2][1]!=(float)sin(M_PI/16) or rotateXMat.tab[2][2]!=(float)cos(M_PI/16) or rotateXMat.tab[2][3]!=0.f or
+        rotateXMat.tab[3][0]!=0.f or rotateXMat.tab[3][1]!=0.f or rotateXMat.tab[3][2]!=0.f or rotateXMat.tab[3][3]!=1.f 
+    )
     {
         printf("ERROR in testMat4 : CreateXRotationMatrix() not working\n");
         working=false;
     }
 
-/*
-    Mat4 rotateYMat = CreateYRotationMatrix(M_PI/2);
-    rotateYMat.PrintMatrix();
+    Mat4 rotateYMat = CreateYRotationMatrix(M_PI/16);
     if(
-        rotateYMat.tab[0][0]!=0.f or rotateYMat.tab[0][1]!=-1.f or rotateYMat.tab[0][2]!=0.f or rotateYMat.tab[0][3]!=0.f or
-        rotateYMat.tab[1][0]!=1.f or rotateYMat.tab[1][1]!=0.f or rotateYMat.tab[1][2]!=0.f or rotateYMat.tab[1][3]!=0.f or
-        rotateYMat.tab[2][0]!=0.f or rotateYMat.tab[2][1]!=0.f or rotateYMat.tab[2][2]!=1.f or rotateYMat.tab[2][3]!=0.f or
-        rotateYMat.tab[3][0]!=0.f or rotateYMat.tab[3][1]!=0.f or rotateYMat.tab[3][2]!=0.f or rotateYMat.tab[3][3]!=1.f     
-        )
+        rotateYMat.tab[0][0]!=(float)cos(M_PI/16) or rotateYMat.tab[0][1]!=0.f or rotateYMat.tab[0][2]!=(float)sin(M_PI/16) or rotateYMat.tab[0][3]!=0.f or
+        rotateYMat.tab[1][0]!=0.f or rotateYMat.tab[1][1]!=1.f or rotateYMat.tab[1][2]!=0.f or rotateYMat.tab[1][3]!=0.f or
+        rotateYMat.tab[2][0]!=(float)-sin(M_PI/16) or rotateYMat.tab[2][1]!=0.f or rotateYMat.tab[2][2]!=(float)cos(M_PI/16) or rotateYMat.tab[2][3]!=0.f or
+        rotateYMat.tab[3][0]!=0.f or rotateYMat.tab[3][1]!=0.f or rotateYMat.tab[3][2]!=0.f or rotateYMat.tab[3][3]!=1.f 
+    )
     {
-        printf("ERROR in testMat4 : CreateXRotationMatrix() not working\n");
+        printf("ERROR in testMat4 : CreateYRotationMatrix() not working\n");
         working=false;
     }
-/*
-    Mat4 rotateZMat = CreateYRotationMatrix(M_PI/2);
-    rotateZMat.PrintMatrix();
+
+
+    Mat4 rotateZMat = CreateZRotationMatrix(M_PI/16);
     if(
-        rotateZMat.tab[0][0]!=0.f or rotateZMat.tab[0][1]!=-1.f or rotateZMat.tab[0][2]!=0.f or rotateZMat.tab[0][3]!=0.f or
-        rotateZMat.tab[1][0]!=0.f or rotateZMat.tab[1][1]!=1.f or rotateZMat.tab[1][2]!=0.f or rotateZMat.tab[1][3]!=0.f or
+        rotateZMat.tab[0][0]!=(float)cos(M_PI/16) or rotateZMat.tab[0][1]!=(float)-sin(M_PI/16) or rotateZMat.tab[0][2]!=0.f or rotateZMat.tab[0][3]!=0.f or
+        rotateZMat.tab[1][0]!=(float)sin(M_PI/16) or rotateZMat.tab[1][1]!=(float)cos(M_PI/16) or rotateZMat.tab[1][2]!=0.f or rotateZMat.tab[1][3]!=0.f or
         rotateZMat.tab[2][0]!=0.f or rotateZMat.tab[2][1]!=0.f or rotateZMat.tab[2][2]!=1.f or rotateZMat.tab[2][3]!=0.f or
-        rotateZMat.tab[3][0]!=0.f or rotateZMat.tab[3][1]!=0.f or rotateZMat.tab[3][2]!=0.f or rotateZMat.tab[3][3]!=1.f     
-        )
+        rotateZMat.tab[3][0]!=0.f or rotateZMat.tab[3][1]!=0.f or rotateZMat.tab[3][2]!=0.f or rotateZMat.tab[3][3]!=1.f 
+    )
     {
-        printf("ERROR in testMat4 : CreateXRotationMatrix() not working\n");
+        printf("ERROR in testMat4 : CreateZRotationMatrix() not working\n");
         working=false;
     }
-*/
+
+    Mat4 transformMatrix = CreateTr
 
     return working;
 }
