@@ -1,4 +1,4 @@
-#include "../utils/maths.hpp"
+#include <maths.hpp>
 
 bool testVec3();
 bool testVec4();
