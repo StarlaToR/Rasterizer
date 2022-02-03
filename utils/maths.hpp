@@ -67,7 +67,7 @@ public:
     void Normalize();
 
     friend Vec4 operator+(const Vec4& a, const Vec4& b);
-    friend Vec4 operator*(const Vec4& a, float b);
+    friend Vec4 operator*(const Vec4& a, const float& b);
 };
 
 Vec4 operator+(const Vec4& a, const Vec4& b);
