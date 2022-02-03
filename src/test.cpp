@@ -232,7 +232,7 @@ bool testMat4()
         working=false;
     }
 
-    Mat4 transformMatrix = CreateTr
-
+    Mat4 transformMatrix = CreateTransformMatrix({M_PI/16,M_PI/16,M_PI/16},{5,35.4f,8},{2,879,0.1f});
+    transformMatrix.PrintMatrix();
     return working;
 }

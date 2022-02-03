@@ -95,7 +95,6 @@ public:
     Mat4(float a[4][4]);
     
     void PrintMatrix();
-    static Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale);
     Mat4 GetTransposeMat4();
     Mat4 GetAdjugateMat4();
     Mat4 GetInvertibleMat4();
@@ -107,13 +106,72 @@ public:
     void operator=(Mat4& a);
 };
 
-inline Mat4 GetIdentityMat4();
-inline Mat4 CreateTranslationMatrix(const Vec3& translation);
-inline Mat4 CreateScaleMatrix(const Vec3& scale);
-inline Mat4 CreateXRotationMatrix(float angle);
-inline Mat4 CreateYRotationMatrix(float angle);
-inline Mat4 CreateZRotationMatrix(float angle);
+inline Mat4 GetIdentityMat4()
+{
+    Mat4 matrix = Mat4();
+    matrix.tab[0][0] = 1;
+    matrix.tab[1][1] = 1;
+    matrix.tab[2][2] = 1;
+    matrix.tab[3][3] = 1;
+    return matrix;
+}
+inline Mat4 CreateTranslationMatrix(const Vec3& translation)
+{
+    Mat4 matrix = GetIdentityMat4();
+    matrix.tab[0][3] = translation.x;
+    matrix.tab[1][3] = translation.y;
+    matrix.tab[2][3] = translation.z;
+    return matrix;
+}
+inline Mat4 CreateScaleMatrix(const Vec3& scale)
+{
+    Mat4 matrix = GetIdentityMat4();
+    matrix.tab[0][0] = scale.x;
+    matrix.tab[1][1] = scale.y;
+    matrix.tab[2][2] = scale.z;
+    return matrix;
+}inline Mat4 CreateXRotationMatrix(float angle) // ! radian !
+{
+    Mat4 matrix = GetIdentityMat4();
+    matrix.tab[1][1] = cos(angle);
+    matrix.tab[1][2] = -sin(angle);
+    matrix.tab[2][1] = sin(angle);
+    matrix.tab[2][2] = cos(angle);
+    return matrix;
+}inline Mat4 CreateYRotationMatrix(float angle) // ! radian !
+{
+    Mat4 matrix = GetIdentityMat4();
+    matrix.tab[0][0] = cos(angle);
+    matrix.tab[0][2] = sin(angle);
+    matrix.tab[2][0] = -sin(angle);
+    matrix.tab[2][2] = cos(angle);
+    return matrix;
+}inline Mat4 CreateZRotationMatrix(float angle) // ! radian !
+{
+    Mat4 matrix = GetIdentityMat4();
+    matrix.tab[0][0] = cos(angle);
+    matrix.tab[0][1] = -sin(angle);
+    matrix.tab[1][0] = sin(angle);
+    matrix.tab[1][1] = cos(angle);
+    return matrix;
+}
+inline Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
+{
+    Mat4 translation = CreateTranslationMatrix(position);
+    Mat4 rotateX = CreateXRotationMatrix(rotation.x);
+    Mat4 rotateY = CreateYRotationMatrix(rotation.y);
+    Mat4 rotateZ  = CreateZRotationMatrix(rotation.z);
+    Mat4 scaling = CreateScaleMatrix(scale);
 
+    Mat4 transform = GetIdentityMat4();
+    transform *= translation;
+    transform *= rotateY;
+    transform *= rotateX;
+    transform *= rotateZ;
+    transform *= scaling;
+
+    return transform;
+}
 float GetDeterminantMat2(float a, float b, float c, float d);
 float GetDeterminantMat3(Vec3 a, Vec3 b, Vec3 c);
 float GetDeterminantMat4(Mat4 a);
