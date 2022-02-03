@@ -152,11 +152,6 @@ Mat4 Mat4::GetInvertibleMat4()
 }
 
 
-
-
-
-
-
 float GetDeterminantMat2(float a, float b, float c, float d)
 {
     return (a * d - b * c);
@@ -223,7 +218,7 @@ void Mat4::operator*=(float a)
     }
 }
 
-Mat4 operator*(Mat4& a, Mat4& b)
+Mat4 operator*(const Mat4& a, const Mat4& b)
 {
     Mat4 c = Mat4();
     
@@ -241,7 +236,7 @@ Mat4 operator*(Mat4& a, Mat4& b)
     return c;
 }
 
-Mat4 operator*(Mat4& a, float& b)
+Mat4 operator*(Mat4 a, float b)
 {
     Mat4 c = Mat4();
 
