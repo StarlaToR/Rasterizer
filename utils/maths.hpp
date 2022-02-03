@@ -91,10 +91,10 @@ public:
             }
         }
     }
+
+    Mat4(float a[4][4]);
     
     void PrintMatrix();
-    
-
     static Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale);
 
     friend Mat4 operator*(Mat4& a, Mat4& b);
