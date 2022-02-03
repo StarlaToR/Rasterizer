@@ -65,6 +65,9 @@ public:
     void Homogenize();
     float GetMagnitude();
     void Normalize();
+
+    friend Vec4 operator+(const Vec4& a, const Vec4& b);
+    friend Vec4 operator*(const Vec4& a, float b);
 };
 
 Vec4 operator+(const Vec4& a, const Vec4& b);
@@ -156,6 +159,8 @@ inline Mat4 CreateZRotationMatrix(float angle) // ! radian !
     return matrix;
 }
 
+Mat4 operator*(Mat4 a, Mat4 b);
+
 inline Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
 {
     Mat4 translation = CreateTranslationMatrix(position);
@@ -173,5 +178,5 @@ float GetDeterminantMat2(float a, float b, float c, float d);
 float GetDeterminantMat3(Vec3 a, Vec3 b, Vec3 c);
 float GetDeterminantMat4(Mat4 a);
 
-Mat4 operator*(const Mat4& a, const Mat4& b);
+
 Mat4 operator*(const Mat4& a, const float& b);

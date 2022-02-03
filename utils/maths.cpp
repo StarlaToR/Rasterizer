@@ -70,7 +70,7 @@ Vec4 operator+(const Vec4& a, const Vec4& b)
     return c;
 }
 
-Vec4 operator*(const Vec4& a, const float b)
+Vec4 operator*(const Vec4& a, const float& b)
 {
     Vec4 c(
         a.x * b,
@@ -218,7 +218,7 @@ void Mat4::operator*=(float a)
     }
 }
 
-Mat4 operator*(const Mat4& a, const Mat4& b)
+Mat4 operator*(Mat4 a, Mat4 b)
 {
     Mat4 c = Mat4();
     
