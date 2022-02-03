@@ -145,6 +145,8 @@ bool testMat4()
 
     Mat4 mat3 = mat1*mat2;
 
+    mat1.PrintMatrix();
+    mat2.PrintMatrix();
     mat3.PrintMatrix();
 
     return true;
