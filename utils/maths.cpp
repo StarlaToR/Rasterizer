@@ -14,7 +14,7 @@ void Vec3::Normalize()
 }
 
 
-Vec3 operator+(Vec3& a, Vec3& b)
+Vec3 operator+(const Vec3& a, const Vec3& b)
 {
     Vec3 c(
         a.x + b.x,
@@ -25,7 +25,7 @@ Vec3 operator+(Vec3& a, Vec3& b)
 }
 
 //Working
-Vec3 operator*(Vec3& a, float b)
+Vec3 operator*(const Vec3& a, const float b)
 {
     Vec3 c(
         a.x * b,
@@ -59,7 +59,7 @@ void Vec4::Normalize()
   //  w /= GetMagnitude();
 }
 
-Vec4 operator+(Vec4& a, Vec4& b)
+Vec4 operator+(const Vec4& a, const Vec4& b)
 {
     Vec4 c(
         a.x + b.x,
@@ -70,7 +70,7 @@ Vec4 operator+(Vec4& a, Vec4& b)
     return c;
 }
 
-Vec4 operator*(Vec4& a, float b)
+Vec4 operator*(const Vec4& a, const float b)
 {
     Vec4 c(
         a.x * b,
@@ -236,7 +236,7 @@ Mat4 operator*(const Mat4& a, const Mat4& b)
     return c;
 }
 
-Mat4 operator*(Mat4 a, float b)
+Mat4 operator*(const Mat4& a, const float& b)
 {
     Mat4 c = Mat4();
 
