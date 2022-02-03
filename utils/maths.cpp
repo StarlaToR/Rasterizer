@@ -86,6 +86,17 @@ Vec4 operator*(Vec4& a, float b)
     return c;
 }
 
+Mat4::Mat4(float a[4][4])
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            tab[i][j] = a[i][j];
+        }
+    }
+}
+
 Mat4 getIdentityMat4()
 {
     Mat4 matrix = Mat4();
