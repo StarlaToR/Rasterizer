@@ -93,14 +93,9 @@ public:
     }
     
     void PrintMatrix();
-    void getIdentityMat4();
+    
 
     static Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale);
-    static Mat4 CreateTranslationMatrix(const Vec3& translation);
-    static Mat4 CreateScaleMatrix(const Vec3& scale);
-    static Mat4 CreateXRotationMatrix(float angle);
-    static Mat4 CreateYRotationMatrix(float angle);
-    static Mat4 CreateZRotationMatrix(float angle); 
 
     friend Mat4 operator*(Mat4& a, Mat4& b);
     friend Mat4 operator*(Mat4& a, float& b);
@@ -108,6 +103,13 @@ public:
     void operator*=(float a);
     void operator=(Mat4& a);
 };
+
+static Mat4 getIdentityMat4();
+static Mat4 CreateTranslationMatrix(const Vec3& translation);
+static Mat4 CreateScaleMatrix(const Vec3& scale);
+static Mat4 CreateXRotationMatrix(float angle);
+static Mat4 CreateYRotationMatrix(float angle);
+static Mat4 CreateZRotationMatrix(float angle); 
 
 Mat4 operator*(Mat4& a, Mat4& b);
 Mat4 operator*(Mat4& a, float& b);
