@@ -99,8 +99,8 @@ public:
     Mat4 GetAdjugateMat4();
     Mat4 GetInvertibleMat4();
 
-    friend Mat4 operator*(Mat4& a, Mat4& b);
-    friend Mat4 operator*(Mat4& a, float& b);
+    //friend Mat4 operator*(Mat4& a, Mat4& b);
+    //friend Mat4 operator*(Mat4& a, float& b);
     void operator*=(Mat4& a);
     void operator*=(float a);
     void operator=(Mat4& a);

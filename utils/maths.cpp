@@ -117,32 +117,39 @@ Mat4 Mat4::GetTransposeMat4()
     }
     return matrix;
 }
-/*
+
 Mat4 Mat4::GetAdjugateMat4()
 {
-    return (Mat4(
-        {
-            {GetDeterminantMat3({this->tab[1][1], this->tab[1][2], this->tab[1][3]},{this->tab[2][1], this->tab[2][2], this->tab[2][3]},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})},
-            {GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})},
-            {GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})},
-            {GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})}
-        }
-    ));
+    Mat4 matrix = Mat4();
+
+    matrix.tab[0][0] = GetDeterminantMat3({this->tab[1][1], this->tab[1][2], this->tab[1][3]},{this->tab[2][1], this->tab[2][2], this->tab[2][3]},{this->tab[3][1], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[0][1] = GetDeterminantMat3({this->tab[1][0], this->tab[1][2], this->tab[1][3]},{this->tab[2][0], this->tab[2][2], this->tab[2][3]},{this->tab[3][0], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[0][2] = GetDeterminantMat3({this->tab[1][0], this->tab[1][1], this->tab[1][3]},{this->tab[2][0], this->tab[2][1], this->tab[2][3]},{this->tab[3][0], this->tab[3][1], this->tab[3][3]});
+    matrix.tab[0][3] = GetDeterminantMat3({this->tab[1][0], this->tab[1][1], this->tab[1][2]},{this->tab[2][0], this->tab[2][1], this->tab[2][2]},{this->tab[3][0], this->tab[3][1], this->tab[3][2]});
+
+    matrix.tab[1][0] = GetDeterminantMat3({this->tab[0][1], this->tab[0][2], this->tab[0][3]},{this->tab[2][1], this->tab[2][2], this->tab[2][3]},{this->tab[3][1], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[1][1] = GetDeterminantMat3({this->tab[0][0], this->tab[0][2], this->tab[0][3]},{this->tab[2][0], this->tab[2][2], this->tab[2][3]},{this->tab[3][0], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[1][2] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][3]},{this->tab[2][0], this->tab[2][1], this->tab[2][3]},{this->tab[3][0], this->tab[3][1], this->tab[3][3]});
+    matrix.tab[1][3] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][2]},{this->tab[2][0], this->tab[2][1], this->tab[2][2]},{this->tab[3][0], this->tab[3][1], this->tab[3][2]});
+
+    matrix.tab[2][0] = GetDeterminantMat3({this->tab[0][1], this->tab[0][2], this->tab[0][3]},{this->tab[1][1], this->tab[1][2], this->tab[1][3]},{this->tab[3][1], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[2][1] = GetDeterminantMat3({this->tab[0][0], this->tab[0][2], this->tab[0][3]},{this->tab[1][0], this->tab[1][2], this->tab[1][3]},{this->tab[3][0], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[2][2] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][3]},{this->tab[1][0], this->tab[1][1], this->tab[1][3]},{this->tab[3][0], this->tab[3][1], this->tab[3][3]});
+    matrix.tab[2][3] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][2]},{this->tab[1][0], this->tab[1][1], this->tab[1][2]},{this->tab[3][0], this->tab[3][1], this->tab[3][2]});
+
+    matrix.tab[3][0] = GetDeterminantMat3({this->tab[0][1], this->tab[0][2], this->tab[0][3]},{this->tab[1][1], this->tab[1][2], this->tab[1][3]},{this->tab[2][1], this->tab[2][2], this->tab[2][3]});
+    matrix.tab[3][1] = GetDeterminantMat3({this->tab[0][0], this->tab[0][2], this->tab[0][3]},{this->tab[1][0], this->tab[1][2], this->tab[1][3]},{this->tab[2][0], this->tab[2][2], this->tab[2][3]});
+    matrix.tab[3][2] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][3]},{this->tab[1][0], this->tab[1][1], this->tab[1][3]},{this->tab[2][0], this->tab[2][1], this->tab[2][3]});
+    matrix.tab[3][3] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][2]},{this->tab[1][0], this->tab[1][1], this->tab[1][2]},{this->tab[2][0], this->tab[2][1], this->tab[2][2]});
+
+    return matrix;
 }
-*/
-/*
+
+
 Mat4 Mat4::GetInvertibleMat4()
 {
-    
-}*/
-
-
-
-
-
-
-
-
+    return (this->GetAdjugateMat4() * (1 / GetDeterminantMat4(*this)));
+}
 
 
 
