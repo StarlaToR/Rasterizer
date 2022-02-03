@@ -104,12 +104,22 @@ public:
     void operator=(Mat4& a);
 };
 
-static Mat4 GetIdentityMat4();
-static Mat4 CreateTranslationMatrix(const Vec3& translation);
-static Mat4 CreateScaleMatrix(const Vec3& scale);
-static Mat4 CreateXRotationMatrix(float angle);
-static Mat4 CreateYRotationMatrix(float angle);
-static Mat4 CreateZRotationMatrix(float angle); 
+inline Mat4 GetIdentityMat4()
+{
+    Mat4 matrix = Mat4();
+    matrix.tab[0][0] = 1;
+    matrix.tab[1][1] = 1;
+    matrix.tab[2][2] = 1;
+    matrix.tab[3][3] = 1;
+
+    return matrix;
+}
+
+inline Mat4 CreateTranslationMatrix(const Vec3& translation);
+inline Mat4 CreateScaleMatrix(const Vec3& scale);
+inline Mat4 CreateXRotationMatrix(float angle);
+inline Mat4 CreateYRotationMatrix(float angle);
+inline Mat4 CreateZRotationMatrix(float angle); 
 
 Mat4 operator*(Mat4& a, Mat4& b);
 Mat4 operator*(Mat4& a, float& b);

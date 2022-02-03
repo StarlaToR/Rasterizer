@@ -86,16 +86,6 @@ Vec4 operator*(Vec4& a, float b)
     return c;
 }
 
-Mat4 GetIdentityMat4()
-{
-    Mat4 matrix = Mat4();
-    matrix.tab[0][0] = 1;
-    matrix.tab[1][1] = 1;
-    matrix.tab[2][2] = 1;
-    matrix.tab[3][3] = 1;
-
-    return matrix;
-}
 
 Mat4::Mat4(float a[4][4])
 {
@@ -137,7 +127,7 @@ void Mat4::PrintMatrix()
     printf("\n\n");
 }
 
-static Mat4 CreateTranslationMatrix(const Vec3& translation)
+inline Mat4 CreateTranslationMatrix(const Vec3& translation)
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][3] = translation.x;
@@ -146,7 +136,7 @@ static Mat4 CreateTranslationMatrix(const Vec3& translation)
     return matrix;
 }
 
-static Mat4 CreateScaleMatrix(const Vec3& scale)
+inline Mat4 CreateScaleMatrix(const Vec3& scale)
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][0] = scale.x;
@@ -155,7 +145,7 @@ static Mat4 CreateScaleMatrix(const Vec3& scale)
     return matrix;
 }
 
-static Mat4 CreateXRotationMatrix(float angle)
+inline Mat4 CreateXRotationMatrix(float angle)
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[1][1] = cos(angle);
@@ -165,7 +155,7 @@ static Mat4 CreateXRotationMatrix(float angle)
     return matrix;
 }
 
-static Mat4 CreateYRotationMatrix(float angle)
+inline Mat4 CreateYRotationMatrix(float angle)
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][0] = cos(angle);
@@ -175,7 +165,7 @@ static Mat4 CreateYRotationMatrix(float angle)
     return matrix;
 }
 
-static Mat4 CreateZRotationMatrix(float angle)
+inline Mat4 CreateZRotationMatrix(float angle)
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][0] = cos(angle);

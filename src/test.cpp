@@ -98,22 +98,9 @@ bool testVec4()
 
 bool testMat4()
 {    
-    Mat4 mat = Mat4();
-    Mat4 mat2=mat;
-
-    //first value of the first row set to 1
-    mat2.tab[0][0]=1;
-    //last value of the second row set to 4
-    mat2.tab[1][3]=4;
-    //last value of the matrix set to 8
-    mat2.tab[0][15]=8;
-
-    mat2*=2.f;
-    //mat2=mat2*mat;
-
-
     Mat4 identityMat = GetIdentityMat4();
 
+    //identityMat.PrintMatrix();
 
     for(int i=0;i<4;i++)
     {
@@ -137,4 +124,28 @@ bool testMat4()
             }
         }
     }
+
+    float data1[4][4]=
+    {
+        {1,2,3,4},
+        {1,2,3,4},
+        {1,2,3,4},
+        {1,2,3,4}
+    };
+    float data2[4][4]=
+    {
+        {1,1,1,1},
+        {2,2,2,2},
+        {3,3,3,3},
+        {4,4,4,4}
+    };
+
+    Mat4 mat1 = Mat4(data1);
+    Mat4 mat2 = Mat4(data2);
+
+    Mat4 mat3 = mat1*mat2;
+
+    mat3.PrintMatrix();
+
+    return true;
 }
