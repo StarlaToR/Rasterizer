@@ -115,6 +115,7 @@ inline Mat4 GetIdentityMat4()
     matrix.tab[3][3] = 1;
     return matrix;
 }
+
 inline Mat4 CreateTranslationMatrix(const Vec3& translation)
 {
     Mat4 matrix = GetIdentityMat4();
@@ -123,6 +124,7 @@ inline Mat4 CreateTranslationMatrix(const Vec3& translation)
     matrix.tab[2][3] = translation.z;
     return matrix;
 }
+
 inline Mat4 CreateScaleMatrix(const Vec3& scale)
 {
     Mat4 matrix = GetIdentityMat4();
@@ -130,7 +132,9 @@ inline Mat4 CreateScaleMatrix(const Vec3& scale)
     matrix.tab[1][1] = scale.y;
     matrix.tab[2][2] = scale.z;
     return matrix;
-}inline Mat4 CreateXRotationMatrix(float angle) // ! radian !
+}
+
+inline Mat4 CreateXRotationMatrix(float angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[1][1] = cos(angle);
@@ -138,7 +142,9 @@ inline Mat4 CreateScaleMatrix(const Vec3& scale)
     matrix.tab[2][1] = sin(angle);
     matrix.tab[2][2] = cos(angle);
     return matrix;
-}inline Mat4 CreateYRotationMatrix(float angle) // ! radian !
+}
+
+inline Mat4 CreateYRotationMatrix(float angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][0] = cos(angle);
@@ -146,7 +152,9 @@ inline Mat4 CreateScaleMatrix(const Vec3& scale)
     matrix.tab[2][0] = -sin(angle);
     matrix.tab[2][2] = cos(angle);
     return matrix;
-}inline Mat4 CreateZRotationMatrix(float angle) // ! radian !
+}
+
+inline Mat4 CreateZRotationMatrix(float angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][0] = cos(angle);
@@ -155,6 +163,7 @@ inline Mat4 CreateScaleMatrix(const Vec3& scale)
     matrix.tab[1][1] = cos(angle);
     return matrix;
 }
+
 inline Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
 {
     Mat4 translation = CreateTranslationMatrix(position);
@@ -172,6 +181,7 @@ inline Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, co
 
     return transform;
 }
+
 float GetDeterminantMat2(float a, float b, float c, float d);
 float GetDeterminantMat3(Vec3 a, Vec3 b, Vec3 c);
 float GetDeterminantMat4(Mat4 a);
