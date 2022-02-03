@@ -14,7 +14,7 @@ void Vec3::Normalize()
 }
 
 
-Vec3 operator+(Vec3& a, Vec3& b)
+Vec3 operator+(const Vec3& a, const Vec3& b)
 {
     Vec3 c(
         a.x + b.x,
@@ -25,7 +25,7 @@ Vec3 operator+(Vec3& a, Vec3& b)
 }
 
 //Working
-Vec3 operator*(Vec3& a, float b)
+Vec3 operator*(const Vec3& a, const float b)
 {
     Vec3 c(
         a.x * b,
@@ -59,7 +59,7 @@ void Vec4::Normalize()
   //  w /= GetMagnitude();
 }
 
-Vec4 operator+(Vec4& a, Vec4& b)
+Vec4 operator+(const Vec4& a, const Vec4& b)
 {
     Vec4 c(
         a.x + b.x,
@@ -70,7 +70,7 @@ Vec4 operator+(Vec4& a, Vec4& b)
     return c;
 }
 
-Vec4 operator*(Vec4& a, float b)
+Vec4 operator*(const Vec4& a, const float b)
 {
     Vec4 c(
         a.x * b,
@@ -117,37 +117,39 @@ Mat4 Mat4::GetTransposeMat4()
     }
     return matrix;
 }
-/*
+
 Mat4 Mat4::GetAdjugateMat4()
 {
-    return (Mat4(
-        {
-            {GetDeterminantMat3({this->tab[1][1], this->tab[1][2], this->tab[1][3]},{this->tab[2][1], this->tab[2][2], this->tab[2][3]},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})},
-            {GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})},
-            {GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})},
-            {GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})}
-        }
-    ));
+    Mat4 matrix = Mat4();
+
+    matrix.tab[0][0] = GetDeterminantMat3({this->tab[1][1], this->tab[1][2], this->tab[1][3]},{this->tab[2][1], this->tab[2][2], this->tab[2][3]},{this->tab[3][1], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[0][1] = GetDeterminantMat3({this->tab[1][0], this->tab[1][2], this->tab[1][3]},{this->tab[2][0], this->tab[2][2], this->tab[2][3]},{this->tab[3][0], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[0][2] = GetDeterminantMat3({this->tab[1][0], this->tab[1][1], this->tab[1][3]},{this->tab[2][0], this->tab[2][1], this->tab[2][3]},{this->tab[3][0], this->tab[3][1], this->tab[3][3]});
+    matrix.tab[0][3] = GetDeterminantMat3({this->tab[1][0], this->tab[1][1], this->tab[1][2]},{this->tab[2][0], this->tab[2][1], this->tab[2][2]},{this->tab[3][0], this->tab[3][1], this->tab[3][2]});
+
+    matrix.tab[1][0] = GetDeterminantMat3({this->tab[0][1], this->tab[0][2], this->tab[0][3]},{this->tab[2][1], this->tab[2][2], this->tab[2][3]},{this->tab[3][1], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[1][1] = GetDeterminantMat3({this->tab[0][0], this->tab[0][2], this->tab[0][3]},{this->tab[2][0], this->tab[2][2], this->tab[2][3]},{this->tab[3][0], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[1][2] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][3]},{this->tab[2][0], this->tab[2][1], this->tab[2][3]},{this->tab[3][0], this->tab[3][1], this->tab[3][3]});
+    matrix.tab[1][3] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][2]},{this->tab[2][0], this->tab[2][1], this->tab[2][2]},{this->tab[3][0], this->tab[3][1], this->tab[3][2]});
+
+    matrix.tab[2][0] = GetDeterminantMat3({this->tab[0][1], this->tab[0][2], this->tab[0][3]},{this->tab[1][1], this->tab[1][2], this->tab[1][3]},{this->tab[3][1], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[2][1] = GetDeterminantMat3({this->tab[0][0], this->tab[0][2], this->tab[0][3]},{this->tab[1][0], this->tab[1][2], this->tab[1][3]},{this->tab[3][0], this->tab[3][2], this->tab[3][3]});
+    matrix.tab[2][2] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][3]},{this->tab[1][0], this->tab[1][1], this->tab[1][3]},{this->tab[3][0], this->tab[3][1], this->tab[3][3]});
+    matrix.tab[2][3] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][2]},{this->tab[1][0], this->tab[1][1], this->tab[1][2]},{this->tab[3][0], this->tab[3][1], this->tab[3][2]});
+
+    matrix.tab[3][0] = GetDeterminantMat3({this->tab[0][1], this->tab[0][2], this->tab[0][3]},{this->tab[1][1], this->tab[1][2], this->tab[1][3]},{this->tab[2][1], this->tab[2][2], this->tab[2][3]});
+    matrix.tab[3][1] = GetDeterminantMat3({this->tab[0][0], this->tab[0][2], this->tab[0][3]},{this->tab[1][0], this->tab[1][2], this->tab[1][3]},{this->tab[2][0], this->tab[2][2], this->tab[2][3]});
+    matrix.tab[3][2] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][3]},{this->tab[1][0], this->tab[1][1], this->tab[1][3]},{this->tab[2][0], this->tab[2][1], this->tab[2][3]});
+    matrix.tab[3][3] = GetDeterminantMat3({this->tab[0][0], this->tab[0][1], this->tab[0][2]},{this->tab[1][0], this->tab[1][1], this->tab[1][2]},{this->tab[2][0], this->tab[2][1], this->tab[2][2]});
+
+    return matrix;
 }
-*/
-/*
+
+
 Mat4 Mat4::GetInvertibleMat4()
 {
-    
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return (this->GetAdjugateMat4() * (1 / GetDeterminantMat4(*this)));
+}
 
 
 float GetDeterminantMat2(float a, float b, float c, float d)
@@ -216,7 +218,7 @@ void Mat4::operator*=(float a)
     }
 }
 
-Mat4 operator*(Mat4& a, Mat4& b)
+Mat4 operator*(const Mat4& a, const Mat4& b)
 {
     Mat4 c = Mat4();
     
@@ -234,7 +236,7 @@ Mat4 operator*(Mat4& a, Mat4& b)
     return c;
 }
 
-Mat4 operator*(Mat4& a, float& b)
+Mat4 operator*(const Mat4& a, const float& b)
 {
     Mat4 c = Mat4();
 

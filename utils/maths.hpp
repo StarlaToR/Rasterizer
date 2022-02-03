@@ -25,13 +25,10 @@ public:
 
     float GetMagnitude();
     void Normalize();
-
-    friend Vec3 operator+(Vec3& a, Vec3& b);
-    friend Vec3 operator*(Vec3& a, float& b);
 };
 
-Vec3 operator+(Vec3& a, Vec3& b);
-Vec3 operator*(Vec3& a, float b);
+Vec3 operator+(const Vec3& a, const Vec3& b);
+Vec3 operator*(const Vec3& a, const float b);
 
 class Vec4
 {
@@ -68,13 +65,10 @@ public:
     void Homogenize();
     float GetMagnitude();
     void Normalize();
-
-    friend Vec4 operator+(Vec4& a, Vec4& b);
-    friend Vec4 operator*(Vec4& a, float b);
 };
 
-Vec4 operator+(Vec4& a, Vec4& b);
-Vec4 operator*(Vec4& a, float& b);
+Vec4 operator+(const Vec4& a, const Vec4& b);
+Vec4 operator*(const Vec4& a, const float& b);
 
 class Mat4
 {
@@ -99,8 +93,6 @@ public:
     Mat4 GetAdjugateMat4();
     Mat4 GetInvertibleMat4();
 
-    friend Mat4 operator*(Mat4& a, Mat4& b);
-    friend Mat4 operator*(Mat4& a, float& b);
     void operator*=(Mat4& a);
     void operator*=(float a);
     void operator=(Mat4& a);
@@ -172,12 +164,7 @@ inline Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, co
     Mat4 rotateZ  = CreateZRotationMatrix(rotation.z);
     Mat4 scaling = CreateScaleMatrix(scale);
 
-    Mat4 transform = GetIdentityMat4();
-    transform *= translation;
-    transform *= rotateY;
-    transform *= rotateX;
-    transform *= rotateZ;
-    transform *= scaling;
+    Mat4 transform = translation * rotateY * rotateX * rotateZ * scaling;
 
     return transform;
 }
@@ -186,5 +173,5 @@ float GetDeterminantMat2(float a, float b, float c, float d);
 float GetDeterminantMat3(Vec3 a, Vec3 b, Vec3 c);
 float GetDeterminantMat4(Mat4 a);
 
-Mat4 operator*(Mat4& a, Mat4& b);
-Mat4 operator*(Mat4& a, float& b);
+Mat4 operator*(const Mat4& a, const Mat4& b);
+Mat4 operator*(const Mat4& a, const float& b);

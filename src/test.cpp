@@ -55,7 +55,7 @@ bool testVec4()
     Vec4 v1 = {40.1f,1.45f,780.f,1023.5f};
     Vec4 v2 = {12.f,63.11f,0.f,9876.f};
     Vec4 v3 = v1+v2;
-    Vec4 v4 = v1*2;
+    Vec4 v4 = v1 * 2.f;
 
     
     if(!(v0.x==0.f and v0.y==0.f and v0.z==0.f and v0.w==1.f))
