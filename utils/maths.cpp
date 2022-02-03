@@ -233,7 +233,7 @@ void Mat4::operator*=(float a)
 Mat4 operator*(Mat4& a, Mat4& b)
 {
     Mat4 c = Mat4();
-
+    
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
