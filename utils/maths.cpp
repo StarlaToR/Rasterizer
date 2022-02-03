@@ -129,6 +129,36 @@ void Mat4::PrintMatrix()
     printf("\n\n");
 }
 
+Mat4 Mat4::GetTransposeMat4()
+{
+    Mat4 matrix = Mat4();
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            matrix.tab[i][j] = this->tab[j][i];
+        }
+    }
+    return matrix;
+}
+
+Mat4 Mat4::GetAdjugateMat4()
+{
+    return (Mat4(
+        {
+            {GetDeterminantMat3({this->tab[1][1], this->tab[1][2], this->tab[1][3]},{this->tab[2][1], this->tab[2][2], this->tab[2][3]},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})},
+            {GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})},
+            {GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})},
+            {GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{}), GetDeterminantMat3({},{},{})}
+        }
+    ));
+}
+
+Mat4 Mat4::GetInvertibleMat4()
+{
+
+}
+
 inline Mat4 GetIdentityMat4()
 {
     Mat4 matrix = Mat4();
@@ -157,7 +187,7 @@ inline Mat4 CreateScaleMatrix(const Vec3& scale)
     return matrix;
 }
 
-inline Mat4 CreateXRotationMatrix(float angle)
+inline Mat4 CreateXRotationMatrix(float angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[1][1] = cos(angle);
@@ -167,7 +197,7 @@ inline Mat4 CreateXRotationMatrix(float angle)
     return matrix;
 }
 
-inline Mat4 CreateYRotationMatrix(float angle)
+inline Mat4 CreateYRotationMatrix(float angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][0] = cos(angle);
@@ -177,7 +207,7 @@ inline Mat4 CreateYRotationMatrix(float angle)
     return matrix;
 }
 
-inline Mat4 CreateZRotationMatrix(float angle)
+inline Mat4 CreateZRotationMatrix(float angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][0] = cos(angle);
@@ -187,6 +217,29 @@ inline Mat4 CreateZRotationMatrix(float angle)
     return matrix;
 }
 
+float GetDeterminantMat2(float a, float b, float c, float d)
+{
+    return (a * d - b * c);
+}
+
+float GetDeterminantMat3(Vec3 a, Vec3 b, Vec3 c)
+{
+    return (
+        a.x * GetDeterminantMat2(b.y, b.z, c.y, c.z)
+        - a.y * GetDeterminantMat2(b.x, b.z, c.x, c.z)
+        + a.z * GetDeterminantMat2(b.x, b.y, c.x, c.y)
+    );
+}
+
+float GetDeterminantMat4(Mat4 a)
+{
+    return(
+        a.tab[0][0] * GetDeterminantMat3({a.tab[1][1], a.tab[1][2], a.tab[1][3]}, {a.tab[2][1], a.tab[2][2], a.tab[2][3]}, {a.tab[3][1], a.tab[3][2], a.tab[3][3]})
+        - a.tab[0][1] * GetDeterminantMat3({a.tab[1][0], a.tab[1][2], a.tab[1][3]}, {a.tab[2][0], a.tab[2][2], a.tab[2][3]}, {a.tab[3][0], a.tab[3][2], a.tab[3][3]})
+        + a.tab[0][2] * GetDeterminantMat3({a.tab[1][0], a.tab[1][1], a.tab[1][3]}, {a.tab[2][0], a.tab[2][1], a.tab[2][3]}, {a.tab[3][0], a.tab[3][1], a.tab[3][3]})
+        - a.tab[0][3] * GetDeterminantMat3({a.tab[1][0], a.tab[1][1], a.tab[1][2]}, {a.tab[2][0], a.tab[2][1], a.tab[2][2]}, {a.tab[3][0], a.tab[3][1], a.tab[3][2]})
+    );
+}
 
 void Mat4::operator=(Mat4& a)
 {
