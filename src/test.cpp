@@ -112,7 +112,7 @@ bool testMat4()
     //mat2=mat2*mat;
 
 
-    Mat4 identityMat = getIdentityMat4();
+    Mat4 identityMat = GetIdentityMat4();
 
 
     for(int i=0;i<4;i++)
