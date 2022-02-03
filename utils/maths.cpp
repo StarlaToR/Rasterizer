@@ -86,12 +86,13 @@ Vec4 operator*(Vec4& a, float b)
     return c;
 }
 
-void Mat4::getIdentityMat4()
+Mat4 getIdentityMat4()
 {
-    this->tab[1][1] = 1;
-    this->tab[2][2] = 1;
-    this->tab[3][3] = 1;
-    this->tab[4][4] = 1;
+    Mat4 matrix = Mat4();
+    matrix.tab[0][0] = 1;
+    matrix.tab[1][1] = 1;
+    matrix.tab[2][2] = 1;
+    matrix.tab[3][3] = 1;
 }
 
 Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
@@ -123,30 +124,27 @@ void Mat4::PrintMatrix()
     printf("\n\n");
 }
 
-Mat4 Mat4::CreateTranslationMatrix(const Vec3& translation)
+Mat4 CreateTranslationMatrix(const Vec3& translation)
 {
-    Mat4 matrix = Mat4();
-    matrix.getIdentityMat4();
+    Mat4 matrix = getIdentityMat4();
     matrix.tab[0][3] = translation.x;
     matrix.tab[1][3] = translation.y;
     matrix.tab[2][3] = translation.z;
     return matrix;
 }
 
-Mat4 Mat4::CreateScaleMatrix(const Vec3& scale)
+Mat4 CreateScaleMatrix(const Vec3& scale)
 {
-    Mat4 matrix = Mat4();
-    matrix.getIdentityMat4();
+    Mat4 matrix = getIdentityMat4();
     matrix.tab[0][0] = scale.x;
     matrix.tab[1][1] = scale.y;
     matrix.tab[2][2] = scale.z;
     return matrix;
 }
 
-Mat4 Mat4::CreateXRotationMatrix(float angle)
+Mat4 CreateXRotationMatrix(float angle)
 {
-    Mat4 matrix = Mat4();
-    matrix.getIdentityMat4();
+    Mat4 matrix = getIdentityMat4();
     matrix.tab[1][1] = cos(angle);
     matrix.tab[1][2] = -sin(angle);
     matrix.tab[2][1] = sin(angle);
@@ -154,10 +152,9 @@ Mat4 Mat4::CreateXRotationMatrix(float angle)
     return matrix;
 }
 
-Mat4 Mat4::CreateYRotationMatrix(float angle)
+Mat4 CreateYRotationMatrix(float angle)
 {
-    Mat4 matrix = Mat4();
-    matrix.getIdentityMat4();
+    Mat4 matrix = getIdentityMat4();
     matrix.tab[0][0] = cos(angle);
     matrix.tab[0][2] = sin(angle);
     matrix.tab[2][0] = -sin(angle);
@@ -165,10 +162,9 @@ Mat4 Mat4::CreateYRotationMatrix(float angle)
     return matrix;
 }
 
-Mat4 Mat4::CreateZRotationMatrix(float angle)
+Mat4 CreateZRotationMatrix(float angle)
 {
-    Mat4 matrix = Mat4();
-    matrix.getIdentityMat4();
+    Mat4 matrix = getIdentityMat4();
     matrix.tab[0][0] = cos(angle);
     matrix.tab[0][1] = -sin(angle);
     matrix.tab[1][0] = sin(angle);
