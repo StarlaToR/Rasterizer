@@ -111,9 +111,30 @@ bool testMat4()
     mat2*=2.f;
     //mat2=mat2*mat;
 
-    if(!(1==1))
+
+    Mat4 identityMat = getIdentityMat4();
+
+
+    for(int i=0;i<4;i++)
     {
-        printf("ERROR in testMat4 : CreateTranslationMatrix() not working\n");
-        return false;
-    }   
+        for(int j=0;j<4;j++)
+        {
+            if(i==j)
+            {
+                if(!(identityMat.tab[i][j]==1))
+                {
+                    printf("ERROR in testMat4 : GetIdentityMatrix() not working\n");
+                    return false;
+                }   
+            }
+            else
+            {
+                if(!(identityMat.tab[i][j]==0))
+                {
+                    printf("ERROR in testMat4 : GetIdentityMatrix() not working\n");
+                    return false;
+                }            
+            }
+        }
+    }
 }

@@ -104,7 +104,7 @@ public:
     void operator=(Mat4& a);
 };
 
-static Mat4 getIdentityMat4();
+static Mat4 GetIdentityMat4();
 static Mat4 CreateTranslationMatrix(const Vec3& translation);
 static Mat4 CreateScaleMatrix(const Vec3& scale);
 static Mat4 CreateXRotationMatrix(float angle);

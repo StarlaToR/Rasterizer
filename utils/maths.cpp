@@ -86,13 +86,15 @@ Vec4 operator*(Vec4& a, float b)
     return c;
 }
 
-Mat4 getIdentityMat4()
+Mat4 GetIdentityMat4()
 {
     Mat4 matrix = Mat4();
     matrix.tab[0][0] = 1;
     matrix.tab[1][1] = 1;
     matrix.tab[2][2] = 1;
     matrix.tab[3][3] = 1;
+
+    return matrix;
 }
 
 Mat4 Mat4::CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
