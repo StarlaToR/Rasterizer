@@ -104,16 +104,7 @@ public:
     void operator=(Mat4& a);
 };
 
-inline Mat4 GetIdentityMat4()
-{
-    Mat4 matrix = Mat4();
-    matrix.tab[0][0] = 1;
-    matrix.tab[1][1] = 1;
-    matrix.tab[2][2] = 1;
-    matrix.tab[3][3] = 1;
-
-    return matrix;
-}
+inline Mat4 GetIdentityMat4();
 
 inline Mat4 CreateTranslationMatrix(const Vec3& translation);
 inline Mat4 CreateScaleMatrix(const Vec3& scale);
