@@ -106,6 +106,26 @@ Mat4::Mat4(float a[4][4])
     }
 }
 
+Mat4::Mat4(float a, float b, float c, float d, float e, float f, float g, float h, float i, float j, float k, float l, float m, float n, float o, float p)
+{
+    tab[0][0] = a;
+    tab[0][1] = b;
+    tab[0][2] = c;
+    tab[0][3] = d;
+    tab[1][0] = e;
+    tab[1][1] = f;
+    tab[1][2] = g;
+    tab[1][3] = h;
+    tab[2][0] = i;
+    tab[2][1] = j;
+    tab[2][2] = k;
+    tab[2][3] = l;
+    tab[3][0] = m;
+    tab[3][1] = n;
+    tab[3][2] = o;
+    tab[3][3] = p;
+}
+
 void Mat4::PrintMatrix()
 {
     for(int i=0;i<4;i++)
