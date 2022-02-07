@@ -83,38 +83,35 @@ void Renderer::DrawLine(const float3& p0, const float3& p1, const float4& color)
 
 float3 ndcToScreenCoords(float3 ndc, const Viewport& viewport)
 {
-    printf("AVANT : x=%f, y=%f\n",ndc.x,ndc.y);
-    ndc.x+=viewport.x;
-    ndc.y+=viewport.y;
-    printf("APRES : x=%f, y=%f\n",ndc.x,ndc.y);
-
     // TODO
-
     return ndc;
 }
 
 void Renderer::DrawTriangle(rdrVertex* vertices)
 {
+
     // Store triangle vertices positions
-    float3 localCoords[3] = {
+
+    float3 localCoords[3] = { 
         { vertices[0].x, vertices[0].y, vertices[0].z },
         { vertices[1].x, vertices[1].y, vertices[1].z },
         { vertices[2].x, vertices[2].y, vertices[2].z },
     };
 
+    float3 worldCoords[3] = { 
+        { localCoords[0].x+0, localCoords[0].y+0, localCoords[0].z+2 },
+        { localCoords[1].x+0, localCoords[1].y+0, localCoords[1].z+2 },
+        { localCoords[2].x+0, localCoords[2].y+0, localCoords[2].z+2 },
+    };
+
     // Local space (v3) -> Clip space (v4)
     // TODO
-    for (int i = 0; i < 3; i++)
-    {
-        localCoords[i].x = (localCoords[i].x + 1) / viewport.width/2;
-        localCoords[i].y = (localCoords[i].y + 1) / viewport.height/2;
-    }
-
     float4 clipCoords[3] = {
         { float4{ localCoords[0], 1.f } },
         { float4{ localCoords[1], 1.f } },
         { float4{ localCoords[2], 1.f } },
     };
+
 
     // Clip space (v4) to NDC (v3)
     // TODO
