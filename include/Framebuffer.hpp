@@ -21,6 +21,10 @@ public:
     float4 clearColor = { 0.f, 0.f, 0.f, 1.f };
 
     Framebuffer(int width, int height);
+    Framebuffer()
+    {
+
+    };
     ~Framebuffer();
 
     void Clear();

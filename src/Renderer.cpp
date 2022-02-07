@@ -12,11 +12,16 @@
 
 
 Renderer::Renderer(float* p_colorBuffer32Bits, float* p_depthBuffer, const uint p_width, const uint p_height):
-fb(p_width, p_height),viewport(0,0,p_width, p_height)
+/*fb(p_width, p_height),*/viewport(0,0,p_width, p_height)
 {
     //fb.colorBuffer = reinterpret_cast<float4*>(p_colorBuffer32Bits);
     //fb.depthBuffer = p_depthBuffer;
 
+}
+
+Renderer::Renderer(Framebuffer* f, const uint p_width, const uint p_height):viewport(0,0,p_width, p_height)
+{
+    fb = f;
 }
 
 Renderer::~Renderer()
@@ -53,6 +58,13 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float4 p_color)
 {
     std::memcpy(&fb.GetColorBuffer()[p_x + p_y*fb.GetWidth()],&p_color,sizeof(float4));
 
+    //std::memcpy(&fb->GetColorBuffer()[p_x + p_y*fb->GetWidth()],&p_color,sizeof(float4));
+    float* colorBuffer = fb->GetColorBuffer();
+
+    colorBuffer[p_x + p_y * fb->GetWidth() * 4] = p_color.r;
+    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 1] = p_color.g;
+    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 2] = p_color.b;
+    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 3] = p_color.a;
 //    std::memcpy(&colorBuffer[p_y*fb.GetWidth()+p_x], &p_color, sizeof(float4));
 }
 
