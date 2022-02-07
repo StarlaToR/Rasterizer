@@ -13,6 +13,11 @@ void Vec3::Normalize()
     z /= GetMagnitude();
 }
 
+bool Vec3::IsInTriangle(Vec3 p0,Vec3 p1, Vec3 p2)
+{
+
+}
+
 
 Vec3 operator+(const Vec3& a, const Vec3& b)
 {
