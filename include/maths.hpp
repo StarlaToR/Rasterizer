@@ -63,6 +63,7 @@ public:
     }
 
     void Homogenize();
+    Vec3 GetHomogenizedVec();
     float GetMagnitude();
     void Normalize();
 

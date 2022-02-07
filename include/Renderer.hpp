@@ -1,6 +1,6 @@
 #pragma once
 
-#include <types.hpp>
+#include <maths.hpp>
 #include <Framebuffer.hpp>
 #include <maths.hpp>
 
@@ -52,9 +52,9 @@ public:
     void SetModel(Mat4 p_modelMatrix);
     void SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height);
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
-    void DrawLine(const float3& p_0, const float3& p_1, const float4& p_color);
+    void DrawLine(const Vec3& p_0, const Vec3& p_1, const Vec4& p_color);
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
-    void DrawPixel(uint p_x, uint p_y, float4 p_color);
+    void DrawPixel(uint p_x, uint p_y, Vec4 p_color);
 
 
 private:
