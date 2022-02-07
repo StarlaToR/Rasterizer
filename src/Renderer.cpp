@@ -83,6 +83,11 @@ void Renderer::DrawLine(const float3& p0, const float3& p1, const float4& color)
 
 float3 ndcToScreenCoords(float3 ndc, const Viewport& viewport)
 {
+    printf("AVANT : x=%f, y=%f\n",ndc.x,ndc.y);
+    ndc.x = (ndc.x + 1) / viewport.width/2;
+    ndc.y = (ndc.y + 1) / viewport.height/2;
+    printf("APRES : x=%f, y=%f\n",ndc.x,ndc.y);
+
     // TODO
     return ndc;
 }
