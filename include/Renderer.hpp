@@ -13,6 +13,13 @@ struct rdrVertex
     float u, v;       // Texture coordinates
 };
 
+struct color
+{
+    float red;
+    float green;
+    float blue;
+    float alpha;
+};
 
 struct Viewport
 {
@@ -36,7 +43,7 @@ private:
     Mat4 modelMatrix;
     Mat4 projectionMatrix;
 
-    float4 lineColor = { 1.f, 1.f, 1.f, 1.f };
+    Vec4 lineColor = { 1.f, 1.f, 1.f, 1.f };
 
 public:
 // Color and depth buffer have to be valid until the shutdown of the renderer

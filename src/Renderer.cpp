@@ -137,7 +137,7 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     DrawLine(screenCoords[0], screenCoords[1], lineColor);
     DrawLine(screenCoords[1], screenCoords[2], lineColor);
     DrawLine(screenCoords[2], screenCoords[0], lineColor);
-*/
+
 }
 
 void Renderer::DrawTriangles(rdrVertex* p_vertices, const uint p_count)
