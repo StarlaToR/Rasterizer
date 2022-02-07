@@ -104,13 +104,16 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     };
 
     Vec4 worldCoords[3] = { 
-        { localCoords[0].x, localCoords[0].y, localCoords[0].z },
-        { localCoords[1].x, localCoords[1].y, localCoords[1].z },
-        { localCoords[2].x, localCoords[2].y, localCoords[2].z },
+        { localCoords[0].x, localCoords[0].y, localCoords[0].z, 1},
+        { localCoords[1].x, localCoords[1].y, localCoords[1].z, 1},
+        { localCoords[2].x, localCoords[2].y, localCoords[2].z, 1},
     };
 
+/*
     for(int i=0;i<3;i++)
-       // worldCoords[i] *= modelMatrix*worldCoords[i];
+        worldCoords[i] *= modelMatrix;
+*/
+
 
     // Local space (v3) -> Clip space (v4)
     // TODO
@@ -124,10 +127,11 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     // Clip space (v4) to NDC (v3)
     // TODO
     Vec3 ndcCoords[3] = {
-        { clipCoords[0].GetHomogenizedVec() },
-        { clipCoords[1].GetHomogenizedVec() },
-        { clipCoords[2].GetHomogenizedVec() },
+        clipCoords[0].GetHomogenizedVec(),
+        clipCoords[1].GetHomogenizedVec(),
+        clipCoords[2].GetHomogenizedVec(),
     };
+    
 
     // NDC (v3) to screen coords (v2)
     // TODO

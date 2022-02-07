@@ -28,16 +28,16 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     // TODO: Remove this and use proper functions !
 
 
-    /*
+    
     Mat4 modelMatrix =Mat4(
-        400.f,0.f,0.f,400.f,
-        0.f,300.f,0.f,300.f,
-        0.f,0.f,1.f,0.f,
-        0.f,0.f,0.f,1.f,
+        400,0,0,400,
+        0,300,0,300,
+        0,0,1,0,
+        0,0,0,1
     );
-    */
+    
 
-    //renderer.SetModel(modelMatrix);
+    renderer.SetModel(modelMatrix);
 
     // Draw
     renderer.DrawTriangles(vertices.data(), (int)vertices.size());
