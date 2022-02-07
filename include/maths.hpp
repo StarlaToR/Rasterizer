@@ -188,3 +188,4 @@ float GetDeterminantMat4(Mat4 a);
 
 
 Mat4 operator*(const Mat4& a, const float& b);
+Vec4 operator*(const Mat4& a, const Vec4& b);
