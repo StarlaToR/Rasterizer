@@ -2,6 +2,7 @@
 
 #include <types.hpp>
 #include <Framebuffer.hpp>
+#include <maths.hpp>
 
 // Vertex format (only one supported for now)
 struct rdrVertex
@@ -32,6 +33,9 @@ private:
     Framebuffer* fb;
     Viewport viewport;
 
+    Mat4 modelMatrix;
+    Mat4 projectionMatrix;
+
     float4 lineColor = { 1.f, 1.f, 1.f, 1.f };
 
 public:
@@ -45,7 +49,7 @@ public:
     //TODO
     void SetProjection(float* p_projectionMatrix);
     void SetView(float* p_viewMatrix);
-    void SetModel(float* p_modelMatrix);
+    void SetModel(Mat4 p_modelMatrix);
     void SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height);
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
     void DrawLine(const float3& p_0, const float3& p_1, const float4& p_color);

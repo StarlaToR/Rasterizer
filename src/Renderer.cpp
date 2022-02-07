@@ -39,9 +39,9 @@ void Renderer::SetView(float* p_viewMatrix)
     // TODO
 }
 
-void Renderer::SetModel(float* p_modelMatrix)
+void Renderer::SetModel(Mat4 p_modelMatrix)
 {
-    // TODO
+    modelMatrix = p_modelMatrix;
 }
 
 void Renderer::SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height)
@@ -91,17 +91,35 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
 {
 
     // Store triangle vertices positions
-
-    float3 localCoords[3] = { 
+    Vec3 localCoords[3] = { 
         { vertices[0].x, vertices[0].y, vertices[0].z },
         { vertices[1].x, vertices[1].y, vertices[1].z },
         { vertices[2].x, vertices[2].y, vertices[2].z },
     };
 
+    // Local space -> World space
+/*  
+    float3 modelData[3]=
+    {
+        {400,450,0},
+        {200,150,0},
+        {600,150,0},
+    };
+*/
+
+    Vec3 modelData[3]=
+    {
+        {400,0,0},
+        {0,300,0},
+        {0,0,0},
+    };
+/*
+    localCoords[0]*modelData
+
     float3 worldCoords[3] = { 
-        { localCoords[0].x+0, localCoords[0].y+0, localCoords[0].z+2 },
-        { localCoords[1].x+0, localCoords[1].y+0, localCoords[1].z+2 },
-        { localCoords[2].x+0, localCoords[2].y+0, localCoords[2].z+2 },
+        { localCoords[0].x, localCoords[0].y, localCoords[0].z },
+        { localCoords[1].x, localCoords[1].y, localCoords[1].z },
+        { localCoords[2].x, localCoords[2].y, localCoords[2].z },
     };
 
     // Local space (v3) -> Clip space (v4)
@@ -133,6 +151,7 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     DrawLine(screenCoords[0], screenCoords[1], lineColor);
     DrawLine(screenCoords[1], screenCoords[2], lineColor);
     DrawLine(screenCoords[2], screenCoords[0], lineColor);
+*/
 }
 
 void Renderer::DrawTriangles(rdrVertex* p_vertices, const uint p_count)
