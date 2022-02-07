@@ -45,6 +45,19 @@ void Vec4::Homogenize()
     }
 }
 
+Vec3 Vec4::GetHomogenizedVec()
+{
+    Vec3 vec = Vec3();
+    if(w!=0)
+    {
+        vec.x = this->x / w;
+        vec.y = this->y / w;
+        vec.z = this->z / w;
+    }
+
+    return vec;
+}
+
 float Vec4::GetMagnitude()
 {
     return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));

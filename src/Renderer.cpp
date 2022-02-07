@@ -14,7 +14,7 @@
 Renderer::Renderer(float* p_colorBuffer32Bits, float* p_depthBuffer, const uint p_width, const uint p_height):
 /*fb(p_width, p_height),*/viewport(0,0,p_width, p_height)
 {
-    //fb.colorBuffer = reinterpret_cast<float4*>(p_colorBuffer32Bits);
+    //fb.colorBuffer = reinterpret_cast<Vec4*>(p_colorBuffer32Bits);
     //fb.depthBuffer = p_depthBuffer;
 
 }
@@ -54,17 +54,17 @@ void Renderer::SetTexture(float* p_colors32Bits, const uint p_width, const uint 
     // TODO
 }
 
-void Renderer::DrawPixel(uint p_x, uint p_y, float4 p_color)
+void Renderer::DrawPixel(uint p_x, uint p_y, Vec4 p_color)
 {
     float* colorBuffer = fb->GetColorBuffer();
 
-    colorBuffer[p_x + p_y * fb->GetWidth() * 4] = p_color.r;
-    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 1] = p_color.g;
-    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 2] = p_color.b;
-    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 3] = p_color.a;
+    colorBuffer[p_x + p_y * fb->GetWidth() * 4] = p_color.x;
+    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 1] = p_color.y;
+    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 2] = p_color.z;
+    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 3] = p_color.w;
 }
 
-void Renderer::DrawLine(const float3& p0, const float3& p1, const float4& color)
+void Renderer::DrawLine(const Vec3& p0, const Vec3& p1, const Vec4& color)
 {
 
     int x0=p0.x, x1=p1.x, y0=p0.y, y1=p1.y;
@@ -81,7 +81,7 @@ void Renderer::DrawLine(const float3& p0, const float3& p1, const float4& color)
     }
 }
 
-float3 ndcToScreenCoords(float3 ndc, const Viewport& viewport)
+Vec3 ndcToScreenCoords(Vec3 ndc, const Viewport& viewport)
 {
     printf("AVANT : x=%f, y=%f\n",ndc.x,ndc.y);
     ndc.x = (ndc.x + 1) / viewport.width/2;
@@ -97,13 +97,13 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
 
     // Store triangle vertices positions
 
-    float3 localCoords[3] = { 
+    Vec3 localCoords[3] = { 
         { vertices[0].x, vertices[0].y, vertices[0].z },
         { vertices[1].x, vertices[1].y, vertices[1].z },
         { vertices[2].x, vertices[2].y, vertices[2].z },
     };
 
-    float3 worldCoords[3] = { 
+    Vec3 worldCoords[3] = { 
         { localCoords[0].x+0, localCoords[0].y+0, localCoords[0].z+2 },
         { localCoords[1].x+0, localCoords[1].y+0, localCoords[1].z+2 },
         { localCoords[2].x+0, localCoords[2].y+0, localCoords[2].z+2 },
@@ -111,24 +111,24 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
 
     // Local space (v3) -> Clip space (v4)
     // TODO
-    float4 clipCoords[3] = {
-        { float4{ localCoords[0], 1.f } },
-        { float4{ localCoords[1], 1.f } },
-        { float4{ localCoords[2], 1.f } },
+    Vec4 clipCoords[3] = {
+        { Vec4{ localCoords[0], 1.f } },
+        { Vec4{ localCoords[1], 1.f } },
+        { Vec4{ localCoords[2], 1.f } },
     };
 
 
     // Clip space (v4) to NDC (v3)
     // TODO
-    float3 ndcCoords[3] = {
-        { clipCoords[0].xyz },
-        { clipCoords[1].xyz },
-        { clipCoords[2].xyz },
+    Vec3 ndcCoords[3] = {
+        { clipCoords[0].GetHomogenizedVec() },
+        { clipCoords[1].GetHomogenizedVec() },
+        { clipCoords[2].GetHomogenizedVec() },
     };
 
     // NDC (v3) to screen coords (v2)
     // TODO
-    float3 screenCoords[3] = {
+    Vec3 screenCoords[3] = {
         { ndcToScreenCoords(ndcCoords[0], viewport) },
         { ndcToScreenCoords(ndcCoords[1], viewport) },
         { ndcToScreenCoords(ndcCoords[2], viewport) },
@@ -157,5 +157,6 @@ void rdrSetImGuiContext(rdrImpl* renderer, struct ImGuiContext* context)
 
 void Renderer::ShowImGuiControls()
 {
-    ImGui::ColorEdit4("lineColor", lineColor.e);
+    float tab[] = {lineColor.x, lineColor.y, lineColor.z, lineColor.w};
+    ImGui::ColorEdit4("lineColor", tab);
 }
