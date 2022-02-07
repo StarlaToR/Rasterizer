@@ -17,7 +17,27 @@ Vec3 Vec3::GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2)
 {
     Vec3 barycentricCoords;
 
-   // barycentricCoords.x=
+    Vec3 vectorA = {
+        {p1.x-p0.x},
+        {p1.y-p0.y},
+        {p1.z-p0.z},
+    };
+
+    Vec3 vectorB = {
+        {p2.x-p1.x},
+        {p2.y-p1.y},
+        {p2.z-p1.z},
+    };
+    float triangleTotalArea = (vectorA.x*vectorB.y - vectorA.y*vectorB.x)/2;
+    float trianglep0p1This;
+    float trianglep1p2This;
+    float trianglep2p0This;
+
+    
+
+    barycentricCoords.x=trianglep0p1This/triangleTotalArea;
+    barycentricCoords.y=trianglep1p2This/triangleTotalArea;
+    barycentricCoords.z=trianglep2p0This/triangleTotalArea;
 
     return barycentricCoords;
 
