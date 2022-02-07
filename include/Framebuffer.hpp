@@ -26,6 +26,8 @@ public:
     void Clear();
     void UpdateTexture();
 
+    float4* GetColorBuffer4f() { return colorBuffer.data(); }
+
     float* GetColorBuffer() { return reinterpret_cast<float*>(colorBuffer.data()); }
     float* GetDepthBuffer() { return depthBuffer.data(); }
     int GetWidth()  const   { return width; }

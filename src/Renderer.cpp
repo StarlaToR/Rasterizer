@@ -49,13 +49,36 @@ void Renderer::SetTexture(float* p_colors32Bits, const uint p_width, const uint 
     // TODO
 }
 
-void DrawPixel(float4* p_colorBuffer, uint p_width, uint p_height, uint p_x, uint p_y, float4 p_color)
+void Renderer::DrawPixel(uint p_x, uint p_y, float4 p_color)
 {
-    // TODO
+    std::memcpy(&fb.GetColorBuffer()[p_x + p_y*fb.GetWidth()],&p_color,sizeof(float4));
+
+//    std::memcpy(&colorBuffer[p_y*fb.GetWidth()+p_x], &p_color, sizeof(float4));
 }
+
 void Renderer::DrawLine(const float3& p0, const float3& p1, const float4& color)
 {
-   //TODO
+    for(int i=0;i<50;i++)
+    {
+        DrawPixel(i, 50, color);
+    }
+
+/*
+void plotLine(int x0, int y0, int x1, int y1)
+{
+   int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
+   int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
+   int err = dx+dy, e2; /* error value e_xy 
+
+   for(;;){
+      setPixel(x0,y0);
+      if (x0==x1 && y0==y1) break;
+      e2 = 2*err;
+      if (e2 >= dy) { err += dy; x0 += sx; } 
+      if (e2 <= dx) { err += dx; y0 += sy; }  
+   }
+}
+*/
 }
 
 float3 ndcToScreenCoords(float3 ndc, const Viewport& viewport)

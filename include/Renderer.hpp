@@ -49,7 +49,7 @@ public:
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
     void DrawLine(const float3& p_0, const float3& p_1, const float4& p_color);
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
-
+    void DrawPixel(uint p_x, uint p_y, float4 p_color);
 
 private:
     void DrawTriangle(rdrVertex* p_vertices);
