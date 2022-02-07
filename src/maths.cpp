@@ -13,6 +13,17 @@ void Vec3::Normalize()
     z /= GetMagnitude();
 }
 
+Vec3 Vec3::GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2)
+{
+    Vec3 barycentricCoords;
+
+   // barycentricCoords.x=
+
+    return barycentricCoords;
+
+}
+
+
 bool Vec3::IsInTriangle(Vec3 p0,Vec3 p1, Vec3 p2)
 {
 
@@ -285,6 +296,7 @@ Mat4 operator*(Mat4 a, Mat4 b)
 
     return c;
 }
+
 
 Mat4 operator*(const Mat4& a, const float& b)
 {

@@ -87,7 +87,6 @@ Vec3 ndcToScreenCoords(Vec3 ndc, const Viewport& viewport)
     return ndc;
 }
 
-
 void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
 {   
     Vec4 color = { 1.f, 0.f, 0.f, 1.f };
@@ -110,9 +109,9 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     // Store triangle vertices positions
     Vec3 localCoords[3] = { 
 
-        { vertices[0].x, vertices[0].y, vertices[0].z },
-        { vertices[1].x, vertices[1].y, vertices[1].z },
-        { vertices[2].x, vertices[2].y, vertices[2].z },
+        { -vertices[0].x, -vertices[0].y, -vertices[0].z },
+        { -vertices[1].x, -vertices[1].y, -vertices[1].z },
+        { -vertices[2].x, -vertices[2].y, -vertices[2].z },
     };
 
     Vec4 worldCoords[3] = { 
@@ -121,10 +120,10 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         { localCoords[2].x, localCoords[2].y, localCoords[2].z, 1},
     };
 
-/*
+
     for(int i=0;i<3;i++)
-        worldCoords[i] *= modelMatrix;
-*/
+        worldCoords[i] *= modelMatrix.tab;
+
 
 
     // Local space (v3) -> Clip space (v4)
