@@ -56,9 +56,6 @@ void Renderer::SetTexture(float* p_colors32Bits, const uint p_width, const uint 
 
 void Renderer::DrawPixel(uint p_x, uint p_y, float4 p_color)
 {
-    //std::memcpy(&fb->GetColorBuffer()[p_x + p_y*fb->GetWidth()],&p_color,sizeof(float4));
-
-    //std::memcpy(&fb->GetColorBuffer()[p_x + p_y*fb->GetWidth()],&p_color,sizeof(float4));
     float* colorBuffer = fb->GetColorBuffer();
 
     colorBuffer[p_x + p_y * fb->GetWidth() * 4] = p_color.r;
@@ -70,31 +67,28 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float4 p_color)
 
 void Renderer::DrawLine(const float3& p0, const float3& p1, const float4& color)
 {
-    for(int i=0;i<50;i++)
-    {
-        DrawPixel(i, 50, color);
+
+    int x0=p0.x, x1=p1.x, y0=p0.y, y1=p1.y;
+    int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
+    int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
+    int err = dx+dy, e2; 
+
+    for(;;){  
+        DrawPixel(x0,y0,color);
+        if (x0==x1 && y0==y1) break;
+        e2 = 2*err;
+        if (e2 >= dy) { err += dy; x0 += sx; } 
+        if (e2 <= dx) { err += dx; y0 += sy; } 
     }
-
-/*
-void plotLine(int x0, int y0, int x1, int y1)
-{
-   int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
-   int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
-   int err = dx+dy, e2; /* error value e_xy 
-
-   for(;;){
-      setPixel(x0,y0);
-      if (x0==x1 && y0==y1) break;
-      e2 = 2*err;
-      if (e2 >= dy) { err += dy; x0 += sx; } 
-      if (e2 <= dx) { err += dx; y0 += sy; }  
-   }
-}
-*/
 }
 
 float3 ndcToScreenCoords(float3 ndc, const Viewport& viewport)
 {
+    printf("AVANT : x=%f, y=%f\n",ndc.x,ndc.y);
+    ndc.x+=viewport.x;
+    ndc.y+=viewport.y;
+    printf("APRES : x=%f, y=%f\n",ndc.x,ndc.y);
+
     // TODO
     return ndc;
 }
