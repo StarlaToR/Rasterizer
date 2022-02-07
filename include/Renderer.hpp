@@ -43,7 +43,7 @@ private:
     Mat4 modelMatrix;
     Mat4 projectionMatrix;
 
-    Vec4 lineColor = { 1.f, 1.f, 1.f, 1.f };
+    Vec4 lineColor = { 0.f, 1.f, 1.f, 1.f };
 
 public:
 // Color and depth buffer have to be valid until the shutdown of the renderer

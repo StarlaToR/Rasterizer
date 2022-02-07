@@ -4,6 +4,8 @@
 #include <glad/gl.h>
 #include <types.hpp>
 
+#include <maths.hpp>
+
 class Framebuffer
 {
 private:

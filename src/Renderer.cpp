@@ -58,16 +58,16 @@ void Renderer::DrawPixel(uint p_x, uint p_y, Vec4 p_color)
 {
     float* colorBuffer = fb->GetColorBuffer();
 
-    colorBuffer[p_x + p_y * fb->GetWidth() * 4] = p_color.x;
-    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 1] = p_color.y;
-    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 2] = p_color.z;
-    colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 3] = p_color.w;
+    colorBuffer[(p_x + p_y * fb->GetWidth()) * 4] = p_color.x; //p_color.x;
+    colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 1] = p_color.y; //p_color.y;
+    colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 2] = p_color.z; //p_color.z;
+    colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 3] = p_color.w; //p_color.w;
 }
 
 void Renderer::DrawLine(const Vec3& p0, const Vec3& p1, const Vec4& color)
 {
 
-    int x0=p0.x, x1=p1.x, y0=p0.y, y1=p1.y;
+    int x0=50, x1=600, y0=50, y1=400;
     int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
     int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
     int err = dx+dy, e2; 
@@ -88,8 +88,16 @@ Vec3 ndcToScreenCoords(Vec3 ndc, const Viewport& viewport)
 }
 
 void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
-{
+{   
+    Vec4 color = { 1.f, 0.f, 0.f, 1.f };
 
+    for(int i=0;i<fb->GetWidth();i++)
+    {
+        for(int j=0;j<fb->GetHeight();j++)
+        {
+            DrawPixel(i,j,color);
+        }
+    }
 }
 
 void Renderer::DrawTriangle(rdrVertex* vertices)
@@ -145,6 +153,8 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     DrawLine(screenCoords[0], screenCoords[1], lineColor);
     DrawLine(screenCoords[1], screenCoords[2], lineColor);
     DrawLine(screenCoords[2], screenCoords[0], lineColor);
+
+  //  FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2]);
 
 }
 
