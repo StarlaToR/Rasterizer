@@ -95,10 +95,12 @@ void App::Update()
     // We need an OpenGL texture to display the result of the renderer to the screen
     Framebuffer framebuffer(800, 600);
     // Init renderer
-    Renderer renderer(
+    /*Renderer renderer(
         framebuffer.GetColorBuffer(),
         framebuffer.GetDepthBuffer(),
-        framebuffer.GetWidth(), framebuffer.GetHeight());  
+        framebuffer.GetWidth(), framebuffer.GetHeight());  */
+
+    Renderer renderer(&framebuffer, 800, 600);
 
     Scene scene;
 

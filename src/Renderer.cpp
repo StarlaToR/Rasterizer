@@ -56,7 +56,7 @@ void Renderer::SetTexture(float* p_colors32Bits, const uint p_width, const uint 
 
 void Renderer::DrawPixel(uint p_x, uint p_y, float4 p_color)
 {
-    std::memcpy(&fb.GetColorBuffer()[p_x + p_y*fb.GetWidth()],&p_color,sizeof(float4));
+    //std::memcpy(&fb->GetColorBuffer()[p_x + p_y*fb->GetWidth()],&p_color,sizeof(float4));
 
     //std::memcpy(&fb->GetColorBuffer()[p_x + p_y*fb->GetWidth()],&p_color,sizeof(float4));
     float* colorBuffer = fb->GetColorBuffer();
