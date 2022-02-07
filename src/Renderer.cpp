@@ -83,13 +83,13 @@ void Renderer::DrawLine(const Vec3& p0, const Vec3& p1, const Vec4& color)
 
 Vec3 ndcToScreenCoords(Vec3 ndc, const Viewport& viewport)
 {
-    printf("AVANT : x=%f, y=%f\n",ndc.x,ndc.y);
-    ndc.x = (ndc.x + 1) / viewport.width/2;
-    ndc.y = (ndc.y + 1) / viewport.height/2;
-    printf("APRES : x=%f, y=%f\n",ndc.x,ndc.y);
-
     // TODO
     return ndc;
+}
+
+void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
+{
+
 }
 
 void Renderer::DrawTriangle(rdrVertex* vertices)
@@ -118,9 +118,9 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     // Local space (v3) -> Clip space (v4)
     // TODO
     Vec4 clipCoords[3] = {
-        { Vec4{ localCoords[0], 1.f } },
-        { Vec4{ localCoords[1], 1.f } },
-        { Vec4{ localCoords[2], 1.f } },
+        { worldCoords[0] },
+        { worldCoords[1] },
+        { worldCoords[2] },
     };
 
 
