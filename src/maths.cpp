@@ -26,9 +26,15 @@ Vec3 Vec3::GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2)
 
 bool Vec3::IsInTriangle(Vec3 p0,Vec3 p1, Vec3 p2)
 {
+    float e01 = (this->x - p0.x) * (p1.y - p0.y) - (this->y - p0.y) * (p1.x - p0.x);
+    float e12 = (this->x - p1.x) * (p2.y - p1.y) - (this->y - p1.y) * (p2.x - p1.x);
+    float e20 = (this->x - p2.x) * (p0.y - p2.y) - (this->y - p2.y) * (p0.x - p2.x);
 
+    if (e01 >= 0 && e12 >= 0 && e20 >= 0)
+        return true;
+    else
+        return false;
 }
-
 
 Vec3 operator+(const Vec3& a, const Vec3& b)
 {
