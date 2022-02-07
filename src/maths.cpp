@@ -99,6 +99,18 @@ Vec4 operator*(const Vec4& a, const float& b)
     return c;
 }
 
+void Vec4::operator*=(const float tab[4][4])
+{
+    float x1 = this->x;
+    float y1 = this->y;
+    float z1 = this->z;
+    float w1 = this->w;
+
+    this->x = tab[0][0] * x1 + tab[0][1] * y1 + tab[0][2] * z1 + tab[0][3] * w1;
+    this->y = tab[1][0] * x1 + tab[1][1] * y1 + tab[1][2] * z1 + tab[1][3] * w1;
+    this->z = tab[2][0] * x1 + tab[2][1] * y1 + tab[2][2] * z1 + tab[2][3] * w1;
+    this->w = tab[3][0] * x1 + tab[3][1] * y1 + tab[3][2] * z1 + tab[3][3] * w1;
+}
 
 Mat4::Mat4(float a[4][4])
 {
