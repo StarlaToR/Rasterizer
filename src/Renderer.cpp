@@ -62,7 +62,6 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float4 p_color)
     colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 1] = p_color.g;
     colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 2] = p_color.b;
     colorBuffer[p_x + p_y * fb->GetWidth() * 4 + 3] = p_color.a;
-//    std::memcpy(&colorBuffer[p_y*fb.GetWidth()+p_x], &p_color, sizeof(float4));
 }
 
 void Renderer::DrawLine(const float3& p0, const float3& p1, const float4& color)
@@ -90,6 +89,7 @@ float3 ndcToScreenCoords(float3 ndc, const Viewport& viewport)
     printf("APRES : x=%f, y=%f\n",ndc.x,ndc.y);
 
     // TODO
+
     return ndc;
 }
 
@@ -104,6 +104,12 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
 
     // Local space (v3) -> Clip space (v4)
     // TODO
+    for (int i = 0; i < 3; i++)
+    {
+        localCoords[i].x = (localCoords[i].x + 1) / viewport.width/2;
+        localCoords[i].y = (localCoords[i].y + 1) / viewport.height/2;
+    }
+
     float4 clipCoords[3] = {
         { float4{ localCoords[0], 1.f } },
         { float4{ localCoords[1], 1.f } },
