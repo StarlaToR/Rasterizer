@@ -115,7 +115,6 @@ void App::Update()
 
 
         NewFrame(mouseCaptured); //ImGui
-
         {
             double newMouseX, newMouseY;
             glfwGetCursorPos(window, &newMouseX, &newMouseY);
