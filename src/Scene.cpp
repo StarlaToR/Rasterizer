@@ -11,7 +11,8 @@ Scene::Scene()
         //       pos                  normal                  color              uv
         {-0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
         { 0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
-        { 0.0f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
+        { 0.5f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
+        {-0.5f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
     };
 }
 
@@ -40,7 +41,8 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     renderer.SetModel(modelMatrix);
 
     // Draw
-    renderer.DrawTriangles(vertices.data(), (int)vertices.size());
+    //renderer.DrawTriangles(vertices.data(), (int)vertices.size());
+    renderer.DrawQuads(vertices.data(),(int) vertices.size());
 
     time += deltaTime;
 }

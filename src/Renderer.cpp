@@ -106,6 +106,27 @@ void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
     }
 }
 
+void Renderer::DrawQuads(rdrVertex* p_vertices, const uint p_count)
+{
+    for (int i = 0; i < p_count; i += 4)
+    {
+        DrawQuad(&p_vertices[i]);
+    }
+}
+
+void Renderer::DrawQuad(rdrVertex* vertices)
+{
+    rdrVertex firstHalf[3] = { vertices[0],vertices[1],vertices[2]};
+    rdrVertex secondHalf[3] = { vertices[0],vertices[2],vertices[3]};
+
+    DrawTriangle(firstHalf);
+    DrawTriangle(secondHalf);
+}
+void Renderer::DrawCube(const float& size)
+{
+
+}
+
 void Renderer::DrawTriangle(rdrVertex* vertices)
 {
 
