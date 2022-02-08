@@ -97,6 +97,9 @@ void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
         {
             Vec3 pointChecked = {i,j,0};
 
+            color = pointChecked.GetBarycentricCoords(p0,p1,p2);
+
+
             if(pointChecked.IsInTriangle(p0,p1,p2))
                 DrawPixel(i,j,color);
         }

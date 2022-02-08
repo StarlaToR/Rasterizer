@@ -13,31 +13,27 @@ void Vec3::Normalize()
     z /= GetMagnitude();
 }
 
+float edgeFunction(const Vec3 &a, const Vec3 &b, const Vec3 &c) 
+{ 
+    return (c.x - a.x) * (b.y - a.y) - (c.y - a.y) * (b.x - a.x); 
+}
+
 Vec3 Vec3::GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2)
 {
     Vec3 barycentricCoords;
 
-    Vec3 vectorA = {
-        {p1.x-p0.x},
-        {p1.y-p0.y},
-        {p1.z-p0.z},
-    };
+    float area = edgeFunction(p0,p1,p2);
+    float w0 = edgeFunction(p1,p2,*this);
+    float w1 = edgeFunction(p2,p0,*this);
+    float w2 = edgeFunction(p0,p1,*this);
 
-    Vec3 vectorB = {
-        {p2.x-p1.x},
-        {p2.y-p1.y},
-        {p2.z-p1.z},
-    };
-    float triangleTotalArea = (vectorA.x*vectorB.y - vectorA.y*vectorB.x)/2;
-    float trianglep0p1This;
-    float trianglep1p2This;
-    float trianglep2p0This;
+    if(w0<=0 and w1<=0 and w2<=0)
+    {
+        barycentricCoords.x=w0/area;
+        barycentricCoords.y=w1/area;
+        barycentricCoords.z=w2/area;
+    }
 
-    
-
-    barycentricCoords.x=trianglep0p1This/triangleTotalArea;
-    barycentricCoords.y=trianglep1p2This/triangleTotalArea;
-    barycentricCoords.z=trianglep2p0This/triangleTotalArea;
 
     return barycentricCoords;
 
