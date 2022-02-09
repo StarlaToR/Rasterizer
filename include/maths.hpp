@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include <stdio.h>
+#include "Renderer.hpp"
 
 class Vec3
 {
@@ -194,3 +195,5 @@ inline Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, co
 
     return transform;
 }
+
+rdrVertex operator*(const rdrVertex& a, const Mat4& b);
