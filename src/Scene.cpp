@@ -52,8 +52,7 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     }
     else if(currentScene==2)
     {
-        Mat4 transformMat = GetIdentityMat4();
-        renderer.DrawCube(1,transformMat);
+        renderer.Scene2();
     }
 
 
