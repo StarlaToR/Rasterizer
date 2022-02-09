@@ -1,0 +1,28 @@
+
+- Permettre la rotation des objets par rapport au centre du monde 
+    Cela permet de vérifier si notre cube est correct
+
+- Finir le Z-Buffer, Antoine n'arrive pas à accéder aux données du depthBuffer
+
+- Essayer d'améliorer la fonction DrawTriangle qui ne marche que si les points sont donnés 
+    dans un ordre précis
+
+- Faire fonctionner la fonction DrawSphere
+
+- Ajouter la gestion des couleurs dans l'affichage des formes
+
+- Optimiser la fonction FillTriangle qui rame du cul.
+    Le parcours de l'ensemble des pixels de l'écran y est peut-être pour quelque chose...
+
+- Si on est stylé ajouter des sliders qui permettent de modifier la scène pendant l'exécution du 
+    programme (changer les coordonnées des points, la rotation)
+
+- Ajouter l'effet de perspective (peut-être pas nécessaire tout de suite)
+
+- Virer les types du prof (le fichier types.hpp)
+
+- Se débarrasser des rdrVertex, on les a pas codé, on sait pas comment ça marche et ils nous 
+    embrouillent
+
+
+

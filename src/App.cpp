@@ -187,8 +187,11 @@ void App::Update()
             mouseCaptured = true;
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         }
+
         ImGui::End();
+
         EndFrame();
+
     }
 }
 

@@ -47,16 +47,9 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     // Draw
     
     if(currentScene==1)
-    {
         renderer.Scene1();
-    }
     else if(currentScene==2)
-    {
         renderer.Scene2();
-    }
-
-
-    
 
     time += deltaTime;
 }

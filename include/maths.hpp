@@ -158,6 +158,14 @@ Vec3 operator*(const Vec3& a, const float b);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////           Inline functions            /////////////////////////////////////////////////////
 
+inline Vec3 getSphericalCoords(const float r, const float theta, const float phi)
+{
+    return { r * sinf(theta) * cosf(phi),
+             r * cosf(theta),
+             r * sinf(theta) * sinf(phi)
+    };
+}
+
 inline Mat4 GetIdentityMat4()
 {
     Mat4 matrix = Mat4();

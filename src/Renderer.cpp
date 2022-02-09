@@ -210,6 +210,53 @@ void Renderer::DrawQuad(const float& size, const Mat4& transformMat, Vec4& color
     DrawTriangle(secondHalf);
 }
 
+void Renderer::DrawSphere(const int lon, const int lat)
+{
+    float r = 0.5f;
+
+    rdrVertex vertices[4];
+
+    for (int j = 0; j < lat; ++j)
+    {
+        float theta0 = ((j+0) / (float)lat) * M_PI;
+        float theta1 = ((j+1) / (float)lat) * M_PI;
+
+        for (int i = 0; i < lon; ++i)
+        {
+            float phi0 = ((i+0) / (float)lon) * 2.f * M_PI;
+            float phi1 = ((i+1) / (float)lon) * 2.f * M_PI;
+
+            Vec3 c0 = getSphericalCoords(r, theta0, phi0);
+            Vec3 c1 = getSphericalCoords(r, theta0, phi1);
+            Vec3 c2 = getSphericalCoords(r, theta1, phi1);
+            Vec3 c3 = getSphericalCoords(r, theta1, phi0);
+
+            vertices[0].x = c0.x;
+            vertices[0].y = c0.y;
+            vertices[0].z = c0.z;
+
+            vertices[1].x = c1.x;
+            vertices[1].y = c1.y;
+            vertices[1].z = c1.z;
+
+            vertices[2].x = c2.x;
+            vertices[2].y = c2.y;
+            vertices[2].z = c2.z;
+
+            vertices[3].x = c3.x;
+            vertices[3].y = c3.y;
+            vertices[3].z = c3.z;
+
+
+            DrawTriangle(vertices);
+
+            DrawTriangle(vertices+1);
+
+        }
+    }
+}
+
+
 void Renderer::DrawTriangle(rdrVertex* vertices, Vec4& color)
 {
 
@@ -308,6 +355,7 @@ void Renderer::Scene2()
 {
         Mat4 transformMat = GetIdentityMat4();
         DrawCube(1,transformMat,{1,0,0,0});
+        //DrawSphere(50,50);
 }
 
 bool Renderer::CheckDepth(const float& x, const float& y, const float& z)

@@ -77,6 +77,7 @@ public:
 
 private:
     
+    void DrawSphere(const int lon, const int lat);
     void DrawQuad(const float& size, const Mat4& transformMat, Vec4& color);
     void DrawCube(const float& size);
     void DrawTriangle(rdrVertex* p_vertices, Vec4& color);
