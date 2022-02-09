@@ -77,7 +77,7 @@ public:
 
     void operator*=(Mat4& a);
     void operator*=(float a);
-    void operator=(Mat4& a);
+    void operator=(Mat4 a);
 };
 
 

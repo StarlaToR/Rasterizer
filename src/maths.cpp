@@ -294,7 +294,7 @@ float GetDeterminantMat4(Mat4 a)
     );
 }
 
-void Mat4::operator=(Mat4& a)
+void Mat4::operator=(Mat4 a)
 {
     for (int i = 0; i < 4; i++)
     {
