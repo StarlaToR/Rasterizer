@@ -54,25 +54,28 @@ void Renderer::SetTexture(float* p_colors32Bits, const uint p_width, const uint 
     // TODO
 }
 
-void Renderer::DrawPixel(uint p_x, uint p_y, Vec4 p_color)
+void Renderer::DrawPixel(uint p_x, uint p_y, uint p_z, Vec4& p_color)
 {
-    float* colorBuffer = fb->GetColorBuffer();
+    if (CheckDepth(p_x, p_y, p_z))
+    {
+        float* colorBuffer = fb->GetColorBuffer();
 
-    colorBuffer[(p_x + p_y * fb->GetWidth()) * 4] = p_color.x; //p_color.x;
-    colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 1] = p_color.y; //p_color.y;
-    colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 2] = p_color.z; //p_color.z;
-    colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 3] = p_color.w; //p_color.w;
+        colorBuffer[(p_x + p_y * fb->GetWidth()) * 4] = p_color.x; //p_color.x;
+        colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 1] = p_color.y; //p_color.y;
+        colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 2] = p_color.z; //p_color.z;
+        colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 3] = p_color.w; //p_color.w;
+    }
 }
 
-void Renderer::DrawLine(const Vec3& p0, const Vec3& p1, const Vec4& color)
+void Renderer::DrawLine(const Vec3& p0, const Vec3& p1, Vec4& color)
 {
     int x0=p0.x, x1=p1.x, y0=p0.y, y1=p1.y;
     int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
     int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
     int err = dx+dy, e2; 
 
-    for(;;){  
-        DrawPixel(x0,y0,color);
+    for(;;){ 
+        DrawPixel(x0, y0, p0.z, color);
         if (x0==x1 && y0==y1) break;
         e2 = 2*err;
         if (e2 >= dy) { err += dy; x0 += sx; } 
@@ -87,15 +90,20 @@ Vec3 ndcToScreenCoords(Vec3 ndc, const Viewport& viewport)
 }
 
 
-void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2, Vec4 color)
+void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2, Vec4& color)
 {
     for(int i=0;i<fb->GetWidth();i++)
     {
         for(int j=0;j<fb->GetHeight();j++)
         {
             Vec3 pointChecked = {i,j,0};
+
+            float depth;
+            if (p0.z == p1.z & p0.z == p2.z)
+                depth = p0.z;
+
             if(pointChecked.IsInTriangle(p0,p1,p2))
-                DrawPixel(i,j,color);
+                DrawPixel(i,j,depth,color);
         }
     }    
 }
@@ -108,9 +116,14 @@ void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
         for(int j=0;j<fb->GetHeight();j++)
         {
             Vec3 pointChecked = {i,j,0};
+            
+            float depth;
+            if (p0.z == p1.z & p0.z == p2.z)
+                depth = p0.z;
+            //De-comment this to have a bilinear interpolation of green, blue and red
             Vec4 color = pointChecked.GetBarycentricCoords(p0,p1,p2);
             if(pointChecked.IsInTriangle(p0,p1,p2))
-                DrawPixel(i,j,color);
+                DrawPixel(i, j, depth, color);
         }
     }
 }
@@ -123,7 +136,7 @@ void Renderer::ApplyViewMatrix(Mat4& matrix)
 void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4 color)
 {
     ApplyViewMatrix(transformMat);
-
+/*
     //Front and back faces
     transformMat *= CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
     DrawQuad(1,transformMat,color);
@@ -148,11 +161,18 @@ void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4 color)
     transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
     DrawQuad(1,transformMat,color);
     transformMat *= CreateTransformMatrix({-M_PI/2,0,0},{0,0,size/2},{1,1,1}); 
+    */
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
+    DrawQuad(1,transformMat, color);
+    transformMat *= CreateTransformMatrix({0,0,0},{0,1,size/2},{1,1,1});
+    color = {0,0,1,1}; 
+    DrawQuad(1,transformMat, color);
+
 }
 
 
 
-void Renderer::DrawQuad(const float& size, const Mat4& transformMat, Vec4 color)
+void Renderer::DrawQuad(const float& size, const Mat4& transformMat, Vec4& color)
 {
     rdrVertex vertices[4] = {
         //       pos                  normal                  color              uv
@@ -185,12 +205,11 @@ void Renderer::DrawQuad(const float& size, const Mat4& transformMat, Vec4 color)
     rdrVertex firstHalf[3] = { vertices[0],vertices[2],vertices[1]};
     rdrVertex secondHalf[3] = { vertices[0],vertices[3],vertices[2]};
     
-    DrawTriangle(firstHalf);
-    DrawTriangle(secondHalf);
+    DrawTriangle(firstHalf, color);
+    DrawTriangle(secondHalf, color);
 }
 
-
-void Renderer::DrawTriangle(rdrVertex* vertices, Vec4 color)
+void Renderer::DrawTriangle(rdrVertex* vertices, Vec4& color)
 {
 
 }
@@ -237,7 +256,15 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         { ndcToScreenCoords(ndcCoords[2], viewport) },
     };
 
-    FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2]);
+    // Draw triangle wireframe
+    /*
+    DrawLine(screenCoords[0], screenCoords[1], lineColor);
+    DrawLine(screenCoords[1], screenCoords[2], lineColor);
+    DrawLine(screenCoords[2], screenCoords[0], lineColor);
+    */
+    Vec4 color(1,1,1,0);
+
+    FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2], color);
 
 }
 
@@ -245,9 +272,10 @@ void Renderer::DrawTriangles(rdrVertex* p_vertices, const uint p_count)
 {
     // calculate mvp from matrices
     // Transform vertex list to triangles into colorBuffer
+    Vec4 color(1,0,0,1);
     for (int i = 0; i < p_count; i += 3)
     {
-        DrawTriangle(&p_vertices[i]);
+        DrawTriangle(&p_vertices[i], color);
     }
 }
 /*
@@ -271,7 +299,8 @@ void Renderer::Scene1()
         { 0.f,0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
     };
 
-    DrawTriangle(&vertices[0]);
+    Vec4 color(1,0,0,1);
+    DrawTriangle(&vertices[0], color);
 }
 
 void Renderer::Scene2()
