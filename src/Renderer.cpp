@@ -98,33 +98,56 @@ void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
             Vec3 pointChecked = {i,j,0};
 
             color = pointChecked.GetBarycentricCoords(p0,p1,p2);
-
-
             if(pointChecked.IsInTriangle(p0,p1,p2))
                 DrawPixel(i,j,color);
         }
     }
 }
 
-void Renderer::DrawQuads(rdrVertex* p_vertices, const uint p_count)
+
+void Renderer::DrawCube(const float& size, const Mat4& transformMat)
 {
-    for (int i = 0; i < p_count; i += 4)
-    {
-        DrawQuad(&p_vertices[i]);
-    }
+    DrawQuad(1,GetIdentityMat4());
 }
 
-void Renderer::DrawQuad(rdrVertex* vertices)
-{
-    rdrVertex firstHalf[3] = { vertices[0],vertices[1],vertices[2]};
-    rdrVertex secondHalf[3] = { vertices[0],vertices[2],vertices[3]};
 
+void Renderer::DrawQuad(const float& size, const Mat4& transformMat)
+{
+    rdrVertex vertices[4] = {
+        //       pos                  normal                  color              uv
+        { -size/2,size/2, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
+        { size/2,size/2, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
+        { size/2, -size/2, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
+        { -size/2, -size/2, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
+    };
+
+    Vec4 transformedPos[4] = {
+        { vertices[0].x,vertices[0].y,vertices[0].z, 1 },
+        { vertices[1].x,vertices[1].y,vertices[1].z, 1 },
+        { vertices[2].x,vertices[2].y,vertices[2].z, 1 },
+        { vertices[3].x,vertices[3].y,vertices[3].z, 1 },
+    };
+
+    for (int i = 0; i < 4; i++)
+    {
+        transformedPos[i]*=transformMat.tab;
+    }
+
+    for (int i = 0; i < 4; i++)
+    {
+        vertices[i].x=transformedPos[i].x;
+        vertices[i].y=transformedPos[i].y;
+        vertices[i].z=transformedPos[i].z;
+
+        printf("transformedPos[%d]{ %f, %f, %f }\n",i,transformedPos[i].x,transformedPos[i].y,transformedPos[i].z );
+    }
+    printf("\n\n\n" );
+
+    rdrVertex firstHalf[3] = { vertices[0],vertices[2],vertices[1]};
+    rdrVertex secondHalf[3] = { vertices[0],vertices[3],vertices[2]};
+    
     DrawTriangle(firstHalf);
     DrawTriangle(secondHalf);
-}
-void Renderer::DrawCube(const float& size)
-{
-
 }
 
 void Renderer::DrawTriangle(rdrVertex* vertices)
@@ -177,10 +200,11 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     };
 
     // Draw triangle wireframe
+    /*
     DrawLine(screenCoords[0], screenCoords[1], lineColor);
     DrawLine(screenCoords[1], screenCoords[2], lineColor);
     DrawLine(screenCoords[2], screenCoords[0], lineColor);
-
+    */
     FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2]);
 
 }

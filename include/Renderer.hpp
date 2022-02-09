@@ -61,14 +61,14 @@ public:
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
     void DrawLine(const Vec3& p_0, const Vec3& p_1, const Vec4& p_color);
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
-    void DrawQuads(rdrVertex* p_vertices, const uint p_count);
     void DrawPixel(uint p_x, uint p_y, Vec4 p_color);
     void FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2);
+    void DrawCube(const float& size, const Mat4& transformMat);
 
 
 private:
     
-    void DrawQuad(rdrVertex* vertices);
+    void DrawQuad(const float& size, const Mat4& transformMat);
     void DrawCube(const float& size);
     void DrawTriangle(rdrVertex* p_vertices);
     void ShowImGuiControls();

@@ -12,7 +12,6 @@ Scene::Scene()
         {-0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
         { 0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
         { 0.5f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
-        {-0.5f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
     };
 }
 
@@ -42,7 +41,7 @@ void Scene::Update(float deltaTime, Renderer& renderer)
 
     // Draw
     //renderer.DrawTriangles(vertices.data(), (int)vertices.size());
-    renderer.DrawQuads(vertices.data(),(int) vertices.size());
+    renderer.DrawCube(5,modelMatrix);
 
     time += deltaTime;
 }
