@@ -112,10 +112,11 @@ void Renderer::DrawCube(const float& size, Mat4& transformMat)
     DrawQuad(1,transformMat);
     transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size},{1,1,1}); 
 
+/*
     transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size},{1,1,1}); 
     DrawQuad(1,transformMat);
     transformMat *= CreateTransformMatrix({0,0,0},{0,0,size},{1,1,1}); 
-
+*/
 }
 
 

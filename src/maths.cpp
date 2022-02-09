@@ -306,7 +306,7 @@ void Mat4::operator=(Mat4 a)
 }
 
 
-void Mat4::operator*=(Mat4& a)
+void Mat4::operator*=(Mat4 a)
 {
     Mat4 c = Mat4();
 
