@@ -122,6 +122,10 @@ public:
         float i, float j, float k, float l,
         float m, float n, float o, float p
         );
+
+
+    void Translate(const Vec3& translation);
+    void Rotate(const float& angle, const Vec3& rotationAxis);
     
     void PrintMatrix();
     Mat4 GetTransposeMat4();

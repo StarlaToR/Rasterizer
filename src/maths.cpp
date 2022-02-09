@@ -145,6 +145,41 @@ void Vec4::operator*=(const float tab[4][4])
     this->w = tab[3][0] * x1 + tab[3][1] * y1 + tab[3][2] * z1 + tab[3][3] * w1;
 }
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////                       Mat4                       /////////////////////////////////////////////////////
+
+void Mat4::Translate(const Vec3& translation)
+{
+    printf("BEFORE:\n");
+    PrintMatrix();
+
+    this->tab[0][3]+=translation.x;
+    this->tab[1][3]+=translation.y;
+    this->tab[2][3]+=translation.z;
+
+    printf("\n\n\nAFTER:\n");
+    PrintMatrix();
+    printf("\n\n\n\n");
+}
+
+void Mat4::Rotate(const float& angle, const Vec3& rotationAxis)
+{
+    printf("BEFORE:\n");
+    PrintMatrix();
+
+    if(rotationAxis.x==1)
+        this->tab[3][0]+=angle;
+    if(rotationAxis.y==1)
+        this->tab[3][1]+=angle;
+    if(rotationAxis.z==1)
+        this->tab[3][2]+=angle;
+
+    printf("\n\nAFTER:\n");
+    PrintMatrix();
+    printf("\n\n");
+}
+
 Mat4::Mat4(float a[4][4])
 {
     for (int i = 0; i < 4; i++)
@@ -334,6 +369,10 @@ Mat4 operator*(const Mat4& a, const float& b)
 
     return c;
 }
+
+///////////////////////////////////                       Mat4                       /////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 Vec4 operator*(const Mat4& a, const Vec4& b)
 {
