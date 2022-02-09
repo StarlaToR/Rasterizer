@@ -13,6 +13,14 @@ Framebuffer::Framebuffer(int p_width, int p_height)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
+
+    for (int i = 0; i < p_height; i++)
+    {
+        for (int j = 0; j < p_width; j ++)
+        {
+            depthBuffer[i * p_width + j] = 100;
+        }
+    }
 }
 
 Framebuffer::~Framebuffer()

@@ -67,6 +67,7 @@ public:
     void ApplyViewMatrix(Mat4& matrix);
 
     void Scene1();
+    bool CheckDepth(const float& x, const float& y, const float& z);
 
 private:
     

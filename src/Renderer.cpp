@@ -86,6 +86,7 @@ Vec3 ndcToScreenCoords(Vec3 ndc, const Viewport& viewport)
     return ndc;
 }
 
+
 void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
 {   
     Vec4 color = { 0.6f, 0.2f, 0.3f, 0.8f };
@@ -263,4 +264,17 @@ void Renderer::Scene1()
     };
 
     DrawTriangle(&vertices[0]);
+}
+
+bool Renderer::CheckDepth(const float& x, const float& y, const float& z)
+{
+    float* depthTab = fb->GetDepthBuffer();
+    if (depthTab[(int)(y * fb->GetWidth() + x)] > z)
+    {
+        depthTab[(int)(y * fb->GetWidth() + x)] = z;
+        return true;
+    }
+    else{
+        return false;
+    }
 }
