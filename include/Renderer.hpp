@@ -1,6 +1,6 @@
 #pragma once
 
-#include <maths.hpp>
+
 #include <Framebuffer.hpp>
 #include <maths.hpp>
 
