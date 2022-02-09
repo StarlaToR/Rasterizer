@@ -107,17 +107,32 @@ void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
 
 void Renderer::DrawCube(const float& size, Mat4& transformMat)
 {
-
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,size},{1,1,1}); 
+    //Front and back faces
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
     DrawQuad(1,transformMat);
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size},{1,1,1}); 
-
-/*
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size},{1,1,1}); 
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
     DrawQuad(1,transformMat);
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,size},{1,1,1}); 
-*/
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
+
+
+    //Left and right faces
+    transformMat *= CreateTransformMatrix({0,M_PI/2,0},{0,0,size/2},{1,1,1}); 
+    DrawQuad(1,transformMat);
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
+    DrawQuad(1,transformMat);
+    transformMat *= CreateTransformMatrix({0,-M_PI/2,0},{0,0,size/2},{1,1,1}); 
+
+    //Up and down faces
+    transformMat *= CreateTransformMatrix({M_PI/2,0,0},{0,0,size/2},{1,1,1}); 
+    DrawQuad(1,transformMat);
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
+    DrawQuad(1,transformMat);
+    transformMat *= CreateTransformMatrix({-M_PI/2,0,0},{0,0,size/2},{1,1,1}); 
 }
+
 
 
 void Renderer::DrawQuad(const float& size, const Mat4& transformMat)
@@ -147,6 +162,7 @@ void Renderer::DrawQuad(const float& size, const Mat4& transformMat)
         vertices[i].x=transformedPos[i].x;
         vertices[i].y=transformedPos[i].y;
         vertices[i].z=transformedPos[i].z;
+        printf("vertices[%d]={ %f, %f, %f }\n",i,vertices[i].x,vertices[i].y,vertices[i].z);
     }
     printf("\n\n\n" );
 
