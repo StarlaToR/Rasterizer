@@ -56,7 +56,7 @@ void Renderer::SetTexture(float* p_colors32Bits, const uint p_width, const uint 
 
 void Renderer::DrawPixel(uint p_x, uint p_y, uint p_z, Vec4& p_color)
 {
-    if (CheckDepth(p_x, p_y, p_z))
+    //if (CheckDepth(p_x, p_y, p_z))
     {
         float* colorBuffer = fb->GetColorBuffer();
 
@@ -117,10 +117,11 @@ void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
         {
             Vec3 pointChecked = {i,j,0};
             
+    
             float depth;
-            if (p0.z == p1.z & p0.z == p2.z)
+//            if (p0.z == p1.z & p0.z == p2.z)
                 depth = p0.z;
-            //De-comment this to have a bilinear interpolation of green, blue and red
+
             Vec4 color = pointChecked.GetBarycentricCoords(p0,p1,p2);
             if(pointChecked.IsInTriangle(p0,p1,p2))
                 DrawPixel(i, j, depth, color);
@@ -164,7 +165,7 @@ void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4 color)
     */
     transformMat *= CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
     DrawQuad(1,transformMat, color);
-    transformMat *= CreateTransformMatrix({0,0,0},{0,1,size/2},{1,1,1});
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0.5f,size/2},{1,1,1});
     color = {0,0,1,1}; 
     DrawQuad(1,transformMat, color);
 
@@ -205,8 +206,8 @@ void Renderer::DrawQuad(const float& size, const Mat4& transformMat, Vec4& color
     rdrVertex firstHalf[3] = { vertices[0],vertices[2],vertices[1]};
     rdrVertex secondHalf[3] = { vertices[0],vertices[3],vertices[2]};
     
-    DrawTriangle(firstHalf, color);
-    DrawTriangle(secondHalf, color);
+    DrawTriangle(firstHalf);
+    DrawTriangle(secondHalf);
 }
 
 void Renderer::DrawTriangle(rdrVertex* vertices, Vec4& color)
@@ -264,7 +265,7 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     */
     Vec4 color(1,1,1,0);
 
-    FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2], color);
+    FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2]);
 
 }
 
@@ -300,7 +301,7 @@ void Renderer::Scene1()
     };
 
     Vec4 color(1,0,0,1);
-    DrawTriangle(&vertices[0], color);
+    DrawTriangle(&vertices[0]);
 }
 
 void Renderer::Scene2()
