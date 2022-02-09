@@ -29,14 +29,14 @@ Renderer::~Renderer()
 
 }
 
-void Renderer::SetProjection(float* p_projectionMatrix)
+void Renderer::SetProjection(Mat4 p_projectionMatrix)
 {
-    // TODO
+    projectionMatrix = p_projectionMatrix;
 }
 
-void Renderer::SetView(float* p_viewMatrix)
+void Renderer::SetView(Mat4 p_viewMatrix)
 {
-    // TODO
+    viewMatrix = p_viewMatrix;
 }
 
 void Renderer::SetModel(Mat4 p_modelMatrix)
@@ -66,7 +66,6 @@ void Renderer::DrawPixel(uint p_x, uint p_y, Vec4 p_color)
 
 void Renderer::DrawLine(const Vec3& p0, const Vec3& p1, const Vec4& color)
 {
-
     int x0=p0.x, x1=p1.x, y0=p0.y, y1=p1.y;
     int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
     int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
@@ -104,9 +103,15 @@ void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
     }
 }
 
+void Renderer::ApplyViewMatrix(Mat4& matrix)
+{
+    matrix*=viewMatrix;
+}
 
 void Renderer::DrawCube(const float& size, Mat4& transformMat)
 {
+    ApplyViewMatrix(transformMat);
+
     //Front and back faces
     transformMat *= CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
     DrawQuad(1,transformMat);
@@ -162,9 +167,8 @@ void Renderer::DrawQuad(const float& size, const Mat4& transformMat)
         vertices[i].x=transformedPos[i].x;
         vertices[i].y=transformedPos[i].y;
         vertices[i].z=transformedPos[i].z;
-        printf("vertices[%d]={ %f, %f, %f }\n",i,vertices[i].x,vertices[i].y,vertices[i].z);
+       // printf("vertices[%d]={ %f, %f, %f }\n\n\n",i,vertices[i].x,vertices[i].y,vertices[i].z);
     }
-    printf("\n\n\n" );
 
     rdrVertex firstHalf[3] = { vertices[0],vertices[2],vertices[1]};
     rdrVertex secondHalf[3] = { vertices[0],vertices[3],vertices[2]};

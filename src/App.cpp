@@ -122,7 +122,7 @@ void App::Update()
         }
 
         // Update camera
-        if (ImGui::IsKeyPressed(GLFW_KEY_ESCAPE))
+        if (ImGui::IsKeyPressed(GLFW_KEY_TAB))
         {
             mouseCaptured = false;
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -132,8 +132,13 @@ void App::Update()
         {
             inputs.deltaX = mouseDeltaX;
             inputs.deltaY = mouseDeltaY;
-            inputs.moveForward  = ImGui::IsKeyDown(GLFW_KEY_UP);
-            inputs.moveBackward = ImGui::IsKeyDown(GLFW_KEY_DOWN);
+            inputs.moveForward  = ImGui::IsKeyDown(GLFW_KEY_E);
+            inputs.moveBackward = ImGui::IsKeyDown(GLFW_KEY_Q);
+            inputs.moveUp  = ImGui::IsKeyDown(GLFW_KEY_UP);
+            inputs.moveDown = ImGui::IsKeyDown(GLFW_KEY_DOWN);
+            inputs.moveLeft  = ImGui::IsKeyDown(GLFW_KEY_LEFT);
+            inputs.moveRight = ImGui::IsKeyDown(GLFW_KEY_RIGHT);
+
             camera.Update(ImGui::GetIO().DeltaTime, inputs);
         }
 
@@ -141,10 +146,10 @@ void App::Update()
         framebuffer.Clear();
 
         // Setup matrices
-        mat4x4 projection = camera.GetProjection();
-        mat4x4 view       = camera.GetViewMatrix();
-        renderer.SetProjection(projection.e);
-        renderer.SetView(view.e);
+        Mat4 projection = camera.GetProjection();
+        Mat4 view       = camera.GetViewMatrix();
+        renderer.SetProjection(projection);
+        renderer.SetView(view);
 
         // Render scene
         scene.Update(ImGui::GetIO().DeltaTime, renderer);
@@ -167,7 +172,7 @@ void App::Update()
         ImGui::End();
 
         ImGui::Begin("Framebuffer");
-        ImGui::Text("(Right click to capture mouse, Esc to un-capture)");
+        ImGui::Text("(Right click to capture mouse, Tab to un-capture)");
         // Display framebuffer (renderer output)
         ImGui::Image((ImTextureID)(size_t)framebuffer.GetColorTexture(), { (float)framebuffer.GetWidth(), (float)framebuffer.GetHeight() });
         if (ImGui::IsItemClicked(ImGuiMouseButton_Right))

@@ -13,19 +13,31 @@ Camera::Camera(const uint width, const uint height)
 
 void Camera::Update(const float p_deltaTime, const CameraInputs& inputs)
 {
-    //TODO
+
+    if(inputs.moveLeft==true)
+        viewMatrix.tab[0][3]-=0.05f;
+
+    if(inputs.moveRight==true)
+        viewMatrix.tab[0][3]+=0.05f;
+
+    if(inputs.moveUp==true)
+        viewMatrix.tab[1][3]-=0.05f;
+
+    if(inputs.moveDown==true)
+        viewMatrix.tab[1][3]+=0.05f;
+
 }
 
-mat4x4 Camera::GetViewMatrix()
+Mat4 Camera::GetViewMatrix()
 {
     //TODO
-    //return mat4::identity();
+    return viewMatrix;
 }
 
-mat4x4 Camera::GetProjection()
+Mat4 Camera::GetProjection()
 {
     //TODO
-    //return mat4::identity();
+    return projectionMatrix;
 }
 
 void Camera::ShowImGuiControls()

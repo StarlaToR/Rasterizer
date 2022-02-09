@@ -42,8 +42,7 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     // Draw
     //renderer.DrawTriangles(vertices.data(), (int)vertices.size());
     
-    Mat4 transformMat = GetIdentityMat4() * CreateTransformMatrix({0,0,0},{0,0,0},{1,1,1});
-
+    Mat4 transformMat = GetIdentityMat4();
     renderer.DrawCube(1,transformMat);
 
     time += deltaTime;

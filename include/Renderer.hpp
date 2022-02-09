@@ -41,6 +41,7 @@ private:
 
     Mat4 modelMatrix;
     Mat4 projectionMatrix;
+    Mat4 viewMatrix;
 
     Vec4 lineColor = { 0.f, 1.f, 1.f, 1.f };
 
@@ -53,8 +54,8 @@ public:
     ~Renderer();
 
     //TODO
-    void SetProjection(float* p_projectionMatrix);
-    void SetView(float* p_viewMatrix);
+    void SetProjection(Mat4 p_projectionMatrix);
+    void SetView(Mat4 p_viewMatrix);
     void SetModel(Mat4 p_modelMatrix);
     void SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height);
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
@@ -63,6 +64,7 @@ public:
     void DrawPixel(uint p_x, uint p_y, Vec4 p_color);
     void FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2);
     void DrawCube(const float& size, Mat4& transformMat);
+    void ApplyViewMatrix(Mat4& matrix);
 
 
 private:

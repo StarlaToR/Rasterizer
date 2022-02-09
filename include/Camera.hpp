@@ -22,8 +22,13 @@ public:
     Camera(const uint p_width, const uint p_height);
 
     void Update(const float p_deltaTime, const CameraInputs& p_inputs);
-    mat4x4 GetViewMatrix();
-    mat4x4 GetProjection();
+    Mat4 GetViewMatrix();
+    Mat4 GetProjection();
 
     void ShowImGuiControls();
+
+private:
+    Mat4 viewMatrix=GetIdentityMat4();
+    Mat4 projectionMatrix=GetIdentityMat4();
+
 };
