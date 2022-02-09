@@ -64,7 +64,7 @@ public:
     void DrawPixel(uint p_x, uint p_y, Vec4 p_color);
     void DrawCube(const float& size, Mat4& transformMat, Vec4 color);
 
-    void transformVertices(rdrVertex* vertices);
+    void transformVertices(Vec3& vertices);
 
     void FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2, Vec4 color);
     void FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2);

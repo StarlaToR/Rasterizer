@@ -185,52 +185,10 @@ void Renderer::DrawQuad(const float& size, const Mat4& transformMat, Vec4 color)
     rdrVertex firstHalf[3] = { vertices[0],vertices[2],vertices[1]};
     rdrVertex secondHalf[3] = { vertices[0],vertices[3],vertices[2]};
     
-    DrawTriangle(firstHalf,color);
-    DrawTriangle(secondHalf,color);
+    DrawTriangle(firstHalf);
+    DrawTriangle(secondHalf);
 }
 
-void Renderer::transformVertices(rdrVertex* vertices)
-{
-    Vec3 localCoords[3] = { 
-
-        { -vertices[0].x, -vertices[0].y, -vertices[0].z },
-        { -vertices[1].x, -vertices[1].y, -vertices[1].z },
-        { -vertices[2].x, -vertices[2].y, -vertices[2].z },
-    };
-
-    Vec4 worldCoords[3] = { 
-        { localCoords[0].x, localCoords[0].y, localCoords[0].z, 1},
-        { localCoords[1].x, localCoords[1].y, localCoords[1].z, 1},
-        { localCoords[2].x, localCoords[2].y, localCoords[2].z, 1},
-    };
-
-    for(int i=0;i<3;i++)
-        worldCoords[i] *= modelMatrix.tab;
-
-    // Local space (v3) -> Clip space (v4)
-    // TODO
-    Vec4 clipCoords[3] = {
-        { worldCoords[0] },
-        { worldCoords[1] },
-        { worldCoords[2] },
-    };
-
-    // Clip space (v4) to NDC (v3)
-    // TODO
-    Vec3 ndcCoords[3] = {
-        clipCoords[0].GetHomogenizedVec(),
-        clipCoords[1].GetHomogenizedVec(),
-        clipCoords[2].GetHomogenizedVec(),
-    };
-
-    // NDC (v3) to screen coords (v2)
-    // TODO
-    Vec3 screenCoords[3] = {
-        { ndcToScreenCoords(ndcCoords[0], viewport) },
-        { ndcToScreenCoords(ndcCoords[1], viewport) },
-        { ndcToScreenCoords(ndcCoords[2], viewport) },
-    };
-}
 
 void Renderer::DrawTriangle(rdrVertex* vertices, Vec4 color)
 {
@@ -239,8 +197,6 @@ void Renderer::DrawTriangle(rdrVertex* vertices, Vec4 color)
 
 void Renderer::DrawTriangle(rdrVertex* vertices)
 {
-/*
-    // Store triangle vertices positions
     Vec3 localCoords[3] = { 
 
         { -vertices[0].x, -vertices[0].y, -vertices[0].z },
@@ -281,15 +237,7 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         { ndcToScreenCoords(ndcCoords[2], viewport) },
     };
 
-    // Draw triangle wireframe
-    /*
-    DrawLine(screenCoords[0], screenCoords[1], lineColor);
-    DrawLine(screenCoords[1], screenCoords[2], lineColor);
-    DrawLine(screenCoords[2], screenCoords[0], lineColor);
-    */
-    transformVertices(vertices);
-
-   // FillTriangle(vertices);
+    FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2]);
 
 }
 
