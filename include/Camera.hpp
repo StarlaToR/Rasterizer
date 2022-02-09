@@ -8,6 +8,11 @@ struct CameraInputs
     float deltaY;
     bool moveForward;
     bool moveBackward;
+    bool moveLeft;
+    bool moveRight;
+    bool moveUp;
+    bool moveDown;
+
     // ... and more if needed
 };
 
