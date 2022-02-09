@@ -385,11 +385,3 @@ Vec4 operator*(const Mat4& a, const Vec4& b)
 
     return c;
 }
-
-rdrVertex operator*(const rdrVertex& a, const Mat4& b)
-{
-    Vec4 c(a.x, a.y, a.z, 1.f);
-    c = b * c;
-    rdrVertex d = {c.x, c.y, c.z, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f};
-    return d;
-}

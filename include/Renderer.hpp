@@ -2,7 +2,6 @@
 
 
 #include <Framebuffer.hpp>
-#include <maths.hpp>
 
 // Vertex format (only one supported for now)
 struct rdrVertex

@@ -1,4 +1,10 @@
 */*.d
 */*.o
+*.d
+*.o
+*/*/*.d
+*/*/*.o
+
+Rasterizer
 rasterizer
 imgui.ini

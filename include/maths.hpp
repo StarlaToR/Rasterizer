@@ -1,7 +1,6 @@
 #pragma once
 #include <cmath>
 #include <stdio.h>
-#include "Renderer.hpp"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////                       Vec3                       /////////////////////////////////////////////////////
@@ -34,12 +33,57 @@ public:
     Vec3 GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2);
 };
 
-Vec3 operator+(const Vec3& a, const Vec3& b);
-Vec3 operator*(const Vec3& a, const float b);
 
 ///////////////////////////////////                       Vec3                       /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////                       Mat4                       /////////////////////////////////////////////////////
+
+class Mat4
+{
+public:
+    float tab[4][4];
+
+    Mat4()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                tab[i][j] = 0.f;
+            }
+        }
+    }
+
+    Mat4(float a[4][4]);
+
+    Mat4(
+        float a, float b, float c, float d,
+        float e, float f, float g, float h,
+        float i, float j, float k, float l,
+        float m, float n, float o, float p
+        );
+
+
+    void Translate(const Vec3& translation);
+    void Rotate(const float& angle, const Vec3& rotationAxis);
+    
+    void PrintMatrix();
+    Mat4 GetTransposeMat4();
+    Mat4 GetAdjugateMat4();
+    Mat4 GetInvertibleMat4();
+
+    void operator*=(Mat4& a);
+    void operator*=(float a);
+    void operator=(Mat4& a);
+};
+
+
+
+///////////////////////////////////                       Mat4                       /////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////                       Vec4                       /////////////////////////////////////////////////////
@@ -87,62 +131,25 @@ public:
     void operator*=(const float tab[4][4]);
 };
 
-Vec4 operator+(const Vec4& a, const Vec4& b);
-Vec4 operator*(const Vec4& a, const float& b);
-Vec4 operator*(const Mat4& a, const Vec4& b);
 
 ///////////////////////////////////                       Vec4                       /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////                       Mat4                       /////////////////////////////////////////////////////
-
-class Mat4
-{
-public:
-    float tab[4][4];
-
-    Mat4()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                tab[i][j] = 0.f;
-            }
-        }
-    }
-
-    Mat4(float a[4][4]);
-
-    Mat4(
-        float a, float b, float c, float d,
-        float e, float f, float g, float h,
-        float i, float j, float k, float l,
-        float m, float n, float o, float p
-        );
-
-
-    void Translate(const Vec3& translation);
-    void Rotate(const float& angle, const Vec3& rotationAxis);
-    
-    void PrintMatrix();
-    Mat4 GetTransposeMat4();
-    Mat4 GetAdjugateMat4();
-    Mat4 GetInvertibleMat4();
-
-    void operator*=(Mat4& a);
-    void operator*=(float a);
-    void operator=(Mat4& a);
-};
+/////////////////////////////////////////////                Operator                /////////////////////////////////////////////////////
 
 Mat4 operator*(Mat4 a, Mat4 b);
 Mat4 operator*(const Mat4& a, const float& b);
 
+Vec4 operator+(const Vec4& a, const Vec4& b);
+Vec4 operator*(const Vec4& a, const float& b);
+Vec4 operator*(const Mat4& a, const Vec4& b);
 
-///////////////////////////////////                       Mat4                       /////////////////////////////////////////////////////
+Vec3 operator+(const Vec3& a, const Vec3& b);
+Vec3 operator*(const Vec3& a, const float b);
+
+/////////////////////////////////////////////                Operator                /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -228,4 +235,3 @@ float GetDeterminantMat3(Vec3 a, Vec3 b, Vec3 c);
 float GetDeterminantMat4(Mat4 a);
 
 
-rdrVertex operator*(const rdrVertex& a, const Mat4& b);
