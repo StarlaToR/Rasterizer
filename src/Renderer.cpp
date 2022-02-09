@@ -105,9 +105,17 @@ void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
 }
 
 
-void Renderer::DrawCube(const float& size, const Mat4& transformMat)
+void Renderer::DrawCube(const float& size, Mat4& transformMat)
 {
-    DrawQuad(1,GetIdentityMat4());
+
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,size},{1,1,1}); 
+    DrawQuad(1,transformMat);
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size},{1,1,1}); 
+
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size},{1,1,1}); 
+    DrawQuad(1,transformMat);
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,size},{1,1,1}); 
+
 }
 
 
@@ -138,8 +146,6 @@ void Renderer::DrawQuad(const float& size, const Mat4& transformMat)
         vertices[i].x=transformedPos[i].x;
         vertices[i].y=transformedPos[i].y;
         vertices[i].z=transformedPos[i].z;
-
-        printf("transformedPos[%d]{ %f, %f, %f }\n",i,transformedPos[i].x,transformedPos[i].y,transformedPos[i].z );
     }
     printf("\n\n\n" );
 

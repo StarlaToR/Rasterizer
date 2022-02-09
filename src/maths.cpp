@@ -169,13 +169,13 @@ void Mat4::Rotate(const float& angle, const Vec3& rotationAxis)
     PrintMatrix();
 
     if(rotationAxis.x==1)
-        this->tab[3][0]+=angle;
+        CreateXRotationMatrix(angle);
     if(rotationAxis.y==1)
-        this->tab[3][1]+=angle;
+        CreateYRotationMatrix(angle);
     if(rotationAxis.z==1)
-        this->tab[3][2]+=angle;
+        CreateZRotationMatrix(angle);
 
-    printf("\n\nAFTER:\n");
+    printf("\nZnAFTER:\n");
     PrintMatrix();
     printf("\n\n");
 }

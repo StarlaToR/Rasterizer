@@ -31,7 +31,7 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     
     Mat4 modelMatrix =Mat4(
         400,0,0,400,
-        0,300,0,300,
+        0,400,0,300,
         0,0,1,0,
         0,0,0,1
     );
@@ -41,7 +41,10 @@ void Scene::Update(float deltaTime, Renderer& renderer)
 
     // Draw
     //renderer.DrawTriangles(vertices.data(), (int)vertices.size());
-    renderer.DrawCube(5,modelMatrix);
+    
+    Mat4 transformMat = GetIdentityMat4() * CreateTransformMatrix({0,0,0},{0,0,0},{1,1,1});
+
+    renderer.DrawCube(1,transformMat);
 
     time += deltaTime;
 }

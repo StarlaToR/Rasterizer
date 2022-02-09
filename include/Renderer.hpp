@@ -62,7 +62,7 @@ public:
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
     void DrawPixel(uint p_x, uint p_y, Vec4 p_color);
     void FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2);
-    void DrawCube(const float& size, const Mat4& transformMat);
+    void DrawCube(const float& size, Mat4& transformMat);
 
 
 private:
