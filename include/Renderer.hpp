@@ -66,6 +66,7 @@ public:
     void DrawCube(const float& size, Mat4& transformMat);
     void ApplyViewMatrix(Mat4& matrix);
 
+    bool CheckDepth(const float& x, const float& y, const float& z);
 
 private:
     

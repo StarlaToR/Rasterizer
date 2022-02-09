@@ -257,3 +257,16 @@ void Renderer::ShowImGuiControls()
     float tab[] = {lineColor.x, lineColor.y, lineColor.z, lineColor.w};
     ImGui::ColorEdit4("lineColor", tab);
 }
+
+bool Renderer::CheckDepth(const float& x, const float& y, const float& z)
+{
+    float* depthTab = fb->GetDepthBuffer();
+    if (depthTab[(int)(y * fb->GetWidth() + x)] > z)
+    {
+        depthTab[(int)(y * fb->GetWidth() + x)] = z;
+        return true;
+    }
+    else{
+        return false;
+    }
+}

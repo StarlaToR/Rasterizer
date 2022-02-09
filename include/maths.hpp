@@ -31,6 +31,8 @@ public:
 
     bool IsInTriangle(Vec3 p0,Vec3 p1, Vec3 p2);
     Vec3 GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2);
+
+    void GetNewZForZBuffer();
 };
 
 
@@ -233,5 +235,3 @@ inline Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, co
 float GetDeterminantMat2(float a, float b, float c, float d);
 float GetDeterminantMat3(Vec3 a, Vec3 b, Vec3 c);
 float GetDeterminantMat4(Mat4 a);
-
-

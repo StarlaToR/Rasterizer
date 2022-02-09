@@ -52,6 +52,11 @@ bool Vec3::IsInTriangle(Vec3 p0,Vec3 p1, Vec3 p2)
         return false;
 }
 
+void Vec3::GetNewZForZBuffer()
+{
+    this->z = 2 * (this->z - 10) / (100 - 10) - 1;
+}
+
 Vec3 operator+(const Vec3& a, const Vec3& b)
 {
     Vec3 c(
