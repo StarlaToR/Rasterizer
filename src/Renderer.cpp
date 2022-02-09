@@ -88,15 +88,16 @@ Vec3 ndcToScreenCoords(Vec3 ndc, const Viewport& viewport)
 
 void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
 {   
-    Vec4 color = { 1.f, 0.f, 0.f, 1.f };
+    Vec4 color = { 0.6f, 0.2f, 0.3f, 0.8f };
 
     for(int i=0;i<fb->GetWidth();i++)
     {
         for(int j=0;j<fb->GetHeight();j++)
         {
             Vec3 pointChecked = {i,j,0};
-
-            color = pointChecked.GetBarycentricCoords(p0,p1,p2);
+            
+            //De-comment this to have a bilinear interpolation of green, blue and red
+            //color = pointChecked.GetBarycentricCoords(p0,p1,p2);
             if(pointChecked.IsInTriangle(p0,p1,p2))
                 DrawPixel(i,j,color);
         }

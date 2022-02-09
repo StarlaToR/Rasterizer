@@ -13,8 +13,9 @@ public:
     Scene();
     ~Scene();
     void Update(float p_deltaTime, Renderer& p_renderer);
-
+    void SetCurrentScene(const int& sceneNumber);
 private:
+    int currentScene=1;
     void ShowImGuiControls();
 
 };

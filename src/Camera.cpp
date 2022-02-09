@@ -26,6 +26,12 @@ void Camera::Update(const float p_deltaTime, const CameraInputs& inputs)
     if(inputs.moveDown==true)
         viewMatrix.tab[1][3]+=0.05f;
 
+    if(inputs.moveForward==true)
+        viewMatrix.tab[2][3]-=0.05f;
+
+    if(inputs.moveBackward==true)
+        viewMatrix.tab[2][3]+=0.05f;
+
 }
 
 Mat4 Camera::GetViewMatrix()

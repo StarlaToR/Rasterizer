@@ -20,6 +20,12 @@ Scene::~Scene()
     // HERE: Unload the scene
 }
 
+void Scene::SetCurrentScene(const int& sceneNumber)
+{
+    printf("gse\n");
+    currentScene=sceneNumber;
+}
+
 void Scene::Update(float deltaTime, Renderer& renderer)
 {
     // HERE: Update (if needed) and display the scene
@@ -40,10 +46,19 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     renderer.SetModel(modelMatrix);
 
     // Draw
-    //renderer.DrawTriangles(vertices.data(), (int)vertices.size());
     
-    Mat4 transformMat = GetIdentityMat4();
-    renderer.DrawCube(1,transformMat);
+    if(currentScene==1)
+    {
+        renderer.DrawTriangles(vertices.data(), (int)vertices.size());
+    }
+    else if(currentScene==2)
+    {
+        Mat4 transformMat = GetIdentityMat4();
+        renderer.DrawCube(1,transformMat);
+    }
+
+
+    
 
     time += deltaTime;
 }

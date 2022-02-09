@@ -110,6 +110,10 @@ void App::Update()
     while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
     {
 
+        if (ImGui::IsKeyPressed(GLFW_KEY_1))
+            scene.SetCurrentScene(1);
+        if (ImGui::IsKeyPressed(GLFW_KEY_2))
+            scene.SetCurrentScene(2);
 
         NewFrame(mouseCaptured); //ImGui
         {
@@ -127,6 +131,7 @@ void App::Update()
             mouseCaptured = false;
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         }
+
 
         if (mouseCaptured)
         {
@@ -150,6 +155,8 @@ void App::Update()
         Mat4 view       = camera.GetViewMatrix();
         renderer.SetProjection(projection);
         renderer.SetView(view);
+
+
 
         // Render scene
         scene.Update(ImGui::GetIO().DeltaTime, renderer);
