@@ -66,6 +66,7 @@ public:
     void DrawCube(const float& size, Mat4& transformMat);
     void ApplyViewMatrix(Mat4& matrix);
 
+    void Scene1();
 
 private:
     

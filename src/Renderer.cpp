@@ -195,11 +195,8 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         { localCoords[2].x, localCoords[2].y, localCoords[2].z, 1},
     };
 
-
     for(int i=0;i<3;i++)
         worldCoords[i] *= modelMatrix.tab;
-
-
 
     // Local space (v3) -> Clip space (v4)
     // TODO
@@ -209,7 +206,6 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         { worldCoords[2] },
     };
 
-
     // Clip space (v4) to NDC (v3)
     // TODO
     Vec3 ndcCoords[3] = {
@@ -217,7 +213,6 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         clipCoords[1].GetHomogenizedVec(),
         clipCoords[2].GetHomogenizedVec(),
     };
-    
 
     // NDC (v3) to screen coords (v2)
     // TODO
@@ -256,4 +251,16 @@ void Renderer::ShowImGuiControls()
 {
     float tab[] = {lineColor.x, lineColor.y, lineColor.z, lineColor.w};
     ImGui::ColorEdit4("lineColor", tab);
+}
+
+void Renderer::Scene1()
+{
+    std::vector<rdrVertex> vertices = {
+        //       pos                  normal                  color              uv
+        { -0.5f, -0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
+        { 0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
+        { 0.f,0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
+    };
+
+    DrawTriangle(&vertices[0]);
 }

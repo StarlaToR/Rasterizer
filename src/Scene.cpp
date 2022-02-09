@@ -22,7 +22,6 @@ Scene::~Scene()
 
 void Scene::SetCurrentScene(const int& sceneNumber)
 {
-    printf("gse\n");
     currentScene=sceneNumber;
 }
 
@@ -49,7 +48,7 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     
     if(currentScene==1)
     {
-        renderer.DrawTriangles(vertices.data(), (int)vertices.size());
+        renderer.Scene1();
     }
     else if(currentScene==2)
     {
