@@ -44,7 +44,7 @@ void Framebuffer::Clear()
     // Clear depth buffer
     {
         for(int i=0;i<GetWidth()*GetHeight(); i++)
-            depthBuffer[i]=100.f;
+            depthBuffer[i]=-100.f;
     }
 }
 

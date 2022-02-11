@@ -244,3 +244,5 @@ inline Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, co
 float GetDeterminantMat2(float a, float b, float c, float d);
 float GetDeterminantMat3(Vec3 a, Vec3 b, Vec3 c);
 float GetDeterminantMat4(Mat4 a);
+
+float GetMaximumDifference(const float a, const float b, const float c);

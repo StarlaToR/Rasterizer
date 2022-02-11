@@ -414,3 +414,15 @@ Vec4 operator*(const Mat4& a, const Vec4& b)
 
     return c;
 }
+
+float GetMaximumDifference(const float a, const float b, const float c)
+{
+    float maxDiff = 0;
+    float tab[6] = {a - b, a - c, b - a, b - c, c - a, c - b};
+    for (int i = 0; i < 6; i++)
+    {
+        if (tab[i] > maxDiff)
+            maxDiff = tab[i];
+    }
+    return maxDiff;
+}

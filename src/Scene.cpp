@@ -32,14 +32,7 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     // Hard coded matrix
     // TODO: Remove this and use proper functions !
 
-
-    
-    Mat4 modelMatrix =Mat4(
-        400,0,0,400,
-        0,400,0,300,
-        0,0,1,0,
-        0,0,0,1
-    );
+    Mat4 modelMatrix = CreateTransformMatrix({0,0,0},{400,300,1}, {400,400,1});
     
 
     renderer.SetModel(modelMatrix);

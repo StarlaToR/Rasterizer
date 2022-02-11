@@ -69,17 +69,19 @@ void Renderer::DrawPixel(uint p_x, uint p_y, uint p_z, Vec4& p_color)
 
 void Renderer::DrawLine(const Vec3& p0, const Vec3& p1, Vec4& color)
 {
-    int x0=p0.x, x1=p1.x, y0=p0.y, y1=p1.y;
-    int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
-    int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
-    int err = dx+dy, e2; 
-
-    for(;;){ 
+    int x0=p0.x, x1=p1.x, y0=p0.y, y1=p1.y, z0 = p0.z, z1 = p1.z;
+    int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
+    int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1; 
+    int dz = abs(z1-z0), sz = z0<z1 ? 1 : -1; 
+    int dm = GetMaximumDifference(dx,dy,dz), i = dm; /* maximum difference */
+    x1 = y1 = z1 = dm/2; /* error offset */
+    
+    for(;;) {  /* loop */
         DrawPixel(x0, y0, p0.z, color);
-        if (x0==x1 && y0==y1) break;
-        e2 = 2*err;
-        if (e2 >= dy) { err += dy; x0 += sx; } 
-        if (e2 <= dx) { err += dx; y0 += sy; } 
+        if (i-- == 0) break;
+        x1 -= dx; if (x1 < 0) { x1 += dm; x0 += sx; } 
+        y1 -= dy; if (y1 < 0) { y1 += dm; y0 += sy; } 
+        z1 -= dz; if (z1 < 0) { z1 += dm; z0 += sz; } 
     }
 }
 
@@ -156,11 +158,10 @@ void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4& color)
     transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
     DrawQuad(1,transformMat,color);
     transformMat *= CreateTransformMatrix({-M_PI/2,0,0},{0,0,size/2},{1,1,1}); 
-*/
-
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
+    */
+    transformMat = CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
     DrawQuad(1,transformMat, color);
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0.5f,-size},{1,1,1});
+    transformMat = CreateTransformMatrix({0,0,0},{0,0.5f,-size},{1,1,1});
     color = {0,0,1,1}; 
     DrawQuad(1,transformMat, color);
 
@@ -320,8 +321,8 @@ void Renderer::Scene1()
 {
     std::vector<rdrVertex> vertices = {
         //       pos                  normal                  color              uv
-        { 0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
-        { 0.f,0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
+        {  0.5f, -0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
+        {  0.f, 0.5f, 0.0f,        0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
         { -0.5f, -0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
     };
 
@@ -337,8 +338,11 @@ void Renderer::Scene2()
 
 bool Renderer::CheckDepth(const float& x, const float& y, const float& z)
 {
+     
     float depthValue = fb->GetDepthBuffer((int)(y * fb->GetWidth() + x));
-    if (depthValue > z)
+
+    //printf("depthValue=%f, z=%f\n",depthValue,z);
+    if (depthValue < z)
     {
         depthValue = z;
         return true;
