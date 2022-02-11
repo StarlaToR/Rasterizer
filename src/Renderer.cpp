@@ -118,10 +118,7 @@ void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
             Vec3 pointChecked = {i,j,0};
             
     
-            float depth;
-//            if (p0.z == p1.z & p0.z == p2.z)
-                depth = p0.z;
-
+            float depth=p1.z;
             Vec4 color = pointChecked.GetBarycentricCoords(p0,p1,p2);
             if(pointChecked.IsInTriangle(p0,p1,p2))
                 DrawPixel(i, j, depth, color);
@@ -360,7 +357,7 @@ bool Renderer::CheckDepth(const float& x, const float& y, const float& z)
 {
     float depthValue = fb->GetDepthBuffer((int)(y * fb->GetWidth() + x));
 
-   // printf("depthValue=%f, z=%f\n",depthValue,z);
+ //   printf("z=%f\n",z);
     if (depthValue > z)
     {
         depthValue = z;
