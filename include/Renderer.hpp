@@ -60,7 +60,7 @@ public:
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
     void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
-    void DrawPixel(uint p_x, uint p_y, uint p_z, Vec4& p_color);
+    void DrawPixel(const float p_x, const float p_y, const float p_z, Vec4& p_color);
     void DrawCube(const float& size, Mat4& transformMat, Vec4& color);
 
     void transformVertices(Vec3& vertices);

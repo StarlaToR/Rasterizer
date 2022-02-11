@@ -54,16 +54,18 @@ void Renderer::SetTexture(float* p_colors32Bits, const uint p_width, const uint 
     // TODO
 }
 
-void Renderer::DrawPixel(uint p_x, uint p_y, uint p_z, Vec4& p_color)
+void Renderer::DrawPixel(const float p_x, const float p_y, const float p_z, Vec4& p_color)
 {
-    if (CheckDepth(p_x, p_y, p_z))
+    if (p_x >= 0 && p_x < fb->GetWidth()
+        && p_y >= 0 && p_y < fb->GetHeight()
+        && CheckDepth(p_x, p_y, p_z))
     {
         float* colorBuffer = fb->GetColorBuffer();
 
-        colorBuffer[(p_x + p_y * fb->GetWidth()) * 4] = p_color.x; //p_color.x;
-        colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 1] = p_color.y; //p_color.y;
-        colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 2] = p_color.z; //p_color.z;
-        colorBuffer[(p_x + p_y * fb->GetWidth()) * 4 + 3] = p_color.w; //p_color.w;
+        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4] = p_color.x; //p_color.x;
+        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4 + 1] = p_color.y; //p_color.y;
+        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4 + 2] = p_color.z; //p_color.z;
+        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4 + 3] = p_color.w; //p_color.w;
     }
 }
 
