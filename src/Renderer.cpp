@@ -83,20 +83,15 @@ void Renderer::DrawLine(const Vec3& p0, const Vec3& p1, Vec4& color)
     }
 }
 
-Vec3 ndcToScreenCoords(Vec3 ndc, const Viewport& viewport)
-{
-    // TODO
-    return ndc;
-}
 
 
-void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2, Vec4& color)
+void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2, Vec4& color)
 {
     for(int i=0;i<fb->GetWidth();i++)
     {
         for(int j=0;j<fb->GetHeight();j++)
         {
-            Vec3 pointChecked = {i,j,0};
+            Vec4 pointChecked = {i,j,0,1};
 
             float depth;
             if (p0.z == p1.z & p0.z == p2.z)
@@ -108,14 +103,15 @@ void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2, Vec4
     }    
 }
 
-void Renderer::FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2)
+
+void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2)
 {   
 
     for(int i=0;i<fb->GetWidth();i++)
     {
         for(int j=0;j<fb->GetHeight();j++)
         {
-            Vec3 pointChecked = {i,j,0};
+            Vec4 pointChecked = {i,j,0,1};
             
     
             float depth=p1.z;
@@ -131,10 +127,11 @@ void Renderer::ApplyViewMatrix(Mat4& matrix)
     matrix*=viewMatrix;
 }
 
-void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4 color)
+void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4& color)
 {
     ApplyViewMatrix(transformMat);
-/*
+
+/* 
     //Front and back faces
     transformMat *= CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
     DrawQuad(1,transformMat,color);
@@ -159,7 +156,8 @@ void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4 color)
     transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
     DrawQuad(1,transformMat,color);
     transformMat *= CreateTransformMatrix({-M_PI/2,0,0},{0,0,size/2},{1,1,1}); 
-    */
+*/
+
     transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
     DrawQuad(1,transformMat, color);
     transformMat *= CreateTransformMatrix({0,0,0},{0,0.5f,-size},{1,1,1});
@@ -202,8 +200,8 @@ void Renderer::DrawQuad(const float& size, const Mat4& transformMat, Vec4& color
     rdrVertex firstHalf[3] = { vertices[0],vertices[2],vertices[1]};
     rdrVertex secondHalf[3] = { vertices[0],vertices[3],vertices[2]};
     
-    DrawTriangle(firstHalf);
-    DrawTriangle(secondHalf);
+    DrawTriangle(firstHalf,color);
+    DrawTriangle(secondHalf,color);
 }
 
 void Renderer::DrawSphere(const int lon, const int lat)
@@ -252,57 +250,47 @@ void Renderer::DrawSphere(const int lon, const int lat)
     }
 }
 
+Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
+{
+    Vec4 coordinate = {-vertex.x,-vertex.y,-vertex.z,1};
+
+    // Local space to World space
+    Mat4 transformMat = modelMatrix*viewMatrix;
+    coordinate*=transformMat.tab;
+
+    // World space to Eye space
+
+
+    // Eye space to Clip space
+    // TODO
+
+    // Clip space NDC space
+    coordinate.GetHomogenizedVec();
+
+    // NDC space Screen space
+    // TODO
+
+    return coordinate;
+}
+
+
+void Renderer::DrawTriangle(rdrVertex* vertices, Vec4& color)
+{
+    Vec4 screenCoords[3]= {
+        VertexGraphicPipeline(vertices[0]),
+        VertexGraphicPipeline(vertices[1]),
+        VertexGraphicPipeline(vertices[2]),
+    };
+    FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2],color);
+}
+
 void Renderer::DrawTriangle(rdrVertex* vertices)
 {
-    Vec3 localCoords[3] = { 
-
-        { -vertices[0].x, -vertices[0].y, -vertices[0].z },
-        { -vertices[1].x, -vertices[1].y, -vertices[1].z },
-        { -vertices[2].x, -vertices[2].y, -vertices[2].z },
+    Vec4 screenCoords[3]= {
+        VertexGraphicPipeline(vertices[0]),
+        VertexGraphicPipeline(vertices[1]),
+        VertexGraphicPipeline(vertices[2]),
     };
-
-    Vec4 worldCoords[3] = { 
-        { localCoords[0].x, localCoords[0].y, localCoords[0].z, 1},
-        { localCoords[1].x, localCoords[1].y, localCoords[1].z, 1},
-        { localCoords[2].x, localCoords[2].y, localCoords[2].z, 1},
-    };
-
-    for(int i=0;i<3;i++)
-        worldCoords[i] *= modelMatrix.tab;
-
-    // Local space (v3) -> Clip space (v4)
-    // TODO
-    Vec4 clipCoords[3] = {
-        { worldCoords[0] },
-        { worldCoords[1] },
-        { worldCoords[2] },
-    };
-
-    // Clip space (v4) to NDC (v3)
-    // TODO
-    Vec3 ndcCoords[3] = {
-        clipCoords[0].GetHomogenizedVec(),
-        clipCoords[1].GetHomogenizedVec(),
-        clipCoords[2].GetHomogenizedVec(),
-    };
-
-    // NDC (v3) to screen coords (v2)
-    // TODO
-    Vec3 screenCoords[3] = {
-        { ndcToScreenCoords(ndcCoords[0], viewport) },
-        { ndcToScreenCoords(ndcCoords[1], viewport) },
-        { ndcToScreenCoords(ndcCoords[2], viewport) },
-    };
-
-    // Draw triangle wireframe
-    /*
-    DrawLine(screenCoords[0], screenCoords[1], lineColor);
-    DrawLine(screenCoords[1], screenCoords[2], lineColor);
-    DrawLine(screenCoords[2], screenCoords[0], lineColor);
-    */
-
-    Vec4 color(1,1,1,0);
-
     FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2]);
 }
 
@@ -337,28 +325,26 @@ void Renderer::Scene1()
         { -0.5f, -0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
     };
 
-    Vec4 color(1,0,0,1);
     DrawTriangle(&vertices[0]);
 }
 
 void Renderer::Scene2()
 {
-        Mat4 transformMat = GetIdentityMat4();
-        DrawCube(1,transformMat,{1,0,0,0});
-        //DrawSphere(50,50);
+    Mat4 transformMat = GetIdentityMat4();
+    Vec4 color = {1,0,0,1};
+    DrawCube(1,transformMat,color);
 }
 
 bool Renderer::CheckDepth(const float& x, const float& y, const float& z)
 {
     float depthValue = fb->GetDepthBuffer((int)(y * fb->GetWidth() + x));
-
- //   printf("z=%f\n",z);
     if (depthValue > z)
     {
         depthValue = z;
         return true;
     }
-    else{
+    else
+    {
         return false;
     }
 }

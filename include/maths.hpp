@@ -28,7 +28,6 @@ public:
 
     float GetMagnitude();
     void Normalize();
-
     bool IsInTriangle(Vec3 p0,Vec3 p1, Vec3 p2);
     Vec3 GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2);
 
@@ -123,9 +122,11 @@ public:
     }
 
     void Homogenize();
-    Vec3 GetHomogenizedVec();
+    Vec4 GetHomogenizedVec();
     float GetMagnitude();
     void Normalize();
+    bool IsInTriangle(Vec4 p0,Vec4 p1, Vec4 p2);
+    Vec4 GetBarycentricCoords(Vec4 p0,Vec4 p1, Vec4 p2);
 
     friend Vec4 operator+(const Vec4& a, const Vec4& b);
     friend Vec4 operator*(const Vec4& a, const float& b);

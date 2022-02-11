@@ -18,6 +18,30 @@ float edgeFunction(const Vec3 &a, const Vec3 &b, const Vec3 &c)
     return (c.x - a.x) * (b.y - a.y) - (c.y - a.y) * (b.x - a.x); 
 }
 
+float edgeFunction(const Vec4 &a, const Vec4 &b, const Vec4 &c) 
+{ 
+    return (c.x - a.x) * (b.y - a.y) - (c.y - a.y) * (b.x - a.x); 
+}
+
+
+Vec4 Vec4::GetBarycentricCoords(Vec4 p0,Vec4 p1, Vec4 p2)
+{
+    Vec4 barycentricCoords;
+
+    float area = edgeFunction(p0,p1,p2);
+    float w0 = edgeFunction(p1,p2,*this);
+    float w1 = edgeFunction(p2,p0,*this);
+    float w2 = edgeFunction(p0,p1,*this);
+
+    if(w0<=0 and w1<=0 and w2<=0)
+    {
+        barycentricCoords.x=w0/area;
+        barycentricCoords.y=w1/area;
+        barycentricCoords.z=w2/area;
+    }
+    return barycentricCoords;
+}
+
 Vec3 Vec3::GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2)
 {
     Vec3 barycentricCoords;
@@ -33,14 +57,11 @@ Vec3 Vec3::GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2)
         barycentricCoords.y=w1/area;
         barycentricCoords.z=w2/area;
     }
-
-
     return barycentricCoords;
-
 }
 
 
-bool Vec3::IsInTriangle(Vec3 p0,Vec3 p1, Vec3 p2)
+bool Vec4::IsInTriangle(Vec4 p0,Vec4 p1, Vec4 p2)
 {
     float e01 = (this->x - p0.x) * (p1.y - p0.y) - (this->y - p0.y) * (p1.x - p0.x);
     float e12 = (this->x - p1.x) * (p2.y - p1.y) - (this->y - p1.y) * (p2.x - p1.x);
@@ -88,9 +109,9 @@ void Vec4::Homogenize()
     }
 }
 
-Vec3 Vec4::GetHomogenizedVec()
+Vec4 Vec4::GetHomogenizedVec()
 {
-    Vec3 vec = Vec3();
+    Vec4 vec = Vec4();
     if(w!=0)
     {
         vec.x = this->x / w;

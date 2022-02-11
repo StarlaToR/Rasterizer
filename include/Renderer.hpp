@@ -62,12 +62,12 @@ public:
     void DrawLine(const Vec3& p_0, const Vec3& p_1, Vec4& p_color);
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
     void DrawPixel(uint p_x, uint p_y, uint p_z, Vec4& p_color);
-    void DrawCube(const float& size, Mat4& transformMat, Vec4 color);
+    void DrawCube(const float& size, Mat4& transformMat, Vec4& color);
 
     void transformVertices(Vec3& vertices);
 
-    void FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2, Vec4& color);
-    void FillTriangle(const Vec3& p0, const Vec3& p1, const Vec3& p2);
+    void FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2, Vec4& color);
+    void FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2);
 
     void ApplyViewMatrix(Mat4& matrix);
     bool CheckDepth(const float& x, const float& y, const float& z);
@@ -83,6 +83,8 @@ private:
     void DrawTriangle(rdrVertex* p_vertices, Vec4& color);
     void DrawTriangle(rdrVertex* p_vertices);
     void ShowImGuiControls();
+    Vec4 VertexGraphicPipeline(rdrVertex& vertex);
+
 };
 
 
