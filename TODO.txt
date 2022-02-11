@@ -5,11 +5,9 @@
 
 - Finir le Z-Buffer
 
-- L'une des face des triangles ne s'affiche pas
+- L'une des face des triangles ne s'affiche pas (le dos)
 
 - Faire fonctionner la fonction DrawSphere
-
-- Ajouter la gestion des couleurs dans l'affichage des formes
 
 - Optimiser la fonction FillTriangle qui rame du cul.
     Le parcours de l'ensemble des pixels de l'écran y est peut-être pour quelque chose...
@@ -19,10 +17,7 @@
 
 - Ajouter l'effet de perspective (peut-être pas nécessaire tout de suite)
 
-- Virer les types du prof (le fichier types.hpp)
 
-- Se débarrasser des rdrVertex, on les a pas codé, on sait pas comment ça marche et ils nous 
-    embrouillent
 
 
 
