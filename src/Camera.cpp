@@ -13,6 +13,7 @@ Camera::Camera(const uint width, const uint height)
 
 void Camera::Update(const float p_deltaTime, const CameraInputs& inputs)
 {
+    angle=0;
     // Movements
     if(inputs.moveLeft==true)
         viewMatrix.tab[0][3]-=0.05f;
@@ -25,16 +26,16 @@ void Camera::Update(const float p_deltaTime, const CameraInputs& inputs)
         viewMatrix.tab[1][3]+=0.05f;
 
     if(inputs.moveForward==true)
-        viewMatrix.tab[2][3]-=0.05f;
+        viewMatrix.tab[2][3]-=0.5f;
     if(inputs.moveBackward==true)
-        viewMatrix.tab[2][3]+=0.05f;
+        viewMatrix.tab[2][3]+=0.5f;
 
 
     // Rotations
     if(inputs.rotateWorldRight==true)
-        angle-=0.05f;
+        angle-=0.02f;
     if(inputs.rotateWorldLeft==true)
-        angle+=0.05f;
+        angle+=0.02f;
 
 
     viewMatrix*=CreateYRotationMatrix(angle);

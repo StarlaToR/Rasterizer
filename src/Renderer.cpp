@@ -355,8 +355,6 @@ bool Renderer::CheckDepth(const float& x, const float& y, const float& z)
 {
      
     float depthValue = fb->GetDepthBuffer((int)(y * fb->GetWidth() + x));
-
-    //printf("depthValue=%f, z=%f\n",depthValue,z);
     if (depthValue < z)
     {
         fb->SetDepthBuffer((int)(y * fb->GetWidth() + x), z);
