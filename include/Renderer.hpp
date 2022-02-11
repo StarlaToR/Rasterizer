@@ -74,6 +74,8 @@ public:
     void Scene1();
     void Scene2();    
 
+    bool wireFrameOn=true;
+
 private:
     
     void DrawSphere(const int lon, const int lat);
@@ -85,6 +87,9 @@ private:
     Vec4 VertexGraphicPipeline(rdrVertex& vertex);
     void DrawTriangleWireFrame(Vec4* vertices);
 
+
+
 };
+
 
 

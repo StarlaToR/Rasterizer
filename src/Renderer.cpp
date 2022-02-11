@@ -294,7 +294,8 @@ void Renderer::DrawTriangle(rdrVertex* vertices, Vec4& color)
         VertexGraphicPipeline(vertices[2]),
     };
 
-    DrawTriangleWireFrame(screenCoords);
+    if(wireFrameOn)
+        DrawTriangleWireFrame(screenCoords);
 
     FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2],color);
 }
@@ -307,7 +308,8 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         VertexGraphicPipeline(vertices[2]),
     };
 
-    DrawTriangleWireFrame(screenCoords);
+    if(wireFrameOn)
+        DrawTriangleWireFrame(screenCoords);
 
     FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2]);
 }
