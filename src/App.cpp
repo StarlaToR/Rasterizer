@@ -144,6 +144,9 @@ void App::Update()
             inputs.moveLeft  = ImGui::IsKeyDown(GLFW_KEY_LEFT);
             inputs.moveRight = ImGui::IsKeyDown(GLFW_KEY_RIGHT);
 
+            inputs.rotateWorldLeft = ImGui::IsKeyDown(GLFW_KEY_N);
+            inputs.rotateWorldRight = ImGui::IsKeyDown(GLFW_KEY_M);
+
             camera.Update(ImGui::GetIO().DeltaTime, inputs);
         }
 

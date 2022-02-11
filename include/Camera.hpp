@@ -13,6 +13,9 @@ struct CameraInputs
     bool moveUp;
     bool moveDown;
 
+    bool rotateWorldLeft;
+    bool rotateWorldRight;
+
     // ... and more if needed
 };
 

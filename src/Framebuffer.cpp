@@ -6,7 +6,6 @@ Framebuffer::Framebuffer(int p_width, int p_height)
     : width(p_width)
     , height(p_height)
     , colorBuffer(p_width* p_height)
-    , depthBuffer(p_width* p_height)
 {
     glGenTextures(1, &colorTexture);
     glBindTexture(GL_TEXTURE_2D, colorTexture);
@@ -14,13 +13,18 @@ Framebuffer::Framebuffer(int p_width, int p_height)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
 
+    depthBuffer = new float[p_width*p_height];
+
+/*
     for (int i = 0; i < p_height; i++)
     {
         for (int j = 0; j < p_width; j ++)
         {
-            depthBuffer[i * p_width + j] = 100;
+            depthBuffer[i*width + j]=100.f;
+            //printf("depthBuffer = %f\n",depthBuffer[i*height + j]);
         }
     }
+*/
 }
 
 Framebuffer::~Framebuffer()
@@ -49,7 +53,12 @@ void Framebuffer::Clear()
 
     // Clear depth buffer
     {
-        std::memset(depthBuffer.data(), 0, depthBuffer.size() * sizeof(depthBuffer[0]));
+      //  std::memset(depthBuffer.data(), 100, depthBuffer.size() * sizeof(depthBuffer[0]));
+    //    std::memset(depthBuffer.data(),100,depthBuffer.size()*sizeof(float));
+        for(int i=0;i<GetWidth()*GetHeight(); i++)
+        {
+            depthBuffer[i]=100.f;
+        }
     }
 }
 

@@ -14,35 +14,40 @@ Camera::Camera(const uint width, const uint height)
 void Camera::Update(const float p_deltaTime, const CameraInputs& inputs)
 {
 
+    // Movements
+
     if(inputs.moveLeft==true)
         viewMatrix.tab[0][3]-=0.05f;
-
     if(inputs.moveRight==true)
         viewMatrix.tab[0][3]+=0.05f;
 
     if(inputs.moveUp==true)
         viewMatrix.tab[1][3]-=0.05f;
-
     if(inputs.moveDown==true)
         viewMatrix.tab[1][3]+=0.05f;
 
     if(inputs.moveForward==true)
         viewMatrix.tab[2][3]-=0.05f;
-
     if(inputs.moveBackward==true)
+        viewMatrix.tab[2][3]+=0.05f;
+
+
+    // Rotations
+
+    if(inputs.rotateWorldRight==true)
+        viewMatrix.tab[2][3]+=0.05f;
+    if(inputs.rotateWorldLeft==true)
         viewMatrix.tab[2][3]+=0.05f;
 
 }
 
 Mat4 Camera::GetViewMatrix()
 {
-    //TODO
     return viewMatrix;
 }
 
 Mat4 Camera::GetProjection()
 {
-    //TODO
     return projectionMatrix;
 }
 

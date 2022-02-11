@@ -56,7 +56,7 @@ void Renderer::SetTexture(float* p_colors32Bits, const uint p_width, const uint 
 
 void Renderer::DrawPixel(uint p_x, uint p_y, uint p_z, Vec4& p_color)
 {
-    //if (CheckDepth(p_x, p_y, p_z))
+    if (CheckDepth(p_x, p_y, p_z))
     {
         float* colorBuffer = fb->GetColorBuffer();
 
@@ -200,7 +200,6 @@ void Renderer::DrawQuad(const float& size, const Mat4& transformMat, Vec4& color
         vertices[i].x=transformedPos[i].x;
         vertices[i].y=transformedPos[i].y;
         vertices[i].z=transformedPos[i].z;
-       // printf("vertices[%d]={ %f, %f, %f }\n\n\n",i,vertices[i].x,vertices[i].y,vertices[i].z);
     }
 
     rdrVertex firstHalf[3] = { vertices[0],vertices[2],vertices[1]};
@@ -313,7 +312,6 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     Vec4 color(1,1,1,0);
 
     FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2]);
-
 }
 
 void Renderer::DrawTriangles(rdrVertex* p_vertices, const uint p_count)
@@ -342,9 +340,9 @@ void Renderer::Scene1()
 {
     std::vector<rdrVertex> vertices = {
         //       pos                  normal                  color              uv
-        { -0.5f, -0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
         { 0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
         { 0.f,0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
+        { -0.5f, -0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
     };
 
     Vec4 color(1,0,0,1);
@@ -360,10 +358,12 @@ void Renderer::Scene2()
 
 bool Renderer::CheckDepth(const float& x, const float& y, const float& z)
 {
-    float* depthTab = fb->GetDepthBuffer();
-    if (depthTab[(int)(y * fb->GetWidth() + x)] > z)
+    float depthValue = fb->GetDepthBuffer((int)(y * fb->GetWidth() + x));
+
+   // printf("depthValue=%f, z=%f\n",depthValue,z);
+    if (depthValue > z)
     {
-        depthTab[(int)(y * fb->GetWidth() + x)] = z;
+        depthValue = z;
         return true;
     }
     else{
