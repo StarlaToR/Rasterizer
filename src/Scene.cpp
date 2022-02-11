@@ -33,12 +33,9 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     // TODO: Remove this and use proper functions !
 
     Mat4 modelMatrix = CreateTransformMatrix({0,0,0},{400,300,1}, {400,400,1});
-    
-
     renderer.SetModel(modelMatrix);
 
     // Draw
-    
     if(currentScene==1)
         renderer.Scene1();
     else if(currentScene==2)

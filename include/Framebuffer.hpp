@@ -36,7 +36,7 @@ public:
     float4* GetColorBuffer4f() { return colorBuffer.data(); }
 
     float* GetColorBuffer() { return reinterpret_cast<float*>(colorBuffer.data()); }
-    //float* GetDepthBuffer() { return depthBuffer.data(); }
+    void SetDepthBuffer(int index, float value){ depthBuffer[index]=value; }
     float& GetDepthBuffer(int index) { return depthBuffer[index]; }
     
     int GetWidth()  const   { return width; }

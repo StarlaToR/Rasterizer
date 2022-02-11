@@ -53,13 +53,12 @@ public:
     Renderer(Framebuffer* f, const uint p_width, const uint p_height);
     ~Renderer();
 
-    //TODO
     void SetProjection(Mat4 p_projectionMatrix);
     void SetView(Mat4 p_viewMatrix);
     void SetModel(Mat4 p_modelMatrix);
     void SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height);
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
-    void DrawLine(const Vec3& p_0, const Vec3& p_1, Vec4& p_color);
+    void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
     void DrawPixel(uint p_x, uint p_y, uint p_z, Vec4& p_color);
     void DrawCube(const float& size, Mat4& transformMat, Vec4& color);
@@ -84,6 +83,7 @@ private:
     void DrawTriangle(rdrVertex* p_vertices);
     void ShowImGuiControls();
     Vec4 VertexGraphicPipeline(rdrVertex& vertex);
+    void DrawTriangleWireFrame(Vec4* vertices);
 
 };
 

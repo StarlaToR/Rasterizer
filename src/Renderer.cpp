@@ -67,7 +67,7 @@ void Renderer::DrawPixel(uint p_x, uint p_y, uint p_z, Vec4& p_color)
     }
 }
 
-void Renderer::DrawLine(const Vec3& p0, const Vec3& p1, Vec4& color)
+void Renderer::DrawLine(const Vec4& p0, const Vec4& p1, Vec4& color)
 {
     int x0=p0.x, x1=p1.x, y0=p0.y, y1=p1.y, z0 = p0.z, z1 = p1.z;
     int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
@@ -274,6 +274,15 @@ Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
     return coordinate;
 }
 
+void Renderer::DrawTriangleWireFrame(Vec4* vertices)
+{
+    Vec4 color2 = {1,1,0,1};
+
+    DrawLine(vertices[0],vertices[1],color2);
+    DrawLine(vertices[1],vertices[2],color2);
+    DrawLine(vertices[2],vertices[0],color2);
+}
+
 
 void Renderer::DrawTriangle(rdrVertex* vertices, Vec4& color)
 {
@@ -282,6 +291,9 @@ void Renderer::DrawTriangle(rdrVertex* vertices, Vec4& color)
         VertexGraphicPipeline(vertices[1]),
         VertexGraphicPipeline(vertices[2]),
     };
+
+    DrawTriangleWireFrame(screenCoords);
+
     FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2],color);
 }
 
@@ -292,6 +304,9 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         VertexGraphicPipeline(vertices[1]),
         VertexGraphicPipeline(vertices[2]),
     };
+
+    DrawTriangleWireFrame(screenCoords);
+
     FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2]);
 }
 
@@ -344,7 +359,7 @@ bool Renderer::CheckDepth(const float& x, const float& y, const float& z)
     //printf("depthValue=%f, z=%f\n",depthValue,z);
     if (depthValue < z)
     {
-        depthValue = z;
+        fb->SetDepthBuffer((int)(y * fb->GetWidth() + x), z);
         return true;
     }
     else

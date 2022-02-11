@@ -127,6 +127,7 @@ public:
     void Normalize();
     bool IsInTriangle(Vec4 p0,Vec4 p1, Vec4 p2);
     Vec4 GetBarycentricCoords(Vec4 p0,Vec4 p1, Vec4 p2);
+    void GetNewZForZBuffer();
 
     friend Vec4 operator+(const Vec4& a, const Vec4& b);
     friend Vec4 operator*(const Vec4& a, const float& b);
