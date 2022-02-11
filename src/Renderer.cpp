@@ -160,9 +160,9 @@ void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4 color)
     DrawQuad(1,transformMat,color);
     transformMat *= CreateTransformMatrix({-M_PI/2,0,0},{0,0,size/2},{1,1,1}); 
     */
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
     DrawQuad(1,transformMat, color);
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0.5f,size/2},{1,1,1});
+    transformMat *= CreateTransformMatrix({0,0,0},{0,0.5f,-size},{1,1,1});
     color = {0,0,1,1}; 
     DrawQuad(1,transformMat, color);
 
@@ -252,12 +252,6 @@ void Renderer::DrawSphere(const int lon, const int lat)
     }
 }
 
-
-void Renderer::DrawTriangle(rdrVertex* vertices, Vec4& color)
-{
-
-}
-
 void Renderer::DrawTriangle(rdrVertex* vertices)
 {
     Vec3 localCoords[3] = { 
@@ -306,6 +300,7 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     DrawLine(screenCoords[1], screenCoords[2], lineColor);
     DrawLine(screenCoords[2], screenCoords[0], lineColor);
     */
+
     Vec4 color(1,1,1,0);
 
     FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2]);

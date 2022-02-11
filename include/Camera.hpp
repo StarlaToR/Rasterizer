@@ -16,6 +16,8 @@ struct CameraInputs
     bool rotateWorldLeft;
     bool rotateWorldRight;
 
+ 
+
     // ... and more if needed
 };
 
@@ -31,6 +33,7 @@ public:
     void ShowImGuiControls();
 
 private:
+    float angle=0;
     Mat4 viewMatrix=GetIdentityMat4();
     Mat4 projectionMatrix=GetIdentityMat4();
 

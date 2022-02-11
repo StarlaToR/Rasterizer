@@ -3,7 +3,9 @@
     Cela permet de vérifier si notre cube est correct
             Besoin du Z-buffer, besoin d'Antoine pour les formules de modification de la viewMatrix
 
-- Finir le Z-Buffer, Antoine n'arrive pas à accéder aux données du depthBuffer
+- Finir le Z-Buffer
+
+- L'une des face des triangles ne s'affiche pas
 
 - Faire fonctionner la fonction DrawSphere
 
