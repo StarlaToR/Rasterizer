@@ -149,22 +149,22 @@ void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4& color)
 
     //Front and back faces
     temporaryMat = transformMat * CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
-    DrawQuad(1,temporaryMat,color);
+    DrawQuad(size,temporaryMat,color);
     temporaryMat = transformMat * CreateTransformMatrix({0,M_PI,0},{0,0,-size/2},{1,1,1}); 
-    DrawQuad(1,temporaryMat,color);    
+    DrawQuad(size,temporaryMat,color);    
 
     //Left and right faces
     temporaryMat = transformMat * CreateTransformMatrix({0,M_PI/2,0},{size/2,0,0},{1,1,1}); 
-    DrawQuad(1,temporaryMat,color);
+    DrawQuad(size,temporaryMat,color);
     temporaryMat = transformMat * CreateTransformMatrix({0,-M_PI/2,0},{-size/2,0,0},{1,1,1}); 
-    DrawQuad(1,temporaryMat,color);
+    DrawQuad(size,temporaryMat,color);
 
     //Up and down faces
     //Possible that the wrong face is expose to the exterior, just switch the value of rotation around
     temporaryMat = transformMat * CreateTransformMatrix({M_PI/2,0,0},{size/2,0,0},{1,1,1}); 
-    DrawQuad(1,temporaryMat,color);
+    DrawQuad(size,temporaryMat,color);
     temporaryMat = transformMat * CreateTransformMatrix({-M_PI/2,0,0},{-size/2,0,0},{1,1,1}); 
-    DrawQuad(1,temporaryMat,color);
+    DrawQuad(size,temporaryMat,color);
 
 }
 
@@ -351,7 +351,7 @@ void Renderer::Scene2()
 {
     Mat4 transformMat = GetIdentityMat4();
     Vec4 color = {1,0,0,1};
-    DrawCube(1,transformMat,color);
+    DrawCube(0.2f,transformMat,color);
 }
 
 bool Renderer::CheckDepth(const float& x, const float& y, const float& z)
