@@ -33,11 +33,11 @@ void Framebuffer::Clear()
         float4* colors = colorBuffer.data();
 
         // Fill the first line with the clear color
-        for (std::size_t i = 0; i < width; ++i)
+        for (std::size_t i = 0; (int)i < width; ++i)
             std::memcpy(&colors[i], &clearColor, sizeof(float4));
 
         // Copy the first line onto every line
-        for (std::size_t i = 1; i < height; ++i)
+        for (std::size_t i = 1; (int)i < height; ++i)
             std::memcpy(&colors[i * width], &colors[0], width * sizeof(float4));
     }
 

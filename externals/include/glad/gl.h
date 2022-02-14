@@ -21,7 +21,7 @@
  *    --api='gl:compatibility=3.0' --extensions='GL_KHR_debug' c --loader
  *
  * Online:
- *    http://glad.sh/#api=gl%3Acompatibility%3D3.0&extensions=GL_KHR_debug&generator=c&options=LOADER
+ *    http:glad.sh/#api=gl%3Acompatibility%3D3.0&extensions=GL_KHR_debug&generator=c&options=LOADER
  *
  */
 

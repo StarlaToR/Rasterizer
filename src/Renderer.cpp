@@ -91,14 +91,14 @@ void Renderer::DrawLine(const Vec4& p0, const Vec4& p1, Vec4& color)
 
 void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2, Vec4& color)
 {
-    for(int i=0;i<fb->GetWidth();i++)
+    for(float i=0;i<fb->GetWidth();i++)
     {
-        for(int j=0;j<fb->GetHeight();j++)
+        for(float j=0;j<fb->GetHeight();j++)
         {
             Vec4 pointChecked = {i,j,0,1};
 
             float depth;
-            if (p0.z == p1.z & p0.z == p2.z)
+            if (p0.z == p1.z && p0.z == p2.z)
                 depth = p0.z;
 
             if(pointChecked.IsInTriangle(p0,p1,p2))
@@ -111,9 +111,9 @@ void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2, Vec4
 void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2)
 {   
 
-    for(int i=0;i<fb->GetWidth();i++)
+    for(float i=0;i<fb->GetWidth();i++)
     {
-        for(int j=0;j<fb->GetHeight();j++)
+        for(float j=0;j<fb->GetHeight();j++)
         {
             Vec4 pointChecked = {i,j,0,1};
             
@@ -319,7 +319,7 @@ void Renderer::DrawTriangles(rdrVertex* p_vertices, const uint p_count)
     // calculate mvp from matrices
     // Transform vertex list to triangles into colorBuffer
     Vec4 color(1,0,0,1);
-    for (int i = 0; i < p_count; i += 3)
+    for (uint i = 0; i < p_count; i += 3)
     {
         DrawTriangle(&p_vertices[i], color);
     }
