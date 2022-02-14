@@ -16,14 +16,14 @@ void Camera::Update(const float p_deltaTime, const CameraInputs& inputs)
     angle=0;
     // Movements
     if(inputs.moveLeft==true)
-        viewMatrix.tab[0][3]-=0.05f;
-    if(inputs.moveRight==true)
         viewMatrix.tab[0][3]+=0.05f;
+    if(inputs.moveRight==true)
+        viewMatrix.tab[0][3]-=0.05f;
 
     if(inputs.moveUp==true)
-        viewMatrix.tab[1][3]-=0.05f;
-    if(inputs.moveDown==true)
         viewMatrix.tab[1][3]+=0.05f;
+    if(inputs.moveDown==true)
+        viewMatrix.tab[1][3]-=0.05f;
 
     if(inputs.moveForward==true)
         viewMatrix.tab[2][3]-=0.5f;
