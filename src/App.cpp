@@ -157,7 +157,7 @@ void App::Update()
         Mat4 projection = camera.GetProjection();
         Mat4 view       = camera.GetViewMatrix();
         renderer.SetProjection(projection);
-        renderer.SetView(view);
+        //renderer.SetView(view);
 
 
 

@@ -34,15 +34,21 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     // Hard coded matrix
     // TODO: Remove this and use proper functions !
 
-    Mat4 modelMatrix = CreateTransformMatrix({0,0,0},{400,300,1}, {400,400,1});
-    renderer.SetModel(modelMatrix);
+    //Mat4 modelMatrix = CreateTransformMatrix({0,0,0},{0,0,0}, {1,1,1});
+    renderer.SetView(CreateTransformMatrix({0,0,0},{0,0.2,0.2}, {1,1,1}));
 
+    renderer.SetModel(CreateTransformMatrix({0,sin(time),0},{0.2,0,1}, {1,1,1}));
+    renderer.DrawTriangles(vertices.data(), vertices.size());
+    renderer.SetModel(CreateTransformMatrix({0,0,0},{0,0,1}, {1,1,1}));
+    renderer.DrawTriangles(vertices.data(), vertices.size());
+
+/*
     // Draw
     if(currentScene==1)
         renderer.Scene1();
     else if(currentScene==2)
         renderer.Scene2();
-
+*/
     time += deltaTime;
 }
 
