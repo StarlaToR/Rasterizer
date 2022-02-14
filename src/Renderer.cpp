@@ -72,6 +72,7 @@ void Renderer::DrawPixel(const float p_x, const float p_y, const float p_z, Vec4
 void Renderer::DrawLine(const Vec4& p0, const Vec4& p1, Vec4& color)
 {
     int x0=p0.x, x1=p1.x, y0=p0.y, y1=p1.y, z0 = p0.z, z1 = p1.z;
+
     int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
     int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1; 
     int dz = abs(z1-z0), sz = z0<z1 ? 1 : -1; 
@@ -79,7 +80,7 @@ void Renderer::DrawLine(const Vec4& p0, const Vec4& p1, Vec4& color)
     x1 = y1 = z1 = dm/2; /* error offset */
     
     for(;;) {  /* loop */
-        DrawPixel(x0, y0, p0.z, color);
+        DrawPixel(x0, y0, z0, color);
         if (i-- == 0) break;
         x1 -= dx; if (x1 < 0) { x1 += dm; x0 += sx; } 
         y1 -= dy; if (y1 < 0) { y1 += dm; y0 += sy; } 
@@ -87,13 +88,19 @@ void Renderer::DrawLine(const Vec4& p0, const Vec4& p1, Vec4& color)
     }
 }
 
-
-
 void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2, Vec4& color)
 {
-    for(float i=0;i<fb->GetWidth();i++)
+    std::vector<Vec4> vertices;
+    vertices.push_back(p0);
+    vertices.push_back(p1);
+    vertices.push_back(p2);
+
+    Vec4 maxPoint = GetMaximumXandY(vertices);
+    Vec4 minPoint = GetMinimumXandY(vertices);
+
+    for(float i=minPoint.x;i<maxPoint.x;i++)
     {
-        for(float j=0;j<fb->GetHeight();j++)
+        for(float j=minPoint.y;j<maxPoint.y;j++)
         {
             Vec4 pointChecked = {i,j,0,1};
 
@@ -110,25 +117,29 @@ void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2, Vec4
 
 void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2)
 {   
+    std::vector<Vec4> vertices;
+    vertices.push_back(p0);
+    vertices.push_back(p1);
+    vertices.push_back(p2);
 
-    for(float i=0;i<fb->GetWidth();i++)
+    Vec4 maxPoint = GetMaximumXandY(vertices);
+    Vec4 minPoint = GetMinimumXandY(vertices);
+
+    for(float i=minPoint.x;i<maxPoint.x;i++)
     {
-        for(float j=0;j<fb->GetHeight();j++)
+        for(float j=minPoint.y;j<maxPoint.y;j++)
         {
             Vec4 pointChecked = {i,j,0,1};
-            
-    
-            float depth=p1.z;
-            Vec4 color = pointChecked.GetBarycentricCoords(p0,p1,p2);
-            if(pointChecked.IsInTriangle(p0,p1,p2))
-                DrawPixel(i, j, depth, color);
-        }
-    }
-}
 
-void Renderer::ApplyViewMatrix(Mat4& matrix)
-{
-    matrix*=viewMatrix;
+            float depth;
+            if (p0.z == p1.z && p0.z == p2.z)
+                depth = p0.z;
+            Vec4 color = pointChecked.GetBarycentricCoords(p0,p1,p2);
+
+            if(pointChecked.IsInTriangle(p0,p1,p2))
+                DrawPixel(i,j,depth,color);
+        }
+    }   
 }
 
 void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4& color)

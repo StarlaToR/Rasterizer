@@ -171,13 +171,9 @@ void App::Update()
         if (ImGui::Begin("Config"))
         {
             if (ImGui::CollapsingHeader("Framebuffer", ImGuiTreeNodeFlags_DefaultOpen))
-            {
                 ImGui::ColorEdit4("clearColor", framebuffer.clearColor.e);
-            }
             if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
-            {
                 camera.ShowImGuiControls();
-            }
         }
         ImGui::End();
 

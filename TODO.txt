@@ -8,7 +8,7 @@
 
 - Ajouter l'effet de perspective (Version 5)
 
-
+- Problème avec le cube, des wireframes sont dessinés au milieu de nul part 
 
 
 

@@ -68,7 +68,6 @@ public:
     void FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2, Vec4& color);
     void FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2);
 
-    void ApplyViewMatrix(Mat4& matrix);
     bool CheckDepth(const float& x, const float& y, const float& z);
 
     void Scene1();
@@ -86,8 +85,6 @@ private:
     void ShowImGuiControls();
     Vec4 VertexGraphicPipeline(rdrVertex& vertex);
     void DrawTriangleWireFrame(Vec4* vertices);
-
-
 
 };
 

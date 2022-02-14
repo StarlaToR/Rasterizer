@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include <stdio.h>
+#include <vector>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////                       Vec3                       /////////////////////////////////////////////////////
@@ -133,6 +134,8 @@ public:
     friend Vec4 operator*(const Vec4& a, const float& b);
     
     void operator*=(const float tab[4][4]);
+
+
 };
 
 
@@ -159,6 +162,35 @@ Vec3 operator*(const Vec3& a, const float b);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////           Inline functions            /////////////////////////////////////////////////////
+
+
+
+inline Vec4 GetMaximumXandY(std::vector<Vec4> vertices)
+{
+    float x=-1,y=-1;
+    for(int i=0; i < (int) vertices.size(); i++)
+    {
+        if(vertices[i].x>=x)
+            x=vertices[i].x;
+        if(vertices[i].y>=y)
+            y=vertices[i].y;
+    }
+    return {x,y,0,1};
+}
+
+
+inline Vec4 GetMinimumXandY(std::vector<Vec4> vertices)
+{
+    float x=9999,y=9999;
+    for(int i=0; i < (int) vertices.size(); i++)
+    {
+        if(vertices[i].x<=x)
+            x=vertices[i].x;
+        if(vertices[i].y<=y)
+            y=vertices[i].y;
+    }
+    return {x,y,0,1};
+}
 
 inline Vec3 getSphericalCoords(const float r, const float theta, const float phi)
 {

@@ -61,6 +61,7 @@ Vec3 Vec3::GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2)
 }
 
 
+
 bool Vec4::IsInTriangle(Vec4 p0,Vec4 p1, Vec4 p2)
 {
     float e01 = (this->x - p0.x) * (p1.y - p0.y) - (this->y - p0.y) * (p1.x - p0.x);
