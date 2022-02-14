@@ -24,7 +24,7 @@ float edgeFunction(const Vec4 &a, const Vec4 &b, const Vec4 &c)
 }
 
 
-Vec4 Vec4::GetBarycentricCoords(Vec4 p0,Vec4 p1, Vec4 p2)
+Vec4 Vec4::GetBarycentricCoords(Vec4 p0, Vec4 p1, Vec4 p2)
 {
     Vec4 barycentricCoords;
 
