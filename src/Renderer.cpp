@@ -133,39 +133,27 @@ void Renderer::ApplyViewMatrix(Mat4& matrix)
 
 void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4& color)
 {
-    ApplyViewMatrix(transformMat);
 
-/* 
+    Mat4 temporaryMat;
+
     //Front and back faces
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
-    DrawQuad(1,transformMat,color);
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
-    DrawQuad(1,transformMat,color);
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
-
+    temporaryMat = transformMat * CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
+    DrawQuad(1,temporaryMat,color);
+    temporaryMat = transformMat * CreateTransformMatrix({0,M_PI,0},{0,0,-size/2},{1,1,1}); 
+    DrawQuad(1,temporaryMat,color);    
 
     //Left and right faces
-    transformMat *= CreateTransformMatrix({0,M_PI/2,0},{0,0,size/2},{1,1,1}); 
-    DrawQuad(1,transformMat,color);
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
-    DrawQuad(1,transformMat,color);
-    transformMat *= CreateTransformMatrix({0,-M_PI/2,0},{0,0,size/2},{1,1,1}); 
+    temporaryMat = transformMat * CreateTransformMatrix({0,M_PI/2,0},{size/2,0,0},{1,1,1}); 
+    DrawQuad(1,temporaryMat,color);
+    temporaryMat = transformMat * CreateTransformMatrix({0,-M_PI/2,0},{-size/2,0,0},{1,1,1}); 
+    DrawQuad(1,temporaryMat,color);
 
     //Up and down faces
-    transformMat *= CreateTransformMatrix({M_PI/2,0,0},{0,0,size/2},{1,1,1}); 
-    DrawQuad(1,transformMat,color);
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
-    transformMat *= CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
-    DrawQuad(1,transformMat,color);
-    transformMat *= CreateTransformMatrix({-M_PI/2,0,0},{0,0,size/2},{1,1,1}); 
-    */
-    transformMat = CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}); 
-    DrawQuad(1,transformMat, color);
-    transformMat = CreateTransformMatrix({0,0,0},{0,0.5f,-size},{1,1,1});
-    color = {0,0,1,1}; 
-    DrawQuad(1,transformMat, color);
+    //Possible that the wrong face is expose to the exterior, just switch the value of rotation around
+    temporaryMat = transformMat * CreateTransformMatrix({M_PI/2,0,0},{size/2,0,0},{1,1,1}); 
+    DrawQuad(1,temporaryMat,color);
+    temporaryMat = transformMat * CreateTransformMatrix({-M_PI/2,0,0},{-size/2,0,0},{1,1,1}); 
+    DrawQuad(1,temporaryMat,color);
 
 }
 
