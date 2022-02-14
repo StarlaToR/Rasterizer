@@ -1,12 +1,3 @@
-
-- Permettre la rotation des objets par rapport au centre du monde 
-    Cela permet de vérifier si notre cube est correct
-            Besoin du Z-buffer, besoin d'Antoine pour les formules de modification de la viewMatrix
-
-- Finir le Z-Buffer
-
-- L'une des face des triangles ne s'affiche pas (le dos)
-
 - Faire fonctionner la fonction DrawSphere
 
 - Optimiser la fonction FillTriangle qui rame du cul.
@@ -15,7 +6,7 @@
 - Si on est stylé ajouter des sliders qui permettent de modifier la scène pendant l'exécution du 
     programme (changer les coordonnées des points, la rotation)
 
-- Ajouter l'effet de perspective (peut-être pas nécessaire tout de suite)
+- Ajouter l'effet de perspective (Version 5)
 
 
 
