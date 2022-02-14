@@ -16,8 +16,6 @@ struct CameraInputs
     bool rotateWorldLeft;
     bool rotateWorldRight;
 
- 
-
     // ... and more if needed
 };
 

@@ -54,5 +54,5 @@ Mat4 Camera::GetProjection()
 
 void Camera::ShowImGuiControls()
 {
-    //TODO
+    ImGui::Text("Test");
 }
