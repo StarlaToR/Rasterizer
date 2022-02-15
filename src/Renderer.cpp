@@ -133,8 +133,8 @@ Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
     // NDC space Screen space   
     Mat4 mat = Mat4(
         {
-        400,0,0,fb->GetWidth()/2,
-        0,400,0,fb->GetHeight()/2,
+        400,0,0,(float)fb->GetWidth()/2,
+        0,400,0,(float)fb->GetHeight()/2,
         0,0,1,0,
         0,0,0,1,
         }

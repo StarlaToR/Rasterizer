@@ -170,7 +170,7 @@ Vec3 operator-(const Vec3& a, const Vec3& b);
 inline Vec3 GetNormalVector(const Vec3& p0, const Vec3& p1, const Vec3& p2)
 {
     Vec3 normal = (p1 - p0) * (p2 - p0);
-    printf("normal={%f, %f, %f, %f}\n",normal.x,normal.y,normal.z);
+    //printf("normal={%f, %f, %f, %f}\n",normal.x,normal.y,normal.z);
     return normal;
 }
 
