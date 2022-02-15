@@ -32,7 +32,7 @@ private:
     void DrawSphere(const int lon, const int lat, const float& radius, const Mat4& transformMat, Renderer& renderer);
     void DrawSquare(const float& size, const Mat4& transformMat ,Renderer& renderer);
     void DrawQuad(rdrVertex* vertices, Renderer& renderer);
-    void DrawCube(const float& size, const Mat4& transformMat ,Renderer& renderer);
+    void DrawCube(const float& size,Renderer& renderer);
 
 
 

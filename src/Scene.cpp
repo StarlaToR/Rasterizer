@@ -82,33 +82,27 @@ void Scene::DrawSquare(const float& size, const Mat4& transformMat ,Renderer& re
 }
 
 
-void Scene::DrawCube(const float& size, const Mat4& transformMat, Renderer& renderer)
+void Scene::DrawCube(const float& size, Renderer& renderer)
 {
 
     //ATTENTION : NO UPPER AND LOWER FACE
 
-    Mat4 center = renderer.GetModel()*transformMat;
+    Mat4 center = renderer.GetModel();
 
     renderer.SetModel(center);
 
-    renderer.SetModel(renderer.GetModel()*CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}));
-    DrawSquare(size,GetIdentityMat4(),renderer);
+    DrawSquare(size,CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}),renderer);
+    renderer.SetModel(center);
+    DrawSquare(size,CreateTransformMatrix({0,M_PI,0},{0,0,size/2},{1,1,1}),renderer);
+    renderer.SetModel(center);
+    DrawSquare(size,CreateTransformMatrix({0,M_PI/2,0},{-size/2,0,0},{1,1,1}),renderer);
+    renderer.SetModel(center);
+    DrawSquare(size,CreateTransformMatrix({0,-M_PI/2,0},{size/2,0,0},{1,1,1}),renderer);
+    renderer.SetModel(center);
+    DrawSquare(size,CreateTransformMatrix({M_PI/2,0,0},{0,size/2,0},{1,1,1}),renderer); 
+    renderer.SetModel(center);
+    DrawSquare(size,CreateTransformMatrix({-M_PI/2,0,0},{0,-size/2,0},{1,1,1}),renderer);
 
-    renderer.SetModel(center);
-    
-    renderer.SetModel(renderer.GetModel()*CreateTransformMatrix({0,M_PI,0},{0,0,size/2},{1,1,1}));
-    DrawSquare(size,GetIdentityMat4(),renderer);
-
-    renderer.SetModel(center);
-    
-    renderer.SetModel(renderer.GetModel()*CreateTransformMatrix({0,M_PI/2,0},{-size/2,0,0},{1,1,1}));
-    DrawSquare(size,GetIdentityMat4(),renderer);
- 
-    renderer.SetModel(center);
-    
-    renderer.SetModel(renderer.GetModel()*CreateTransformMatrix({0,-M_PI/2,0},{size/2,0,0},{1,1,1}));
-    DrawSquare(size,GetIdentityMat4(),renderer);
- 
 }
 
 void Scene::DrawQuad(rdrVertex* vertices, Renderer& renderer)
@@ -183,12 +177,15 @@ void Scene::Scene2(Renderer& renderer)
         { -0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
     };
 
-    renderer.SetModel(CreateTransformMatrix({0,0,0},{0,0,0}, {1,1,1}));
+    renderer.SetModel(CreateTransformMatrix({(float)-time/2,(float)-time,0},{-0.5f,0,0}, {1,1,1}));
 
  //   DrawQuad(vertices.data(),renderer);
 
-//    DrawSquare(0.5f,CreateTransformMatrix({0,0,0},{0,0,0},{1,1,1}),renderer);
-    DrawCube(0.5f,CreateTransformMatrix({0,time,0},{0,0,0},{1,1,1}),renderer);
+    DrawCube(0.5f,renderer);
+
+    renderer.SetModel(CreateTransformMatrix({(float)time,(float)time*2,0},{0.5f,0,0}, {1,1,1}));
+
+    DrawSphere(50,50,0.3f,CreateTransformMatrix({0,0,0},{0,0,0},{1,1,1}),renderer);
 }
 
 /////////////////////////////////////////////            Scene functions             /////////////////////////////////////////////////////
