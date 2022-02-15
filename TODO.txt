@@ -16,4 +16,7 @@
 
 - Le renderer ne dessine que des triangles, le reste est géré dans le fichier Scene.cpp
 
-- Rotation bizarre
+- Gestion des couleurs avec les coordonnées barycentriques des points
+
+
+

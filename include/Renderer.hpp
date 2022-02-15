@@ -58,10 +58,8 @@ public:
     void SetModel(Mat4 p_modelMatrix);
     void SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height);
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
-    void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);
-    void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
+
     void DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color);
-    void DrawCube(const float& size, Mat4& transformMat, Vec4& color);
 
     void transformVertices(Vec3& vertices);
 
@@ -70,21 +68,15 @@ public:
 
     bool CheckDepth(int x, int y, float z);
 
-    void Scene1();
-    void Scene2();    
-
     bool wireFrameOn=true;
+
+    void DrawTriangle(rdrVertex* p_vertices);
 
 private:
     
-    void DrawSphere(const int lon, const int lat, const float& radius, const Mat4& transformMat, Vec4& color);
-    void DrawSquare(const float& size, const Mat4& transformMat, Vec4& color);
-    void DrawQuad(rdrVertex* vertices, Vec4& color);
-    void DrawCube(const float& size);
-    void DrawTriangle(rdrVertex* p_vertices, Vec4& color);
-    void DrawTriangle(rdrVertex* p_vertices);
     void ShowImGuiControls();
     Vec4 VertexGraphicPipeline(rdrVertex& vertex);
+    void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);
     void DrawTriangleWireFrame(Vec4* vertices);
 
 };
