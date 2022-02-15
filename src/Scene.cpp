@@ -187,7 +187,6 @@ void Scene::Scene1(Renderer& renderer)
         { 0.0f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
     };
 
-    renderer.SetView(CreateTransformMatrix({0,0,0},{0,0.2,0.2}, {1,1,1}));
     renderer.SetModel(CreateTransformMatrix({0,time,0},{0.2,0,1}, {1,1,1}));
     DrawTriangles(vertices.data(), vertices.size(),renderer);
     renderer.SetModel(CreateTransformMatrix({0,0,0},{0,0,1}, {1,1,1}));
@@ -206,7 +205,6 @@ void Scene::Scene2(Renderer& renderer)
         { -0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
     };
 
-    renderer.SetView(CreateTransformMatrix({0,0,0},{0,0,0}, {1,1,1}));
     renderer.SetModel(CreateTransformMatrix({0,0,0},{0,0,0}, {1,1,1}));
 
     DrawQuad(vertices.data(),renderer);
@@ -242,8 +240,6 @@ void Scene::Update(float deltaTime, Renderer& renderer)
 
     // Hard coded matrix
     // TODO: Remove this and use proper functions !
-
-    //Mat4 modelMatrix = CreateTransformMatrix({0,0,0},{0,0,0}, {1,1,1});
 
     // Draw
     if(currentScene==1)
