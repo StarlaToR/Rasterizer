@@ -60,7 +60,7 @@ public:
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
     void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
-    void DrawPixel(const float p_x, const float p_y, const float p_z, Vec4& p_color);
+    void DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color);
     void DrawCube(const float& size, Mat4& transformMat, Vec4& color);
 
     void transformVertices(Vec3& vertices);
@@ -68,7 +68,7 @@ public:
     void FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2, Vec4& color);
     void FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2);
 
-    bool CheckDepth(const float& x, const float& y, const float& z);
+    bool CheckDepth(int x, int y, float z);
 
     void Scene1();
     void Scene2();    
@@ -77,8 +77,9 @@ public:
 
 private:
     
-    void DrawSphere(const int lon, const int lat);
-    void DrawQuad(const float& size, const Mat4& transformMat, Vec4& color);
+    void DrawSphere(const int lon, const int lat, const float& radius, const Mat4& transformMat, Vec4& color);
+    void DrawSquare(const float& size, const Mat4& transformMat, Vec4& color);
+    void DrawQuad(rdrVertex* vertices, Vec4& color);
     void DrawCube(const float& size);
     void DrawTriangle(rdrVertex* p_vertices, Vec4& color);
     void DrawTriangle(rdrVertex* p_vertices);

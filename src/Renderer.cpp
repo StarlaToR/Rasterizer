@@ -54,7 +54,7 @@ void Renderer::SetTexture(float* p_colors32Bits, const uint p_width, const uint 
     // TODO
 }
 
-void Renderer::DrawPixel(const float p_x, const float p_y, const float p_z, Vec4& p_color)
+void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
 {
     if (p_x >= 0 && p_x < fb->GetWidth()
         && p_y >= 0 && p_y < fb->GetHeight()
@@ -80,7 +80,7 @@ void Renderer::DrawLine(const Vec4& p0, const Vec4& p1, Vec4& color)
     x1 = y1 = z1 = dm/2; /* error offset */
     
     for(;;) {  /* loop */
-        DrawPixel(x0, y0, z0, color);
+        DrawPixel(x0, y0, -1000, color);
         if (i-- == 0) break;
         x1 -= dx; if (x1 < 0) { x1 += dm; x0 += sx; } 
         y1 -= dy; if (y1 < 0) { y1 += dm; y0 += sy; } 
@@ -106,12 +106,12 @@ void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2, Vec4
         {
             Vec4 pointChecked = {i,j,0,1};
 
-            float depth;
-            if (p0.z == p1.z && p0.z == p2.z)
-                depth = p0.z;
+            Vec4 w = pointChecked.GetBarycentricCoords(p0,p1,p2);
+
+            float depth =  w.x * p0.z + w.y * p1.z + w.z * p1.z;
 
             if(pointChecked.IsInTriangle(p0,p1,p2))
-                DrawPixel(i,j,depth,color);
+                DrawPixel(i,j,depth,w);
         }
     }    
 }
@@ -133,13 +133,12 @@ void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2)
         {
             Vec4 pointChecked = {i,j,0,1};
 
-            float depth;
-            if (p0.z == p1.z && p0.z == p2.z)
-                depth = p0.z;
-            Vec4 color = pointChecked.GetBarycentricCoords(p0,p1,p2);
+            Vec4 w = pointChecked.GetBarycentricCoords(p0,p1,p2);
+
+            float depth =  w.x * p0.z + w.y * p1.z + w.z * p1.z;
 
             if(pointChecked.IsInTriangle(p0,p1,p2))
-                DrawPixel(i,j,depth,color);
+                DrawPixel(i,j,depth,w);
         }
     }   
 }
@@ -151,28 +150,35 @@ void Renderer::DrawCube(const float& size, Mat4& transformMat, Vec4& color)
 
     //Front and back faces
     temporaryMat = transformMat * CreateTransformMatrix({0,0,0},{0,0,size/2},{1,1,1}); 
-    DrawQuad(size,temporaryMat,color);
+    DrawSquare(size,temporaryMat,color);
     temporaryMat = transformMat * CreateTransformMatrix({0,M_PI,0},{0,0,-size/2},{1,1,1}); 
-    DrawQuad(size,temporaryMat,color);    
+    DrawSquare(size,temporaryMat,color);    
 
     //Left and right faces
     temporaryMat = transformMat * CreateTransformMatrix({0,M_PI/2,0},{size/2,0,0},{1,1,1}); 
-    DrawQuad(size,temporaryMat,color);
+    DrawSquare(size,temporaryMat,color);
     temporaryMat = transformMat * CreateTransformMatrix({0,-M_PI/2,0},{-size/2,0,0},{1,1,1}); 
-    DrawQuad(size,temporaryMat,color);
+    DrawSquare(size,temporaryMat,color);
 
     //Up and down faces
     //Possible that the wrong face is expose to the exterior, just switch the value of rotation around
     temporaryMat = transformMat * CreateTransformMatrix({M_PI/2,0,0},{size/2,0,0},{1,1,1}); 
-    DrawQuad(size,temporaryMat,color);
+    DrawSquare(size,temporaryMat,color);
     temporaryMat = transformMat * CreateTransformMatrix({-M_PI/2,0,0},{-size/2,0,0},{1,1,1}); 
-    DrawQuad(size,temporaryMat,color);
+    DrawSquare(size,temporaryMat,color);
 
 }
 
+void Renderer::DrawQuad(rdrVertex* vertices, Vec4& color)
+{
+    rdrVertex firstHalf[3] = { vertices[0],vertices[2],vertices[1]};
+    rdrVertex secondHalf[3] = { vertices[0],vertices[3],vertices[2]};
+    
+    DrawTriangle(firstHalf,color);
+    DrawTriangle(secondHalf,color);
+}
 
-
-void Renderer::DrawQuad(const float& size, const Mat4& transformMat, Vec4& color)
+void Renderer::DrawSquare(const float& size, const Mat4& transformMat, Vec4& color)
 {
     rdrVertex vertices[4] = {
         //       pos                  normal                  color              uv
@@ -208,10 +214,8 @@ void Renderer::DrawQuad(const float& size, const Mat4& transformMat, Vec4& color
     DrawTriangle(secondHalf,color);
 }
 
-void Renderer::DrawSphere(const int lon, const int lat)
+void Renderer::DrawSphere(const int lon, const int lat, const float& radius, const Mat4& transformMat, Vec4& color)
 {
-    float r = 0.5f;
-
     rdrVertex vertices[4];
 
     for (int j = 0; j < lat; ++j)
@@ -224,10 +228,15 @@ void Renderer::DrawSphere(const int lon, const int lat)
             float phi0 = ((i+0) / (float)lon) * 2.f * M_PI;
             float phi1 = ((i+1) / (float)lon) * 2.f * M_PI;
 
-            Vec3 c0 = getSphericalCoords(r, theta0, phi0);
-            Vec3 c1 = getSphericalCoords(r, theta0, phi1);
-            Vec3 c2 = getSphericalCoords(r, theta1, phi1);
-            Vec3 c3 = getSphericalCoords(r, theta1, phi0);
+            Vec4 c0 = getSphericalCoords(radius, theta0, phi0);
+            Vec4 c1 = getSphericalCoords(radius, theta0, phi1);
+            Vec4 c2 = getSphericalCoords(radius, theta1, phi1);
+            Vec4 c3 = getSphericalCoords(radius, theta1, phi0);
+
+            c0 *= transformMat.tab;
+            c1 *= transformMat.tab;
+            c2 *= transformMat.tab;
+            c3 *= transformMat.tab;
 
             vertices[0].x = c0.x;
             vertices[0].y = c0.y;
@@ -246,9 +255,7 @@ void Renderer::DrawSphere(const int lon, const int lat)
             vertices[3].z = c3.z;
 
 
-            DrawTriangle(vertices);
-
-            DrawTriangle(vertices+1);
+            DrawQuad(vertices, color);
 
         }
     }
@@ -271,7 +278,9 @@ Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
     // Clip space NDC space
     coordinate.GetHomogenizedVec();
 
-    // NDC space Screen space
+    // NDC space Screen space   
+    coordinate.x = ((coordinate.x * 0.5f) + 0.5f) * fb->GetWidth();
+    coordinate.y = ((coordinate.y * 0.5f) + 0.5f) * fb->GetHeight();
     // TODO
 
     return coordinate;
@@ -353,12 +362,18 @@ void Renderer::Scene1()
 
 void Renderer::Scene2()
 {
+    /*
     Mat4 transformMat = GetIdentityMat4();
     Vec4 color = {1,0,0,1};
-    DrawCube(0.2f,transformMat,color);
+    transformMat = CreateTransformMatrix({0,0,0},{2,0,0}, {1,1,1});
+    DrawCube(0.5f,transformMat,color);
+    color = {0,0,1,1};
+    transformMat = CreateTransformMatrix({0,0,0},{-2,0,0}, {1,1,1});
+    DrawSphere(50, 10, 0.5f, transformMat, color);
+    */
 }
 
-bool Renderer::CheckDepth(const float& x, const float& y, const float& z)
+bool Renderer::CheckDepth(int x, int y, float z)
 {
      
     float depthValue = fb->GetDepthBuffer((int)(y * fb->GetWidth() + x));
