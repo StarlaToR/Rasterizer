@@ -44,21 +44,10 @@ void Scene::DrawSphere(const int lon, const int lat, const float& radius, const 
             c2 *= transformMat.tab;
             c3 *= transformMat.tab;
 
-            vertices[0].x = c0.x;
-            vertices[0].y = c0.y;
-            vertices[0].z = c0.z;
-
-            vertices[1].x = c1.x;
-            vertices[1].y = c1.y;
-            vertices[1].z = c1.z;
-
-            vertices[2].x = c2.x;
-            vertices[2].y = c2.y;
-            vertices[2].z = c2.z;
-
-            vertices[3].x = c3.x;
-            vertices[3].y = c3.y;
-            vertices[3].z = c3.z;
+            vertices[0].SetPosition({c0.x,c0.y,c0.z});
+            vertices[1].SetPosition({c1.x,c1.y,c1.z});
+            vertices[2].SetPosition({c2.x,c2.y,c2.z});
+            vertices[3].SetPosition({c3.x,c3.y,c3.z});
 
             DrawQuad(vertices,renderer);
 

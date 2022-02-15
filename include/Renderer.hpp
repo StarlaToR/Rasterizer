@@ -4,12 +4,58 @@
 #include <Framebuffer.hpp>
 
 // Vertex format (only one supported for now)
-struct rdrVertex
+class rdrVertex
 {
-    float x, y, z;    // Pos
-    float nx, ny, nz; // Normal
-    float r, g, b, a; // Color
-    float u, v;       // Texture coordinates
+private:
+    Vec3 position;   // Pos
+    Vec3 normal; // Normal
+    Vec4 color; // Color
+    Vec2 texCoord;       // Texture coordinates
+
+public:
+    rdrVertex()
+    {
+        position = Vec3();
+        normal = Vec3();
+        color = Vec3();
+        texCoord = Vec2();
+    }
+
+    rdrVertex(float a, float b, float c, float d, float e, float f, float g, float h, float i, float j, float k)
+    {
+        position = {a, b, c};
+        normal = {d, e, f};
+        color = Vec3(g, h, i);
+        texCoord = {j, k};
+    }
+
+    rdrVertex(Vec3 pos, Vec3 norm, Vec3 col, Vec2 coord)
+    {
+        position = pos;
+        normal = norm;
+        color = col;
+        texCoord = coord;
+    }
+
+    rdrVertex(Vec3 pos, Vec3 norm, Vec4 col, Vec2 coord)
+    {
+        position = pos;
+        normal = norm;
+        color = col;
+        texCoord = coord;
+    }
+
+    Vec3 GetPosition();
+    Vec3 getNormal();
+    Vec4 GetColor();
+    Vec2 GetTexCoord();
+    float GetDepth();
+    void SetPosition(Vec3 pos);
+    void SetPosition(Vec4 pos);
+    void SetNormal(Vec3 norm);
+    void SetColor(Vec3 col);
+    void SetColor(Vec4 col);
+    void SetTexCoord(Vec2 coord);
 };
 
 struct color
@@ -61,18 +107,11 @@ public:
     Mat4 GetModel();
     void SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height);
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
-
     void DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color);
-
     void transformVertices(Vec3& vertices);
-
-    void FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2, Vec4& color);
-    void FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2);
-
+    void FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2);
     bool CheckDepth(int x, int y, float z);
-
     bool wireFrameOn=true;
-
     void DrawTriangle(rdrVertex* p_vertices);
 
 private:

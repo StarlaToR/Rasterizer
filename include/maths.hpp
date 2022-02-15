@@ -4,6 +4,33 @@
 #include <vector>
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////                       Vec2                       /////////////////////////////////////////////////////
+
+class Vec2
+{
+public:
+    float x;
+    float y;
+
+
+    Vec2(float a, float b)
+    {
+        x = a;
+        y = b;
+    }
+
+    Vec2()
+    {
+        x = 0;
+        y = 0;
+    }
+};
+
+
+///////////////////////////////////                       Vec2                       /////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////                       Vec3                       /////////////////////////////////////////////////////
 
 class Vec3
@@ -174,7 +201,7 @@ inline Vec3 GetNormalVector(const Vec3& p0, const Vec3& p1, const Vec3& p2)
     return normal;
 }
 
-inline Vec4 GetMaximumXandY(const std::vector<Vec4>& vertices)
+inline Vec4 GetMaximumXandY(const std::vector<Vec3>& vertices)
 {
     float x=-1,y=-1;
     for(int i=0; i < (int) vertices.size(); i++)
@@ -188,7 +215,7 @@ inline Vec4 GetMaximumXandY(const std::vector<Vec4>& vertices)
 }
 
 
-inline Vec4 GetMinimumXandY(std::vector<Vec4> vertices)
+inline Vec4 GetMinimumXandY(std::vector<Vec3> vertices)
 {
     float x=9999,y=9999;
     for(int i=0; i < (int) vertices.size(); i++)

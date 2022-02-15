@@ -1,15 +1,66 @@
-
 #include <cstdio>
 #include <cstring>
 #include <cassert>
 
 #include <imgui.h>
-
 #include <maths.hpp>
-
 #include <Renderer.hpp>
 
 
+Vec3 rdrVertex::GetPosition()
+{
+    return position;
+}
+
+Vec3 rdrVertex::getNormal()
+{
+    return normal;
+}
+
+Vec4 rdrVertex::GetColor()
+{
+    return color;
+}
+
+float rdrVertex::GetDepth()
+{
+    return position.z;
+}
+
+Vec2 rdrVertex::GetTexCoord()
+{
+    return texCoord;
+}
+
+void rdrVertex::SetPosition(Vec3 pos)
+{
+    position = pos;
+}
+
+void rdrVertex::SetPosition(Vec4 pos)
+{
+    position = {pos.x, pos.y, pos.z};
+}
+
+void rdrVertex::SetNormal(Vec3 norm)
+{
+    normal = norm;
+}
+
+void rdrVertex::SetColor(Vec3 col)
+{
+    color = col;
+}
+
+void rdrVertex::SetColor(Vec4 col)
+{
+    color = col;
+}
+
+void rdrVertex::SetTexCoord(Vec2 coord)
+{
+    texCoord = coord;
+}
 
 Renderer::Renderer(float* p_colorBuffer32Bits, float* p_depthBuffer, const uint p_width, const uint p_height):
 /*fb(p_width, p_height),*/viewport(0,0,p_width, p_height)
@@ -85,12 +136,12 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
 }
 
 
-void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2)
+void Renderer::   FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
 {   
-    std::vector<Vec4> vertices;
-    vertices.push_back(p0);
-    vertices.push_back(p1);
-    vertices.push_back(p2);
+    std::vector<Vec3> vertices;
+    vertices.push_back(p0.GetPosition());
+    vertices.push_back(p1.GetPosition());
+    vertices.push_back(p2.GetPosition());
 
     Vec4 maxPoint = GetMaximumXandY(vertices);
     Vec4 minPoint = GetMinimumXandY(vertices);
@@ -101,19 +152,25 @@ void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2)
         {
             Vec4 pointChecked = {i,j,0,1};
 
-            Vec4 w = pointChecked.GetBarycentricCoords(p0,p1,p2);
-
-            float depth =  w.x * p0.z + w.y * p1.z + w.z * p1.z;
-
-            if(pointChecked.IsInTriangle(p0,p1,p2))
+            if(pointChecked.IsInTriangle(vertices[0],vertices[1],vertices[2]))
+            {
+                Vec4 w = pointChecked.GetBarycentricCoords(vertices[0],vertices[1],vertices[2]);
+                float depth =  w.x * p0.GetDepth() + w.y * p1.GetDepth() + w.z * p2.GetDepth();
+                Vec4 color = {
+                    w.x * p0.GetColor().x + w.y * p1.GetColor().x + w.z * p2.GetColor().x,
+                    w.x * p0.GetColor().y + w.y * p1.GetColor().y + w.z * p2.GetColor().y,
+                    w.x * p0.GetColor().z + w.y * p1.GetColor().z + w.z * p2.GetColor().z,
+                    w.x * p0.GetColor().w + w.y * p1.GetColor().w + w.z * p2.GetColor().w,
+                    };
                 DrawPixel(i,j,depth,w);
+            }
         }
-    }   
+    }
 }
 
 Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
 {
-    Vec4 coordinate = {-vertex.x,-vertex.y,-vertex.z,1};
+    Vec4 coordinate = {vertex.GetPosition() * -1};
 
     // Local space to World space
     Mat4 transformMat = modelMatrix*viewMatrix;
@@ -187,7 +244,13 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     if(wireFrameOn)
         DrawTriangleWireFrame(screenCoords);
 
-    FillTriangle(screenCoords[0],screenCoords[1],screenCoords[2]);
+    rdrVertex vertex[3] = {
+        {{screenCoords[0].x, screenCoords[0].y, screenCoords[0].z}, vertices[0].getNormal(), vertices[0].GetColor(), vertices[0].GetTexCoord()},
+        {{screenCoords[1].x, screenCoords[1].y, screenCoords[1].z}, vertices[1].getNormal(), vertices[1].GetColor(), vertices[1].GetTexCoord()},
+        {{screenCoords[2].x, screenCoords[2].y, screenCoords[2].z}, vertices[2].getNormal(), vertices[2].GetColor(), vertices[2].GetTexCoord()}
+    };
+
+    FillTriangle(vertex[0],vertex[1],vertex[2]);
 }
 
 
