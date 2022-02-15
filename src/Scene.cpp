@@ -36,7 +36,7 @@ void Scene::Update(float deltaTime, Renderer& renderer)
 
     renderer.SetView(renderer.GetView() * CreateTransformMatrix({0,0,0},{0,0.2,0.2}, {1,1,1}));
 
-    renderer.SetModel(CreateTransformMatrix({0,sin(time),0},{0.2,0,1}, {1,1,1}));
+    renderer.SetModel(CreateTransformMatrix({0,time,0},{0.2,0,1}, {1,1,1}));
     renderer.DrawTriangles(vertices.data(), vertices.size());
     renderer.SetModel(CreateTransformMatrix({0,0,0},{0,0,1}, {1,1,1}));
     renderer.DrawTriangles(vertices.data(), vertices.size());
