@@ -44,6 +44,21 @@ void Renderer::SetModel(Mat4 p_modelMatrix)
     modelMatrix = p_modelMatrix;
 }
 
+Mat4 Renderer::GetProjection()
+{
+    return projectionMatrix;
+}
+
+Mat4 Renderer::GetView()
+{
+    return viewMatrix;
+}
+
+Mat4 Renderer::GetModel()
+{
+    return modelMatrix;
+}
+
 void Renderer::SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height)
 {
     // TODO

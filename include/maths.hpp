@@ -132,7 +132,6 @@ public:
 
     friend Vec4 operator+(const Vec4& a, const Vec4& b);
     friend Vec4 operator-(const Vec4& a, const Vec4& b);
-    friend Vec4 operator*(const Vec4& a, const Vec4& b);
 
     friend Vec4 operator*(const Vec4& a, const float& b);
     
@@ -154,10 +153,11 @@ Mat4 operator*(const Mat4& a, const float& b);
 
 Vec4 operator+(const Vec4& a, const Vec4& b);
 Vec4 operator*(const Vec4& a, const float& b);
-Vec4 operator*(const Mat4& a, const Vec4& b);
 
 Vec3 operator+(const Vec3& a, const Vec3& b);
 Vec3 operator*(const Vec3& a, const float b);
+Vec3 operator*(const Vec3& a, const Vec3& b);
+Vec3 operator-(const Vec3& a, const Vec3& b);
 
 /////////////////////////////////////////////                Operator                /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,11 +167,10 @@ Vec3 operator*(const Vec3& a, const float b);
 /////////////////////////////////////////////           Inline functions            /////////////////////////////////////////////////////
 
 
-inline Vec4 GetNormalVector(const Vec4& p0, const Vec4& p1, const Vec4& p2)
+inline Vec3 GetNormalVector(const Vec3& p0, const Vec3& p1, const Vec3& p2)
 {
-
-    Vec4 normal = (p1-p0) * (p2-p0);
-    printf("normal={%f, %f, %f, %f}\n",normal.x,normal.y,normal.z,normal.w);
+    Vec3 normal = (p1 - p0) * (p2 - p0);
+    printf("normal={%f, %f, %f, %f}\n",normal.x,normal.y,normal.z);
     return normal;
 }
 
