@@ -56,6 +56,9 @@ public:
     void SetProjection(Mat4 p_projectionMatrix);
     void SetView(Mat4 p_viewMatrix);
     void SetModel(Mat4 p_modelMatrix);
+    Mat4 GetProjection();
+    Mat4 GetView();
+    Mat4 GetModel();
     void SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height);
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
     void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);

@@ -34,8 +34,7 @@ void Scene::Update(float deltaTime, Renderer& renderer)
     // Hard coded matrix
     // TODO: Remove this and use proper functions !
 
-    //Mat4 modelMatrix = CreateTransformMatrix({0,0,0},{0,0,0}, {1,1,1});
-    renderer.SetView(CreateTransformMatrix({0,0,0},{0,0.2,0.2}, {1,1,1}));
+    renderer.SetView(renderer.GetView() * CreateTransformMatrix({0,0,0},{0,0.2,0.2}, {1,1,1}));
 
     renderer.SetModel(CreateTransformMatrix({0,sin(time),0},{0.2,0,1}, {1,1,1}));
     renderer.DrawTriangles(vertices.data(), vertices.size());
