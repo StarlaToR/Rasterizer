@@ -8,7 +8,12 @@
 
 - Ajouter l'effet de perspective (Version 5)
 
-- Problème avec le cube, des wireframes sont dessinés au milieu de nul part 
 
 
 
+
+- GetHomogenize => Homogenize
+
+- Le renderer ne dessine que des triangles, le reste est géré dans le fichier Scene.cpp
+
+- Rotation bizarre
