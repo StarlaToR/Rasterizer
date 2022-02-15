@@ -60,8 +60,6 @@ Vec3 Vec3::GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2)
     return barycentricCoords;
 }
 
-
-
 bool Vec4::IsInTriangle(Vec4 p0,Vec4 p1, Vec4 p2)
 {
     float e01 = (this->x - p0.x) * (p1.y - p0.y) - (this->y - p0.y) * (p1.x - p0.x);
@@ -143,6 +141,28 @@ Vec4 operator+(const Vec4& a, const Vec4& b)
         a.y + b.y,
         a.z + b.z,
         a.w + b.w
+    );
+    return c;
+}
+
+Vec4 operator-(const Vec4& a, const Vec4& b)
+{
+    Vec4 c(
+        a.x - b.x,
+        a.y - b.y,
+        a.z - b.z,
+        a.w - b.w
+    );
+    return c;
+}
+
+Vec4 operator*(const Vec4& a, const Vec4& b)
+{
+    Vec4 c(
+        a.x * b.x,
+        a.y * b.y,
+        a.z * b.z,
+        a.w * b.w
     );
     return c;
 }

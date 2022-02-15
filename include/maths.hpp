@@ -131,6 +131,9 @@ public:
     void GetNewZForZBuffer();
 
     friend Vec4 operator+(const Vec4& a, const Vec4& b);
+    friend Vec4 operator-(const Vec4& a, const Vec4& b);
+    friend Vec4 operator*(const Vec4& a, const Vec4& b);
+
     friend Vec4 operator*(const Vec4& a, const float& b);
     
     void operator*=(const float tab[4][4]);
@@ -164,8 +167,15 @@ Vec3 operator*(const Vec3& a, const float b);
 /////////////////////////////////////////////           Inline functions            /////////////////////////////////////////////////////
 
 
+inline Vec4 GetNormalVector(const Vec4& p0, const Vec4& p1, const Vec4& p2)
+{
 
-inline Vec4 GetMaximumXandY(std::vector<Vec4> vertices)
+    Vec4 normal = (p1-p0) * (p2-p0);
+    printf("normal={%f, %f, %f, %f}\n",normal.x,normal.y,normal.z,normal.w);
+    return normal;
+}
+
+inline Vec4 GetMaximumXandY(const std::vector<Vec4>& vertices)
 {
     float x=-1,y=-1;
     for(int i=0; i < (int) vertices.size(); i++)

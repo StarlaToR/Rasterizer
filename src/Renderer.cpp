@@ -98,6 +98,8 @@ void Renderer::FillTriangle(const Vec4& p0, const Vec4& p1, const Vec4& p2, Vec4
     Vec4 maxPoint = GetMaximumXandY(vertices);
     Vec4 minPoint = GetMinimumXandY(vertices);
 
+    //GetNomal
+
     for(float i=minPoint.x;i<maxPoint.x;i++)
     {
         for(float j=minPoint.y;j<maxPoint.y;j++)
@@ -306,6 +308,8 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         VertexGraphicPipeline(vertices[1]),
         VertexGraphicPipeline(vertices[2]),
     };
+
+    GetNormalVector(screenCoords[0],screenCoords[1],screenCoords[2]);
 
     if(wireFrameOn)
         DrawTriangleWireFrame(screenCoords);
