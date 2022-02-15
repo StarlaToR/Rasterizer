@@ -1,8 +1,3 @@
-- Faire fonctionner la fonction DrawSphere
-
-- Optimiser la fonction FillTriangle qui rame du cul.
-    Le parcours de l'ensemble des pixels de l'écran y est peut-être pour quelque chose...
-
 - Si on est stylé ajouter des sliders qui permettent de modifier la scène pendant l'exécution du 
     programme (changer les coordonnées des points, la rotation)
 
@@ -13,8 +8,6 @@
 
 
 - GetHomogenize => Homogenize
-
-- Le renderer ne dessine que des triangles, le reste est géré dans le fichier Scene.cpp
 
 - Gestion des couleurs avec les coordonnées barycentriques des points
 
