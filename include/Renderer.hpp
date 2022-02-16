@@ -131,8 +131,8 @@ private:
     void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);
     void DrawTriangleWireFrame(Vec4* vertices);
 
-    bool wireFrameOn=true;
-    bool lightsOn = true;
+    bool wireFrameOn=false;
+    bool lightsOn = false;
 };
 
 

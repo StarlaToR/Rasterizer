@@ -14,10 +14,15 @@ rdrVertex operator*(const rdrVertex& vertex, const Mat4& transformMat)
 
     rdrVertex newVertex = vertex;
     Vec4 newPosition = vertex.position * transformMat;
+    Vec4 newNormal = vertex.normal * transformMat;
 
     newVertex.position.x=newPosition.x;
     newVertex.position.y=newPosition.y;
     newVertex.position.z=newPosition.z;
+
+    newVertex.normal.x=newNormal.x;
+    newVertex.normal.y=newNormal.y;
+    newVertex.normal.z=newNormal.z;
 
     return newVertex;
 }
@@ -166,8 +171,6 @@ float Renderer::GetLightIntensity(rdrVertex& p)
     Vec3 normal = p.GetNormal();
     Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[0][3], viewMatrix.tab[0][3]) - p.GetPosition();
 
-    viewRay.Normalize();
-    normal.Normalize();
     for (int i = 0; i < (int) lights.size(); i++)
     {
         if (lights[i].GetAmbient() > ambientLight)
@@ -277,7 +280,7 @@ void Renderer::DrawLine(const Vec4& p0, const Vec4& p1, Vec4& color)
     x1 = y1 = z1 = dm/2; /* error offset */
     
     for(;;) {  /* loop */
-        DrawPixel(x0, y0, -1000, color);
+        DrawPixel(x0, y0, z0, color);
         if (i-- == 0) break;
         x1 -= dx; if (x1 < 0) { x1 += dm; x0 += sx; } 
         y1 -= dy; if (y1 < 0) { y1 += dm; y0 += sy; } 
@@ -305,18 +308,29 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
 
     if(wireFrameOn)
         DrawTriangleWireFrame(screenCoords);
+    else
+    {
+        vertices[0].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
+        vertices[1].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
+        vertices[2].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
 
-    vertices[0].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
-    vertices[1].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
-    vertices[2].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
+        rdrVertex vertex[3] = {
+            {{screenCoords[0].x, screenCoords[0].y, screenCoords[0].z}, vertices[0].GetNormal(), vertices[0].GetColor(), vertices[0].GetTexCoord()},
+            {{screenCoords[1].x, screenCoords[1].y, screenCoords[1].z}, vertices[1].GetNormal(), vertices[1].GetColor(), vertices[1].GetTexCoord()},
+            {{screenCoords[2].x, screenCoords[2].y, screenCoords[2].z}, vertices[2].GetNormal(), vertices[2].GetColor(), vertices[2].GetTexCoord()}
+        };
 
-    rdrVertex vertex[3] = {
-        {{screenCoords[0].x, screenCoords[0].y, screenCoords[0].z}, vertices[0].GetNormal(), vertices[0].GetColor(), vertices[0].GetTexCoord()},
-        {{screenCoords[1].x, screenCoords[1].y, screenCoords[1].z}, vertices[1].GetNormal(), vertices[1].GetColor(), vertices[1].GetTexCoord()},
-        {{screenCoords[2].x, screenCoords[2].y, screenCoords[2].z}, vertices[2].GetNormal(), vertices[2].GetColor(), vertices[2].GetTexCoord()}
-    };
+        FillTriangle(vertex[0],vertex[1],vertex[2]);
 
-    FillTriangle(vertex[0],vertex[1],vertex[2]);
+        Vec4 color= {1,1,1,1};
+    //    DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal()*100,color);
+
+      //  DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal()*100,color);
+
+    }
+
+
+
 }
 
 

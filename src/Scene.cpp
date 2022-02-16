@@ -169,13 +169,12 @@ void Scene::Scene2(Renderer& renderer)
     renderer.SetLights(lights);
 
 
-    renderer.SetModel(CreateTransformMatrix({1,0,0}, {time,time/2,0}, {0.5f,0.5f,0.5f}));
+    renderer.SetModel(CreateTransformMatrix({0.5f,0,0}, {time,time*1.5f,0}, {0.5f,0.5f,0.5f}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
 
 
-    renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,0,0}, {0.1f,0.1f,0.1f}));
+    renderer.SetModel(CreateTransformMatrix({-0.5f,0,0}, {0,time/2,time}, {0.2f,0.2f,0.2f}));
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
-
 
 /*
     renderer.SetModel(CreateTransformMatrix({-0.5f,0,0}, {(float)time,(float)time/2,0}, {0.2f,0.2f,0.2f}));
