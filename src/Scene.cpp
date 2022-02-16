@@ -41,7 +41,7 @@ static std::vector<rdrVertex> GetCubeVertices()
 
 static std::vector<rdrVertex> GetSphereVertices()
 {
-    int lat = 50, lon = 50;
+    int lat = 20, lon = 20;
     float radius = 1.5f;
     std::vector<rdrVertex> sphere;
 
