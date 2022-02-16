@@ -64,8 +64,8 @@ void Scene::DrawSquare(const float& size, const Mat4& transformMat ,Renderer& re
     vertices = {
         { -size/2, size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
         { size/2, size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
-        { size/2,-size/2, 0.f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
-        { -size/2,-size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
+        { size/2,-size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
+        { -size/2,-size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
     };
     DrawQuad(vertices.data(),renderer);
 }
@@ -74,12 +74,11 @@ void Scene::DrawSquare(const float& size, const Mat4& transformMat ,Renderer& re
 void Scene::DrawCube(const float& size, Renderer& renderer)
 {
 
-    //ATTENTION : NO UPPER AND LOWER FACE
-
     Mat4 center = renderer.GetModel();
 
     renderer.SetModel(center);
 
+    
     DrawSquare(size,CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}),renderer);
     renderer.SetModel(center);
     DrawSquare(size,CreateTransformMatrix({0,M_PI,0},{0,0,size/2},{1,1,1}),renderer);
