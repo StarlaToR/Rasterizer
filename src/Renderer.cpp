@@ -11,9 +11,17 @@
 
 rdrVertex operator*(const rdrVertex& vertex, const Mat4& transformMat)
 {
-    Vec4 newPosition = Vec4(vertex.position);
 
+    rdrVertex newVertex = vertex;
+    Vec4 newPosition = vertex.position * transformMat;
+
+    newVertex.position.x=newPosition.x;
+    newVertex.position.y=newPosition.y;
+    newVertex.position.z=newPosition.z;
+
+    return newVertex;
 }
+
 
 
 Vec3 rdrVertex::GetPosition()

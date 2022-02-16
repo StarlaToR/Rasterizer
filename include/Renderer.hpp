@@ -30,7 +30,7 @@ public:
         texCoord = {j, k};
     }
 
-    rdrVertex(Vec3 pos, Vec3 norm, Vec3 col, Vec2 coord)
+    rdrVertex(const Vec3& pos, const Vec3& norm, const Vec3& col, const Vec2& coord)
     {
         position = pos;
         normal = norm;
