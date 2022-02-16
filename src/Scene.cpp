@@ -167,7 +167,6 @@ void Scene::Scene1(Renderer& renderer)
 
 void Scene::Scene2(Renderer& renderer)
 {
-
     renderer.SetLights(lights);
 
     renderer.SetModel(CreateTransformMatrix({0.5f,0,0}, {(float)time,(float)time/2,0}, {0.5f,0.5f,0.5f}));

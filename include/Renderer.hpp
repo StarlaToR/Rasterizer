@@ -132,7 +132,7 @@ private:
     void DrawTriangleWireFrame(Vec4* vertices);
 
     bool wireFrameOn=true;
-    bool lightsOn = false;
+    bool lightsOn = true;
 };
 
 
