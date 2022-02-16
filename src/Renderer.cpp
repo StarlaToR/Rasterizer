@@ -146,10 +146,6 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
 
 float Renderer::GetLightIntensity(rdrVertex& p ,std::vector<Light> lights)
 {
-//                float ambientLight = light.ambient        
-//                float diffuseLight = light.diffuse * cos(teta);
-//                float specularLight = light.specular * cos^alpha(omega);
-
 }
 
 void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2, std::vector<Light> lights)
@@ -171,7 +167,6 @@ void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2, std::ve
             if(pointChecked.IsInTriangle(vertices[0],vertices[1],vertices[2]))
             {
                 
-
                 Vec4 w = pointChecked.GetBarycentricCoords(vertices[0],vertices[1],vertices[2]);
                 float depth =  w.x * p0.GetDepth() + w.y * p1.GetDepth() + w.z * p2.GetDepth();
                 Vec4 color = {
@@ -250,7 +245,7 @@ void Renderer::DrawTriangleWireFrame(Vec4* vertices)
 }
 
 
-void Renderer::DrawTriangle(rdrVertex* vertices, std::vector<Light> lights)
+void Renderer::DrawTriangle(rdrVertex* vertices)
 {
     Vec4 screenCoords[3]= {
         VertexGraphicPipeline(vertices[0]),
@@ -302,6 +297,17 @@ bool Renderer::CheckDepth(int x, int y, float z)
         return false;
     }
 }
+
+void Renderer::DrawTriangles(rdrVertex* p_vertices, const uint p_count)
+{
+    // calculate mvp from matrices
+    // Transform vertex list to triangles into colorBuffer
+    for (uint i = 0; i < p_count; i += 3)
+    {
+        DrawTriangle(&p_vertices[i]);
+    }
+}
+
 
 
 /////////////////////////////////////////////                 Renderer               /////////////////////////////////////////////////////

@@ -32,6 +32,7 @@ public:
 
 private:
     float angle=0;
+    Vec3 position={0,0,0};
     Mat4 viewMatrix=GetIdentityMat4();
     Mat4 projectionMatrix=GetIdentityMat4();
 

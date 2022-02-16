@@ -89,6 +89,7 @@ private:
     Mat4 modelMatrix;
     Mat4 projectionMatrix;
     Mat4 viewMatrix;
+    std::vector<Light> lights;
 
     Vec4 lineColor = { 0.f, 1.f, 1.f, 1.f };
 
@@ -103,19 +104,21 @@ public:
     void SetProjection(Mat4 p_projectionMatrix);
     void SetView(Mat4 p_viewMatrix);
     void SetModel(Mat4 p_modelMatrix);
+    void SetLights(const std::vector<Light>& p_lights) { this->lights = p_lights; }
     Mat4 GetProjection();
     Mat4 GetView();
     Mat4 GetModel();
     void SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height);
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
+    void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
+
+private:
     void DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color);
     void TransformVertices(Vec3& vertices);
     void FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2, std::vector<Light> lights);
     bool CheckDepth(int x, int y, float z);
     bool wireFrameOn=true;
-    void DrawTriangle(rdrVertex* p_vertices,std::vector<Light> lights);
-
-private:
+    void DrawTriangle(rdrVertex* p_vertices);
     
     float GetLightIntensity(rdrVertex& p ,std::vector<Light> lights);
     void ShowImGuiControls();

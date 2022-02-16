@@ -2,6 +2,40 @@
 #include <maths.hpp>
 #include <Scene.hpp>
 
+static std::vector<rdrVertex> GetCubeFace()
+{
+   //Back face
+    return {
+        { -0.5f, 0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 1.0f,     0.0f, 0.0f },
+        {  0.5f, 0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
+        {  0.5f,-0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 1.0f,     0.0f, 0.0f },
+        { -0.5f,-0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      1.0f, 1.0f, 0.0f,     0.0f, 0.0f },
+    };
+}
+
+static void TransformVertices(std::vector<rdrVertex>& dest, const std::vector<rdrVertex>& vert, const Mat4& transform)
+{
+    // multiply all verts by transform and return them
+    for(int i=0; i<vert.size(); i++)
+    {
+        //dest = vert * transform;
+    }
+}
+
+static std::vector<rdrVertex> GetCubeVertices()
+{
+    std::vector<rdrVertex> square = GetCubeFace();
+
+    std::vector<rdrVertex> cube;
+    TransformVertices(cube, square, CreateTransformMatrix({ 0,      0,      0}, {0, 0, 0}, {1, 1, 1 }));
+    TransformVertices(cube, square, CreateTransformMatrix({ 0,      M_PI,   0}, {0, 0, 0}, {1, 1, 1 }));
+    TransformVertices(cube, square, CreateTransformMatrix({ 0,      M_PI/2, 0}, {0, 0, 0}, {1, 1, 1 }));
+    TransformVertices(cube, square, CreateTransformMatrix({ 0,     -M_PI/2, 0}, {0, 0, 0}, {1, 1, 1 }));
+    TransformVertices(cube, square, CreateTransformMatrix({ M_PI/2, 0,      0}, {0, 0, 0}, {1, 1, 1 })); 
+    TransformVertices(cube, square, CreateTransformMatrix({-M_PI/2, 0,      0}, {0, 0, 0}, {1, 1, 1 }));
+
+    return cube;
+}
 
 Scene::Scene()
 {
@@ -9,6 +43,8 @@ Scene::Scene()
     // Setup some vertices to test
 
     lights.push_back(Light({0,0,0,0},0.2f,0.4f,0.4f));
+
+    cubeVertices = GetCubeVertices();
 }
 
 Scene::~Scene()
@@ -49,53 +85,15 @@ void Scene::DrawSphere(const int lon, const int lat, const float& radius, const 
             vertices[2].SetPosition({c2.x,c2.y,c2.z});
             vertices[3].SetPosition({c3.x,c3.y,c3.z});
 
-            vertices[0].SetColor({0.5f,0,0,0});
-            vertices[1].SetColor({1.0f,0.2f,0,0});
-            vertices[2].SetColor({1.0f,0,1.0f,0});
-            vertices[3].SetColor({0,0,0,0});
+            vertices[0].SetColor({0.5f,0,0,1});
+            vertices[1].SetColor({1.0f,0.2f,0,1});
+            vertices[2].SetColor({1.0f,0,1.0f,1});
+            vertices[3].SetColor({0,0,0,1});
 
             DrawQuad(vertices,renderer);
 
         }
     }
-}
-
-void Scene::DrawSquare(const float& size, const Mat4& transformMat ,Renderer& renderer)
-{
-
-    renderer.SetModel(renderer.GetModel()*transformMat);
-
-   //Back face
-    vertices = {
-        { -size/2, size/2, 0.f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 1.0f,     0.0f, 0.0f },
-        { size/2, size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
-        { size/2,-size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 1.0f,     0.0f, 0.0f },
-        { -size/2,-size/2, 0.f,      0.0f, 0.0f, 0.0f,      1.0f, 1.0f, 0.0f,     0.0f, 0.0f },
-    };
-    DrawQuad(vertices.data(),renderer);
-}
-
-
-void Scene::DrawCube(const float& size, Renderer& renderer)
-{
-
-    Mat4 center = renderer.GetModel();
-
-    renderer.SetModel(center);
-
-    
-    DrawSquare(size,CreateTransformMatrix({0,0,0},{0,0,-size/2},{1,1,1}),renderer);
-    renderer.SetModel(center);
-    DrawSquare(size,CreateTransformMatrix({0,M_PI,0},{0,0,size/2},{1,1,1}),renderer);
-    renderer.SetModel(center);
-    DrawSquare(size,CreateTransformMatrix({0,M_PI/2,0},{-size/2,0,0},{1,1,1}),renderer);
-    renderer.SetModel(center);
-    DrawSquare(size,CreateTransformMatrix({0,-M_PI/2,0},{size/2,0,0},{1,1,1}),renderer);
-    renderer.SetModel(center);
-    DrawSquare(size,CreateTransformMatrix({M_PI/2,0,0},{0,size/2,0},{1,1,1}),renderer); 
-    renderer.SetModel(center);
-    DrawSquare(size,CreateTransformMatrix({-M_PI/2,0,0},{0,-size/2,0},{1,1,1}),renderer);
-
 }
 
 void Scene::DrawQuad(rdrVertex* vertices, Renderer& renderer)
@@ -110,17 +108,7 @@ void Scene::DrawQuad(rdrVertex* vertices, Renderer& renderer)
     triangleVertices.push_back(vertices[2]);
     triangleVertices.push_back(vertices[0]);
 
-    DrawTriangles(triangleVertices.data(),triangleVertices.size(),renderer);
-}
-
-void Scene::DrawTriangles(rdrVertex* p_vertices, const uint p_count, Renderer& renderer)
-{
-    // calculate mvp from matrices
-    // Transform vertex list to triangles into colorBuffer
-    for (uint i = 0; i < p_count; i += 3)
-    {
-        renderer.DrawTriangle(&p_vertices[i],lights);
-    }
+    renderer.DrawTriangles(triangleVertices.data(),triangleVertices.size());
 }
 
 
@@ -153,15 +141,15 @@ void Scene::Scene1(Renderer& renderer)
     };
 
     //renderer.SetModel(CreateTransformMatrix({0,(float)time,0},{0.2,0,1}, {1,1,1}));
-    DrawTriangles(vertices.data(), vertices.size(),renderer);
+   // DrawTriangles(vertices.data(), vertices.size(),renderer);
     renderer.SetModel(CreateTransformMatrix({0,0,0},{0,0,1}, {1,1,1}));
-    DrawTriangles(vertices.data(), vertices.size(),renderer);
+    renderer.DrawTriangles(vertices.data(), vertices.size());
 }
 
 void Scene::Scene2(Renderer& renderer)
 {
 
-    renderer.SetModel(CreateTransformMatrix({(float)-time/2,(float)-time,0},{-0.5f,0,0}, {1,1,1}));
+//    renderer.SetModel(CreateTransformMatrix({(float)-time/2,(float)-time,0},{-0.5f,0,0}, {1,1,1}));
 
 /*
     vertices = {
@@ -173,12 +161,14 @@ void Scene::Scene2(Renderer& renderer)
     };
     DrawQuad(vertices.data(),renderer);
 */
+    renderer.SetLights(lights);
 
-    DrawCube(0.5f,renderer);
+    renderer.SetModel(CreateTransformMatrix({(float)time,(float)time/2,0},{0.5f,0,0}, {1,1,1}));
+    renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
 
-    renderer.SetModel(CreateTransformMatrix({(float)time,(float)time*2,0},{0.5f,0,0}, {1,1,1}));
+    //renderer.SetModel(CreateTransformMatrix({(float)time,(float)time*2,0},{0.5f,0,0}, {1,1,1}));
 
-    DrawSphere(50,50,0.3f,CreateTransformMatrix({0,0,0},{0,0,0},{1,1,1}),renderer);
+    //DrawSphere(50,50,0.3f,CreateTransformMatrix({0,0,0},{0,0,0},{1,1,1}),renderer);
 }
 
 /////////////////////////////////////////////            Scene functions             /////////////////////////////////////////////////////
