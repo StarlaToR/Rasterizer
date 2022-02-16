@@ -64,6 +64,16 @@ Vec3 operator*(const Vec3& a, const float b)
     return c;
 }
 
+Vec3 operator*(const float b, const Vec3& a)
+{
+    Vec3 c(
+        a.x * b,
+        a.y * b,
+        a.z * b
+    );
+    return c;
+}
+
 Vec3 operator*(const Vec3& a, const Vec3& b)
 {
     Vec3 d(
@@ -439,6 +449,18 @@ Mat4 operator*(const Mat4& a, const float& b)
 
 
 Vec4 operator*(const Mat4& a, const Vec4& b)
+{
+    Vec4 c = Vec4();
+
+    c.x = a.tab[0][0] * b.x + a.tab[0][1] * b.y + a.tab[0][2] * b.z + a.tab[0][3] * b.w;
+    c.y = a.tab[1][0] * b.x + a.tab[1][1] * b.y + a.tab[1][2] * b.z + a.tab[1][3] * b.w;
+    c.z = a.tab[2][0] * b.x + a.tab[2][1] * b.y + a.tab[2][2] * b.z + a.tab[2][3] * b.w;
+    c.w = a.tab[3][0] * b.x + a.tab[3][1] * b.y + a.tab[3][2] * b.z + a.tab[3][3] * b.w;
+
+    return c;
+}
+
+Vec4 operator*(const Vec4& b, const Mat4& a)
 {
     Vec4 c = Vec4();
 

@@ -126,7 +126,7 @@ private:
     bool wireFrameOn=true;
     void DrawTriangle(rdrVertex* p_vertices);
     
-    float GetLightIntensity(rdrVertex& p ,std::vector<Light> lights);
+    float GetLightIntensity(rdrVertex& p);
     void ShowImGuiControls();
     Vec4 VertexGraphicPipeline(rdrVertex& vertex);
     void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);
