@@ -166,7 +166,7 @@ float Renderer::GetLightIntensity(rdrVertex& p)
     Vec3 normal = p.GetNormal();
     Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[0][3], viewMatrix.tab[0][3]) - p.GetPosition();
 
-    for (int i = 0; i < (int) lights.size(); i++)
+    for (int i = 0; i < (int) lights.size()/sizeof(Light); i++)
     {
         if (lights[i].GetAmbient() > ambientLight)
         {
