@@ -34,6 +34,8 @@ static std::vector<rdrVertex> GetCubeVertices()
     TransformVertices(cube, square, CreateTransformMatrix({ M_PI/2, 0,      0}, {0, 0, 0}, {1, 1, 1 })); 
     TransformVertices(cube, square, CreateTransformMatrix({-M_PI/2, 0,      0}, {0, 0, 0}, {1, 1, 1 }));
 
+    printf("\nsize = %d\n",cube.size());
+
     return cube;
 }
 
@@ -41,8 +43,6 @@ Scene::Scene()
 {
     // HERE: Load the scene
     // Setup some vertices to test
-
-    lights.push_back(Light({0,0,0},0.2f,0.4f,0.4f));
 
     cubeVertices = GetCubeVertices();
 }
@@ -149,26 +149,11 @@ void Scene::Scene1(Renderer& renderer)
 void Scene::Scene2(Renderer& renderer)
 {
 
-//    renderer.SetModel(CreateTransformMatrix({(float)-time/2,(float)-time,0},{-0.5f,0,0}, {1,1,1}));
-
-/*
-    vertices = {
-        //       pos                  normal                  color              uv
-        { -0.5f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
-        { 0.5f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
-        {0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
-        { -0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
-    };
-    DrawQuad(vertices.data(),renderer);
-*/
     renderer.SetLights(lights);
 
     renderer.SetModel(CreateTransformMatrix({(float)time,(float)time/2,0},{0.5f,0,0}, {1,1,1}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
 
-    //renderer.SetModel(CreateTransformMatrix({(float)time,(float)time*2,0},{0.5f,0,0}, {1,1,1}));
-
-    //DrawSphere(50,50,0.3f,CreateTransformMatrix({0,0,0},{0,0,0},{1,1,1}),renderer);
 }
 
 /////////////////////////////////////////////            Scene functions             /////////////////////////////////////////////////////

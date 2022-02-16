@@ -15,9 +15,9 @@ void Camera::Update(const float p_deltaTime, const CameraInputs& inputs)
 {
     // Movements
     if(inputs.moveLeft==true)
-        position.x-=0.05f;
-    if(inputs.moveRight==true)
         position.x+=0.05f;
+    if(inputs.moveRight==true)
+        position.x-=0.05f;
 
     if(inputs.moveUp==true)
         position.y+=0.05f;
