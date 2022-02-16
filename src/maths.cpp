@@ -64,6 +64,16 @@ Vec3 operator*(const Vec3& a, const float b)
     return c;
 }
 
+Vec3 operator*(const float b, const Vec3& a)
+{
+    Vec3 c(
+        a.x * b,
+        a.y * b,
+        a.z * b
+    );
+    return c;
+}
+
 Vec3 operator*(const Vec3& a, const Vec3& b)
 {
     Vec3 d(

@@ -58,6 +58,7 @@ public:
     void Normalize();
     bool IsInTriangle(Vec3 p0,Vec3 p1, Vec3 p2);
     Vec3 GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2);
+    float GetCrossProduct(const Vec3& a, const Vec3& b);
 
     void GetNewZForZBuffer();
 };
@@ -183,6 +184,8 @@ Vec4 operator*(const Vec4& a, const float& b);
 
 Vec3 operator+(const Vec3& a, const Vec3& b);
 Vec3 operator*(const Vec3& a, const float b);
+Vec3 operator*(const Vec3& a, const float b);
+Vec3 operator*(const float b, const Vec3& a);
 Vec3 operator*(const Vec3& a, const Vec3& b);
 Vec3 operator-(const Vec3& a, const Vec3& b);
 
@@ -294,7 +297,7 @@ inline Mat4 CreateZRotationMatrix(float angle) // ! radian !
     return matrix;
 }
 
-inline Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
+inline Mat4 CreateTransformMatrix(const Vec3& position, const Vec3& rotation, const Vec3& scale)
 {
     Mat4 translation = CreateTranslationMatrix(position);
     Mat4 rotateX = CreateXRotationMatrix(rotation.x);
@@ -305,6 +308,12 @@ inline Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, co
     Mat4 transform = translation * rotateY * rotateX * rotateZ * scaling;
 
     return transform;
+}
+
+inline float GetCrossProduct(const Vec3& a, const Vec3& b)
+{
+    Vec3 d = a * b;
+    return d.GetMagnitude();
 }
 /////////////////////////////////////////////           Inline functions            /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

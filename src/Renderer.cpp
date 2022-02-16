@@ -144,8 +144,30 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
     }
 }
 
-float Renderer::GetLightIntensity(rdrVertex& p ,std::vector<Light> lights)
+float Renderer::GetLightIntensity(rdrVertex& p)
 {
+    float ambientLight = lights[0].GetAmbient();  
+    float intensity = 0;
+    Vec3 normal = p.GetNormal();
+
+    for (int i = 0; i < lights.size(); i++)
+    {
+        if (lights[i].GetAmbient() > ambientLight)
+        {
+            ambientLight = lights[i].GetAmbient();
+        }
+
+        Vec3 lightRay = p.GetPosition() - lights[i].GetPosition();
+        Vec3 reflectionRay = 2 * (normal * lightRay) * normal - lightRay;
+        Vec3 viewRay = camera.GetPosition() - p.GetPosition();
+
+        float diffuseLight = lights[i].GetDiffuse() * GetCrossProduct(lightRay, normal);
+        float specularLight = lights[i].GetSpecular() * GetCrossProduct(viewRay, p.GetPosition());
+
+        intensity += diffuseLight + specularLight;
+    }
+    intensity += ambientLight;
+    return intensity;
 }
 
 void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2, std::vector<Light> lights)
