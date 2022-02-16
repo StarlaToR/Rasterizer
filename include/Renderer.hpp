@@ -123,7 +123,6 @@ private:
     void TransformVertices(Vec3& vertices);
     void FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2);
     bool CheckDepth(int x, int y, float z);
-    bool wireFrameOn=true;
     void DrawTriangle(rdrVertex* p_vertices);
     
     float GetLightIntensity(rdrVertex& p);
@@ -131,6 +130,8 @@ private:
     Vec4 VertexGraphicPipeline(rdrVertex& vertex);
     void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);
     void DrawTriangleWireFrame(Vec4* vertices);
+
+    bool wireFrameOn=true;
 
 };
 

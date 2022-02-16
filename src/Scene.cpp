@@ -6,10 +6,13 @@ static std::vector<rdrVertex> GetCubeFace()
 {
    //Back face
     return {
-        { -0.5f, 0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 1.0f,     0.0f, 0.0f },
-        {  0.5f, 0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
-        {  0.5f,-0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 1.0f,     0.0f, 0.0f },
-        { -0.5f,-0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      1.0f, 1.0f, 0.0f,     0.0f, 0.0f },
+        { -0.5f, 0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
+        {  0.5f, 0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
+        {  0.5f,-0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
+
+        { -0.5f, 0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
+        {  0.5f,-0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
+        { -0.5f,-0.5f, 0.5f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
     };
 }
 
@@ -144,8 +147,6 @@ void Scene::Scene1(Renderer& renderer)
         { 0.0f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
     };
 
-    //renderer.SetModel(CreateTransformMatrix({0,(float)time,0},{0.2,0,1}, {1,1,1}));
-   // DrawTriangles(vertices.data(), vertices.size(),renderer);
     renderer.SetModel(CreateTransformMatrix({0,0,1},{0,0,0}, {1,1,1}));
     renderer.DrawTriangles(vertices.data(), vertices.size());
 }
