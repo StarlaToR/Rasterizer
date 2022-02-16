@@ -204,8 +204,7 @@ inline Vec3 GetNormalVector(const Vec3& p0, const Vec3& p1, const Vec3& p2)
 {
     Vec3 normal = (p1-p0)*(p2-p0);
     normal.Normalize();
-    printf("normal={%f, %f, %f}\n",normal.x,normal.y,normal.z);
-    return normal;
+    return normal*-1;
 }
 
 inline Vec4 GetMaximumXandY(const std::vector<Vec3>& vertices)

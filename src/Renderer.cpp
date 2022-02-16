@@ -166,24 +166,28 @@ float Renderer::GetLightIntensity(rdrVertex& p)
     Vec3 normal = p.GetNormal();
     Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[0][3], viewMatrix.tab[0][3]) - p.GetPosition();
 
-    for (int i = 0; i < (int) lights.size()/sizeof(Light); i++)
+    viewRay.Normalize();
+    normal.Normalize();
+    for (int i = 0; i < (int) lights.size(); i++)
     {
         if (lights[i].GetAmbient() > ambientLight)
         {
             ambientLight = lights[i].GetAmbient();
         }
 
-        Vec3 lightRay = p.GetPosition() - lights[i].GetPosition();
+        Vec3 lightRay = lights[i].GetPosition() - p.GetPosition();
         Vec3 reflectionRay = 2 * (normal * lightRay) * normal - lightRay;
         
+        //lightRay.Normalize();
+        //reflectionRay.Normalize();
 
         float diffuseLight = lights[i].GetDiffuse() * GetCrossProduct(lightRay, normal);
         float specularLight = lights[i].GetSpecular() * GetCrossProduct(reflectionRay, viewRay);
-
+    
         intensity += diffuseLight + specularLight;
     }
     intensity += ambientLight;
-
+   // printf("intensity = %f\n\n",intensity);
     return intensity;
 }
 
@@ -199,6 +203,7 @@ void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
 
     for(float i=minPoint.x;i<maxPoint.x;i++)
     {
+
         for(float j=minPoint.y;j<maxPoint.y;j++)
         {
             Vec4 pointChecked = {i,j,0,1};
@@ -351,6 +356,7 @@ void Renderer::DrawTriangles(rdrVertex* p_vertices, const uint p_count)
     {
         DrawTriangle(&p_vertices[i]);
     }
+
 }
 
 
