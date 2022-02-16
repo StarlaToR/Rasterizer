@@ -300,7 +300,7 @@ inline Mat4 CreateZRotationMatrix(float angle) // ! radian !
     return matrix;
 }
 
-inline Mat4 CreateTransformMatrix(const Vec3& position, const Vec3& rotation, const Vec3& scale)
+inline Mat4 CreateTransformMatrix(const Vec3& rotation, const Vec3& position, const Vec3& scale)
 {
     Mat4 translation = CreateTranslationMatrix(position);
     Mat4 rotateX = CreateXRotationMatrix(rotation.x);
@@ -318,6 +318,7 @@ inline float GetCrossProduct(const Vec3& a, const Vec3& b)
     Vec3 d = a * b;
     return d.GetMagnitude();
 }
+
 /////////////////////////////////////////////           Inline functions            /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
