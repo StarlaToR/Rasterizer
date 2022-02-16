@@ -14,7 +14,7 @@ Vec3 rdrVertex::GetPosition()
     return position;
 }
 
-Vec3 rdrVertex::getNormal()
+Vec3 rdrVertex::GetNormal()
 {
     return normal;
 }
@@ -144,8 +144,15 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
     }
 }
 
+float Renderer::GetLightIntensity(rdrVertex& p ,std::vector<Light> lights)
+{
+//                float ambientLight = light.ambient        
+//                float diffuseLight = light.diffuse * cos(teta);
+//                float specularLight = light.specular * cos^alpha(omega);
 
-void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
+}
+
+void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2, std::vector<Light> lights)
 {   
     std::vector<Vec3> vertices;
     vertices.push_back(p0.GetPosition());
@@ -163,6 +170,8 @@ void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
 
             if(pointChecked.IsInTriangle(vertices[0],vertices[1],vertices[2]))
             {
+                
+
                 Vec4 w = pointChecked.GetBarycentricCoords(vertices[0],vertices[1],vertices[2]);
                 float depth =  w.x * p0.GetDepth() + w.y * p1.GetDepth() + w.z * p2.GetDepth();
                 Vec4 color = {
@@ -241,25 +250,28 @@ void Renderer::DrawTriangleWireFrame(Vec4* vertices)
 }
 
 
-void Renderer::DrawTriangle(rdrVertex* vertices)
+void Renderer::DrawTriangle(rdrVertex* vertices, std::vector<Light> lights)
 {
     Vec4 screenCoords[3]= {
         VertexGraphicPipeline(vertices[0]),
         VertexGraphicPipeline(vertices[1]),
         VertexGraphicPipeline(vertices[2]),
     };
-   // GetNormalVector(screenCoords[0],screenCoords[1],screenCoords[2]);
 
     if(wireFrameOn)
         DrawTriangleWireFrame(screenCoords);
 
+    vertices[0].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
+    vertices[1].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
+    vertices[2].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
+
     rdrVertex vertex[3] = {
-        {{screenCoords[0].x, screenCoords[0].y, screenCoords[0].z}, vertices[0].getNormal(), vertices[0].GetColor(), vertices[0].GetTexCoord()},
-        {{screenCoords[1].x, screenCoords[1].y, screenCoords[1].z}, vertices[1].getNormal(), vertices[1].GetColor(), vertices[1].GetTexCoord()},
-        {{screenCoords[2].x, screenCoords[2].y, screenCoords[2].z}, vertices[2].getNormal(), vertices[2].GetColor(), vertices[2].GetTexCoord()}
+        {{screenCoords[0].x, screenCoords[0].y, screenCoords[0].z}, vertices[0].GetNormal(), vertices[0].GetColor(), vertices[0].GetTexCoord()},
+        {{screenCoords[1].x, screenCoords[1].y, screenCoords[1].z}, vertices[1].GetNormal(), vertices[1].GetColor(), vertices[1].GetTexCoord()},
+        {{screenCoords[2].x, screenCoords[2].y, screenCoords[2].z}, vertices[2].GetNormal(), vertices[2].GetColor(), vertices[2].GetTexCoord()}
     };
 
-    FillTriangle(vertex[0],vertex[1],vertex[2]);
+    FillTriangle(vertex[0],vertex[1],vertex[2],lights);
 }
 
 

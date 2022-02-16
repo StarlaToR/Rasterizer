@@ -2,6 +2,7 @@
 
 
 #include <Framebuffer.hpp>
+#include <Light.hpp>
 
 // Vertex format (only one supported for now)
 class rdrVertex
@@ -46,7 +47,7 @@ public:
     }
 
     Vec3 GetPosition();
-    Vec3 getNormal();
+    Vec3 GetNormal();
     Vec4 GetColor();
     Vec2 GetTexCoord();
     float GetDepth();
@@ -108,14 +109,15 @@ public:
     void SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height);
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
     void DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color);
-    void transformVertices(Vec3& vertices);
-    void FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2);
+    void TransformVertices(Vec3& vertices);
+    void FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2, std::vector<Light> lights);
     bool CheckDepth(int x, int y, float z);
     bool wireFrameOn=true;
-    void DrawTriangle(rdrVertex* p_vertices);
+    void DrawTriangle(rdrVertex* p_vertices,std::vector<Light> lights);
 
 private:
     
+    float GetLightIntensity(rdrVertex& p ,std::vector<Light> lights);
     void ShowImGuiControls();
     Vec4 VertexGraphicPipeline(rdrVertex& vertex);
     void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);

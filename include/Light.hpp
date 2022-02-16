@@ -1,3 +1,4 @@
+#pragma once
 #include <maths.hpp>
 
 class Light

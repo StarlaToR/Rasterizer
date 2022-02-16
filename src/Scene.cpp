@@ -49,10 +49,10 @@ void Scene::DrawSphere(const int lon, const int lat, const float& radius, const 
             vertices[2].SetPosition({c2.x,c2.y,c2.z});
             vertices[3].SetPosition({c3.x,c3.y,c3.z});
 
-            vertices[0].SetColor({0.5f,0,0});
-            vertices[1].SetColor({1.0f,0.2f,0});
-            vertices[2].SetColor({1.0f,0,1.0f});
-            vertices[3].SetColor({0,0,0});
+            vertices[0].SetColor({0.5f,0,0,0});
+            vertices[1].SetColor({1.0f,0.2f,0,0});
+            vertices[2].SetColor({1.0f,0,1.0f,0});
+            vertices[3].SetColor({0,0,0,0});
 
             DrawQuad(vertices,renderer);
 
@@ -119,7 +119,7 @@ void Scene::DrawTriangles(rdrVertex* p_vertices, const uint p_count, Renderer& r
     // Transform vertex list to triangles into colorBuffer
     for (uint i = 0; i < p_count; i += 3)
     {
-        renderer.DrawTriangle(&p_vertices[i]);
+        renderer.DrawTriangle(&p_vertices[i],lights);
     }
 }
 
@@ -161,6 +161,9 @@ void Scene::Scene1(Renderer& renderer)
 void Scene::Scene2(Renderer& renderer)
 {
 
+    renderer.SetModel(CreateTransformMatrix({(float)-time/2,(float)-time,0},{-0.5f,0,0}, {1,1,1}));
+
+/*
     vertices = {
         //       pos                  normal                  color              uv
         { -0.5f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
@@ -168,10 +171,8 @@ void Scene::Scene2(Renderer& renderer)
         {0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
         { -0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
     };
-
-    renderer.SetModel(CreateTransformMatrix({(float)-time/2,(float)-time,0},{-0.5f,0,0}, {1,1,1}));
-
- //   DrawQuad(vertices.data(),renderer);
+    DrawQuad(vertices.data(),renderer);
+*/
 
     DrawCube(0.5f,renderer);
 

@@ -9,7 +9,5 @@
 
 - GetHomogenize => Homogenize
 
-- Gestion des couleurs avec les coordonnées barycentriques des points
-
 
 
