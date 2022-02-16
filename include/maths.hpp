@@ -176,14 +176,17 @@ public:
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////                Operator                /////////////////////////////////////////////////////
 
+
 Mat4 operator*(Mat4 a, Mat4 b);
 Mat4 operator*(const Mat4& a, const float& b);
 
 Vec4 operator+(const Vec4& a, const Vec4& b);
 Vec4 operator*(const Vec4& a, const float& b);
+Vec4 operator*(const Vec4& b, const Mat4& a);
+Vec4 operator*(const Mat4& a, const Vec4& b);
+
 
 Vec3 operator+(const Vec3& a, const Vec3& b);
-Vec3 operator*(const Vec3& a, const float b);
 Vec3 operator*(const Vec3& a, const float b);
 Vec3 operator*(const float b, const Vec3& a);
 Vec3 operator*(const Vec3& a, const Vec3& b);
