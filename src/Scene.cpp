@@ -27,12 +27,12 @@ static std::vector<rdrVertex> GetCubeVertices()
     std::vector<rdrVertex> square = GetCubeFace();
 
     std::vector<rdrVertex> cube;
-    TransformVertices(cube, square, CreateTransformMatrix({ 0,      0,      0}, {0, 0, 0}, {1, 1, 1 }));
-    TransformVertices(cube, square, CreateTransformMatrix({ 0,      M_PI,   0}, {0, 0, 0}, {1, 1, 1 }));
-    TransformVertices(cube, square, CreateTransformMatrix({ 0,      M_PI/2, 0}, {0, 0, 0}, {1, 1, 1 }));
-    TransformVertices(cube, square, CreateTransformMatrix({ 0,     -M_PI/2, 0}, {0, 0, 0}, {1, 1, 1 }));
-    TransformVertices(cube, square, CreateTransformMatrix({ M_PI/2, 0,      0}, {0, 0, 0}, {1, 1, 1 })); 
-    TransformVertices(cube, square, CreateTransformMatrix({-M_PI/2, 0,      0}, {0, 0, 0}, {1, 1, 1 }));
+    TransformVertices(cube, square, CreateTransformMatrix( {0, 0, 0}, { 0,      0,      0}, {1, 1, 1 }));
+    TransformVertices(cube, square, CreateTransformMatrix( {0, 0, 0}, { 0,      M_PI,   0}, {1, 1, 1 }));
+    TransformVertices(cube, square, CreateTransformMatrix( {0, 0, 0}, { 0,      M_PI/2, 0}, {1, 1, 1 }));
+    TransformVertices(cube, square, CreateTransformMatrix( {0, 0, 0}, { 0,     -M_PI/2, 0}, {1, 1, 1 }));
+    TransformVertices(cube, square, CreateTransformMatrix( {0, 0, 0}, { M_PI/2, 0,      0}, {1, 1, 1 })); 
+    TransformVertices(cube, square, CreateTransformMatrix( {0, 0, 0}, {-M_PI/2, 0,      0}, {1, 1, 1 }));
 
     printf("\nsize = %d\n",(int)cube.size());
 
@@ -146,7 +146,7 @@ void Scene::Scene1(Renderer& renderer)
 
     //renderer.SetModel(CreateTransformMatrix({0,(float)time,0},{0.2,0,1}, {1,1,1}));
    // DrawTriangles(vertices.data(), vertices.size(),renderer);
-    renderer.SetModel(CreateTransformMatrix({0,0,0},{0,0,1}, {1,1,1}));
+    renderer.SetModel(CreateTransformMatrix({0,0,1},{0,0,0}, {1,1,1}));
     renderer.DrawTriangles(vertices.data(), vertices.size());
 }
 
@@ -155,10 +155,11 @@ void Scene::Scene2(Renderer& renderer)
 
     renderer.SetLights(lights);
 
-    renderer.SetModel(CreateTransformMatrix({(float)time,(float)time/2,0},{0.5f,0,0}, {1,1,1}));
+    renderer.SetModel(CreateTransformMatrix({0.5f,0,0}, {(float)time,(float)time/2,0}, {1,1,1}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
 
 }
+
 
 /////////////////////////////////////////////            Scene functions             /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
