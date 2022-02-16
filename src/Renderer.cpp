@@ -207,12 +207,12 @@ void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
                 
                 Vec4 w = pointChecked.GetBarycentricCoords(vertices[0],vertices[1],vertices[2]);
                 float depth =  w.x * p0.GetDepth() + w.y * p1.GetDepth() + w.z * p2.GetDepth();
+                rdrVertex point(Vec3(i, j, depth), GetNormalVector(Vec3(i, j, depth), p0.GetPosition(), p1.GetPosition()), {0,0,0}, {0,0});
                 Vec4 color = {
                     w.x * p0.GetColor().x + w.y * p1.GetColor().x + w.z * p2.GetColor().x,
                     w.x * p0.GetColor().y + w.y * p1.GetColor().y + w.z * p2.GetColor().y,
                     w.x * p0.GetColor().z + w.y * p1.GetColor().z + w.z * p2.GetColor().z,
-                    w.x * p0.GetColor().w + w.y * p1.GetColor().w + w.z * p2.GetColor().w,
-                    //GetLightIntensity({i, j, depth}, GetNormalVector(Vec3(i, j, depth), p0.GetPosition(), p1.GetPosition()), ),
+                    GetLightIntensity(point),
                     };
                 DrawPixel(i,j,depth,color);
             }
