@@ -231,7 +231,7 @@ Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
     Vec4 coordinate = {vertex.GetPosition() * -1};
 
     // Local space to World space
-    Mat4 transformMat = modelMatrix*viewMatrix;
+    Mat4 transformMat = viewMatrix * modelMatrix;
     coordinate*=transformMat.tab;
 
     // World space to Eye space
