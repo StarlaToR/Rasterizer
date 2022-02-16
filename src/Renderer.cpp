@@ -145,7 +145,7 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
 }
 
 
-void Renderer::   FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
+void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
 {   
     std::vector<Vec3> vertices;
     vertices.push_back(p0.GetPosition());
@@ -171,7 +171,7 @@ void Renderer::   FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
                     w.x * p0.GetColor().z + w.y * p1.GetColor().z + w.z * p2.GetColor().z,
                     w.x * p0.GetColor().w + w.y * p1.GetColor().w + w.z * p2.GetColor().w,
                     };
-                DrawPixel(i,j,depth,w);
+                DrawPixel(i,j,depth,color);
             }
         }
     }

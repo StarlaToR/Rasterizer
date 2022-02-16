@@ -49,6 +49,11 @@ void Scene::DrawSphere(const int lon, const int lat, const float& radius, const 
             vertices[2].SetPosition({c2.x,c2.y,c2.z});
             vertices[3].SetPosition({c3.x,c3.y,c3.z});
 
+            vertices[0].SetColor({0.5f,0,0});
+            vertices[1].SetColor({1.0f,0.2f,0});
+            vertices[2].SetColor({1.0f,0,1.0f});
+            vertices[3].SetColor({0,0,0});
+
             DrawQuad(vertices,renderer);
 
         }
@@ -62,10 +67,10 @@ void Scene::DrawSquare(const float& size, const Mat4& transformMat ,Renderer& re
 
    //Back face
     vertices = {
-        { -size/2, size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
+        { -size/2, size/2, 0.f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 1.0f,     0.0f, 0.0f },
         { size/2, size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
-        { size/2,-size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
-        { -size/2,-size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
+        { size/2,-size/2, 0.f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 1.0f,     0.0f, 0.0f },
+        { -size/2,-size/2, 0.f,      0.0f, 0.0f, 0.0f,      1.0f, 1.0f, 0.0f,     0.0f, 0.0f },
     };
     DrawQuad(vertices.data(),renderer);
 }
@@ -147,7 +152,6 @@ void Scene::Scene1(Renderer& renderer)
         { 0.0f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
     };
 
-    renderer.SetView(CreateTransformMatrix({0,0,0},{0,0,0}, {1,1,1}));
     //renderer.SetModel(CreateTransformMatrix({0,(float)time,0},{0.2,0,1}, {1,1,1}));
     DrawTriangles(vertices.data(), vertices.size(),renderer);
     renderer.SetModel(CreateTransformMatrix({0,0,0},{0,0,1}, {1,1,1}));
