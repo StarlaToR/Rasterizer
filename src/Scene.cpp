@@ -125,6 +125,8 @@ void Scene::Update(float deltaTime, Renderer& renderer)
         Scene1(renderer);
     else if(currentScene==2)
         Scene2(renderer);
+    else if(currentScene==3)
+        Scene3(renderer);
 
     time += deltaTime;
 }
@@ -151,6 +153,8 @@ void Scene::ShowImGuiControls()
 
 void Scene::Scene1(Renderer& renderer)
 {
+    renderer.lightsOn=false;
+
     renderer.SetLights(lights);
 
     triangleVertices = {
@@ -166,6 +170,8 @@ void Scene::Scene1(Renderer& renderer)
 
 void Scene::Scene2(Renderer& renderer)
 {
+    renderer.lightsOn=false;
+
     renderer.SetLights(lights);
 
 
@@ -175,11 +181,21 @@ void Scene::Scene2(Renderer& renderer)
 
     renderer.SetModel(CreateTransformMatrix({-0.5f,0,0}, {0,(float)time/2,(float)time}, {0.2f,0.2f,0.2f}));
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
+}
 
-/*
-    renderer.SetModel(CreateTransformMatrix({-0.5f,0,0}, {(float)time,(float)time/2,0}, {0.2f,0.2f,0.2f}));
+void Scene::Scene3(Renderer& renderer)
+{
+    renderer.lightsOn=true;
+    renderer.SetLights(lights);
+
+    renderer.SetModel(CreateTransformMatrix({0.8f,0,0}, {(float)time,(float)time*1.5f,0}, {0.5f,0.5f,0.5f}));
+    renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
+
+
+    renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,(float)time/2,(float)time}, {0.1f,0.1f,0.1f}));
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
-*/
+
+
 }
 
 /////////////////////////////////////////////            Scene functions             /////////////////////////////////////////////////////

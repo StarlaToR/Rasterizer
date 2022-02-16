@@ -117,6 +117,8 @@ public:
     void SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height);
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
+    bool wireFrameOn=false;
+    bool lightsOn = false;
 
 private:
     void DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color);
@@ -131,8 +133,6 @@ private:
     void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);
     void DrawTriangleWireFrame(Vec4* vertices);
 
-    bool wireFrameOn=false;
-    bool lightsOn = false;
 };
 
 

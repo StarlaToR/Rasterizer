@@ -27,6 +27,8 @@ private:
     // Scene functions
     void Scene1(Renderer& renderer);
     void Scene2(Renderer& renderer);
+    void Scene3(Renderer& renderer);
+
 };
 
 

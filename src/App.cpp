@@ -114,6 +114,9 @@ void App::Update()
             scene.SetCurrentScene(1);
         if (ImGui::IsKeyPressed(GLFW_KEY_2))
             scene.SetCurrentScene(2);
+        if (ImGui::IsKeyPressed(GLFW_KEY_3))
+            scene.SetCurrentScene(3);
+
 
         NewFrame(mouseCaptured); //ImGui
         {
