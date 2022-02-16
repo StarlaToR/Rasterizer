@@ -149,6 +149,7 @@ float Renderer::GetLightIntensity(rdrVertex& p)
     float ambientLight = lights[0].GetAmbient();  
     float intensity = 0;
     Vec3 normal = p.GetNormal();
+    Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[0][3], viewMatrix.tab[0][3]) - p.GetPosition();
 
     for (int i = 0; i < lights.size(); i++)
     {
@@ -159,7 +160,7 @@ float Renderer::GetLightIntensity(rdrVertex& p)
 
         Vec3 lightRay = p.GetPosition() - lights[i].GetPosition();
         Vec3 reflectionRay = 2 * (normal * lightRay) * normal - lightRay;
-        Vec3 viewRay = camera.GetPosition() - p.GetPosition();
+        
 
         float diffuseLight = lights[i].GetDiffuse() * GetCrossProduct(lightRay, normal);
         float specularLight = lights[i].GetSpecular() * GetCrossProduct(viewRay, p.GetPosition());
