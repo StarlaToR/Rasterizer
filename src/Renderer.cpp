@@ -186,7 +186,7 @@ float Renderer::GetLightIntensity(rdrVertex& p)
     return intensity;
 }
 
-void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2, std::vector<Light> lights)
+void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
 {   
     std::vector<Vec3> vertices;
     vertices.push_back(p0.GetPosition());
@@ -212,6 +212,7 @@ void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2, std::ve
                     w.x * p0.GetColor().y + w.y * p1.GetColor().y + w.z * p2.GetColor().y,
                     w.x * p0.GetColor().z + w.y * p1.GetColor().z + w.z * p2.GetColor().z,
                     w.x * p0.GetColor().w + w.y * p1.GetColor().w + w.z * p2.GetColor().w,
+                    //GetLightIntensity({i, j, depth}, GetNormalVector(Vec3(i, j, depth), p0.GetPosition(), p1.GetPosition()), ),
                     };
                 DrawPixel(i,j,depth,color);
             }
@@ -304,7 +305,7 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         {{screenCoords[2].x, screenCoords[2].y, screenCoords[2].z}, vertices[2].GetNormal(), vertices[2].GetColor(), vertices[2].GetTexCoord()}
     };
 
-    FillTriangle(vertex[0],vertex[1],vertex[2],lights);
+    FillTriangle(vertex[0],vertex[1],vertex[2]);
 }
 
 

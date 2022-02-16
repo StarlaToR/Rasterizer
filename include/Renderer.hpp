@@ -121,7 +121,7 @@ public:
 private:
     void DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color);
     void TransformVertices(Vec3& vertices);
-    void FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2, std::vector<Light> lights);
+    void FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2);
     bool CheckDepth(int x, int y, float z);
     bool wireFrameOn=true;
     void DrawTriangle(rdrVertex* p_vertices);
