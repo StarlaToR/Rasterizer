@@ -18,7 +18,7 @@ static void TransformVertices(std::vector<rdrVertex>& dest, const std::vector<rd
     // multiply all verts by transform and return them
     for(int i=0; i<vert.size(); i++)
     {
-        //dest = vert * transform;
+        dest.push_back(vert[i]*transform);
     }
 }
 

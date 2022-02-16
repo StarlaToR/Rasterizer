@@ -57,7 +57,13 @@ public:
     void SetColor(Vec3 col);
     void SetColor(Vec4 col);
     void SetTexCoord(Vec2 coord);
+
+    friend rdrVertex operator*(const rdrVertex& vertex, const Mat4& transformMat);
+
 };
+
+rdrVertex operator*(const rdrVertex& vertex, const Mat4& transformMat);
+
 
 struct color
 {
