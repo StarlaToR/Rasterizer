@@ -15,7 +15,7 @@ public:
 private:
     double time = 0.0;
 
-    std::vector<rdrVertex> vertices;
+    std::vector<rdrVertex> triangleVertices;
     std::vector<rdrVertex> sphereVertices;
     std::vector<rdrVertex> cubeVertices;
     std::vector<Light> lights;
@@ -27,8 +27,6 @@ private:
     // Scene functions
     void Scene1(Renderer& renderer);
     void Scene2(Renderer& renderer);
-
-
 };
 
 

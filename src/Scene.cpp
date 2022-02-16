@@ -2,6 +2,59 @@
 #include <maths.hpp>
 #include <Scene.hpp>
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////         Controller functions           /////////////////////////////////////////////////////
+
+
+Scene::Scene()
+{
+    // HERE: Load the scene
+    // Setup some vertices to test
+
+    lights.push_back(Light({0,0,0},0.2f,0.4f,0.4f));
+
+    cubeVertices = GetCubeVertices();
+    sphereVertices = GetSphereVertices();
+
+}
+
+Scene::~Scene()
+{
+    // HERE: Unload the scene
+}
+
+void Scene::SetCurrentScene(const int& sceneNumber)
+{
+    currentScene=sceneNumber;
+}
+
+void Scene::Update(float deltaTime, Renderer& renderer)
+{
+    if(currentScene==1)
+        Scene1(renderer);
+    else if(currentScene==2)
+        Scene2(renderer);
+
+    time += deltaTime;
+}
+
+void Scene::ShowImGuiControls()
+{
+    ImGui::SliderFloat("scale", &scale, 0.f, 10.f);
+}
+
+/////////////////////////////////////////////         Controller functions           /////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////            Generate vertices functions           //////////////////////////////////////////////
+
 static std::vector<rdrVertex> GetCubeFace()
 {
     return {
@@ -85,22 +138,9 @@ static std::vector<rdrVertex> GetSphereVertices()
     return sphere;
 }
 
-Scene::Scene()
-{
-    // HERE: Load the scene
-    // Setup some vertices to test
+//////////////////////////////////////////            Generate vertices functions           //////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    lights.push_back(Light({0,0,0},0.2f,0.4f,0.4f));
-
-    cubeVertices = GetCubeVertices();
-    sphereVertices = GetSphereVertices();
-
-}
-
-Scene::~Scene()
-{
-    // HERE: Unload the scene
-}
 
 
 
@@ -112,7 +152,7 @@ void Scene::Scene1(Renderer& renderer)
 {
     renderer.SetLights(lights);
 
-    vertices = {
+    triangleVertices = {
         //       pos                  normal                  color              uv
         {-0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
         { 0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
@@ -120,7 +160,7 @@ void Scene::Scene1(Renderer& renderer)
     };
 
     renderer.SetModel(CreateTransformMatrix({0,0,1},{0,0,0}, {1,1,1}));
-    renderer.DrawTriangles(vertices.data(), vertices.size());
+    renderer.DrawTriangles(triangleVertices.data(), triangleVertices.size());
 }
 
 void Scene::Scene2(Renderer& renderer)
@@ -137,7 +177,6 @@ void Scene::Scene2(Renderer& renderer)
 
 }
 
-
 /////////////////////////////////////////////            Scene functions             /////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -151,33 +190,3 @@ void Scene::Scene2(Renderer& renderer)
 
 
 
-
-
-
-void Scene::SetCurrentScene(const int& sceneNumber)
-{
-    currentScene=sceneNumber;
-}
-
-
-
-void Scene::Update(float deltaTime, Renderer& renderer)
-{
-    // HERE: Update (if needed) and display the scene
-
-    // Hard coded matrix
-    // TODO: Remove this and use proper functions !
-
-    // Draw
-    if(currentScene==1)
-        Scene1(renderer);
-    else if(currentScene==2)
-        Scene2(renderer);
-
-    time += deltaTime;
-}
-
-void Scene::ShowImGuiControls()
-{
-    ImGui::SliderFloat("scale", &scale, 0.f, 10.f);
-}
