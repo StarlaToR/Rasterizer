@@ -16,6 +16,7 @@ private:
     double time = 0.0;
 
     std::vector<rdrVertex> vertices;
+    std::vector<rdrVertex> sphereVertices;
     std::vector<rdrVertex> cubeVertices;
     std::vector<Light> lights;
 
