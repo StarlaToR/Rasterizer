@@ -16,7 +16,7 @@ static std::vector<rdrVertex> GetCubeFace()
 static void TransformVertices(std::vector<rdrVertex>& dest, const std::vector<rdrVertex>& vert, const Mat4& transform)
 {
     // multiply all verts by transform and return them
-    for(int i=0; i<vert.size(); i++)
+    for(int i=0; i< (int) vert.size(); i++)
     {
         dest.push_back(vert[i]*transform);
     }
@@ -34,7 +34,7 @@ static std::vector<rdrVertex> GetCubeVertices()
     TransformVertices(cube, square, CreateTransformMatrix({ M_PI/2, 0,      0}, {0, 0, 0}, {1, 1, 1 })); 
     TransformVertices(cube, square, CreateTransformMatrix({-M_PI/2, 0,      0}, {0, 0, 0}, {1, 1, 1 }));
 
-    printf("\nsize = %d\n",cube.size());
+    printf("\nsize = %d\n",(int)cube.size());
 
     return cube;
 }
@@ -43,6 +43,8 @@ Scene::Scene()
 {
     // HERE: Load the scene
     // Setup some vertices to test
+
+    lights.push_back(Light({0,0,0},0.2f,0.4f,0.4f));
 
     cubeVertices = GetCubeVertices();
 }
@@ -133,6 +135,8 @@ void Scene::DrawQuad(rdrVertex* vertices, Renderer& renderer)
 
 void Scene::Scene1(Renderer& renderer)
 {
+    renderer.SetLights(lights);
+
     vertices = {
         //       pos                  normal                  color              uv
         {-0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },

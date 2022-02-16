@@ -110,7 +110,7 @@ public:
     void SetProjection(Mat4 p_projectionMatrix);
     void SetView(Mat4 p_viewMatrix);
     void SetModel(Mat4 p_modelMatrix);
-    void SetLights(const std::vector<Light>& p_lights) { this->lights = p_lights; }
+    void SetLights(const std::vector<Light>& p_lights) { lights = p_lights; }
     Mat4 GetProjection();
     Mat4 GetView();
     Mat4 GetModel();
