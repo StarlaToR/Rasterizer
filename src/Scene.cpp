@@ -102,7 +102,7 @@ Scene::Scene()
     // HERE: Load the scene
     // Setup some vertices to test
 
-    lights.push_back(Light({0,0,0},0.2f,0.4f,0.4f));
+    lights.push_back(Light({400,300,0},0.2f,0.4f,0.4f));
 
     cubeVertices = GetCubeVertices();
     sphereVertices = GetSphereVertices();
@@ -188,13 +188,14 @@ void Scene::Scene3(Renderer& renderer)
     renderer.lightsOn=true;
     renderer.SetLights(lights);
 
-    renderer.SetModel(CreateTransformMatrix({0.8f,0,0}, {(float)time,(float)time*1.5f,0}, {0.5f,0.5f,0.5f}));
+//    renderer.SetModel(CreateTransformMatrix({0.8f,0,0}, {(float)time,(float)time/2,0}, {0.5f,0.5f,0.5f}));
+    renderer.SetModel(CreateTransformMatrix({0.8f,0,0}, {0,0,0}, {0.5f,0.5f,0.5f}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
 
-
-    renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,(float)time/2,(float)time}, {0.1f,0.1f,0.1f}));
+    /*
+    renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,0,0}, {0.1f,0.1f,0.1f}));
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
-
+    */
 
 }
 
