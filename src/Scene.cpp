@@ -159,9 +159,9 @@ void Scene::Scene1(Renderer& renderer)
 
     triangleVertices = {
         //       pos                  normal                  color              uv
-        {-0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
-        { 0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
-        { 0.0f, 0.5f, 0.0f,      0.0f, 0.0f, 0.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
+        {-0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 1.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
+        { 0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 1.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
+        { 0.0f, 0.5f, 0.0f,      0.0f, 0.0f, 1.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
     };
 
     renderer.SetModel(CreateTransformMatrix({0,0,0},{0,0,0}, {1,1,1}));

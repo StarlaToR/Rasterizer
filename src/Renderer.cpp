@@ -195,7 +195,7 @@ float Renderer::GetLightIntensity(rdrVertex& p)
         intensity += diffuseLight + specularLight;
     }
     intensity += ambientLight;
-   // printf("intensity = %f\n\n",intensity);
+
     return intensity;
 }
 
@@ -314,23 +314,27 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     if(wireFrameOn)
         DrawTriangleWireFrame(screenCoords);
     else
-    {
-        vertices[0].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
+    {       
+        vertices[0].SetNormal(GetNormalVector(
+            {screenCoords[0].x,screenCoords[0].y,screenCoords[0].z},
+            {screenCoords[1].x,screenCoords[1].y,screenCoords[1].z},
+            {screenCoords[2].x,screenCoords[2].y,screenCoords[2].z}            
+            ));
         vertices[1].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
         vertices[2].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
+
+
 
         rdrVertex vertex[3] = {
             {{screenCoords[0].x, screenCoords[0].y, screenCoords[0].z}, vertices[0].GetNormal(), vertices[0].GetColor(), vertices[0].GetTexCoord()},
             {{screenCoords[1].x, screenCoords[1].y, screenCoords[1].z}, vertices[1].GetNormal(), vertices[1].GetColor(), vertices[1].GetTexCoord()},
             {{screenCoords[2].x, screenCoords[2].y, screenCoords[2].z}, vertices[2].GetNormal(), vertices[2].GetColor(), vertices[2].GetTexCoord()}
         };
-
+    
         FillTriangle(vertex[0],vertex[1],vertex[2]);
 
         Vec4 color= {1,1,1,1};
-        DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal()*100,color);
-
-      //  DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal()*100,color);
+        DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal(),color);
 
     }
 
