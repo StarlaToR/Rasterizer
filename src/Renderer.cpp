@@ -278,13 +278,14 @@ Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
 
 
     // Eye space to Clip space
-    // TODO
+    
+    //coordinate *= projectionMatrix.tab;
 
     // Clip space NDC space
     coordinate.GetHomogenizedVec();
 
     // NDC space Screen space   
-    Mat4 mat = Mat4(
+    Mat4 screenMatrix = Mat4(
         {
         400,0,0,(float)fb->GetWidth()/2,
         0,400,0,(float)fb->GetHeight()/2,
@@ -292,7 +293,8 @@ Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
         0,0,0,1,
         }
     );
-    coordinate *= mat.tab;
+    
+    coordinate *= screenMatrix.tab;
 
     return coordinate;
 }
