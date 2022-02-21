@@ -11,7 +11,9 @@ public:
     float GetAmbient();
     float GetDiffuse();
     float GetSpecular();
-
+    void SetPosition(Vec3 _position);
+    void SetPosition(Vec4 _position);
+  
 private:
     Vec3 position;
     float ambient, diffuse, specular;

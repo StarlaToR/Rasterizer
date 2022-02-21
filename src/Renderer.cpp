@@ -225,15 +225,20 @@ void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
                     alpha,
                 };
                 DrawPixel(i,j,depth,col);
+
+                /*
+                Vec4 color = {1,1,1,1};
+                Vec4 positionLight = {lights[0].GetPosition().x,lights[0].GetPosition().y,lights[0].GetPosition().z,1};
+                Vec4 positionPoint = {point.GetPosition().x,point.GetPosition().y,point.GetPosition().z,1};
+                DrawLine(positionLight,positionPoint,color);
+                */
             }
         }
     }
 }
 
-Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
+Vec4 Renderer::VertexGraphicPipeline(Vec4& coordinate)
 {
-    Vec4 coordinate = {vertex.GetPosition() * -1};
-
     // Local space to World space
     Mat4 transformMat = viewMatrix * modelMatrix;
     coordinate*=transformMat.tab;
@@ -250,18 +255,24 @@ Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
     coordinate.GetHomogenizedVec();
 
     // NDC space Screen space   
+
     Mat4 screenMatrix = Mat4(
         {
         400,0,0,(float)fb->GetWidth()/2,
         0,400,0,(float)fb->GetHeight()/2,
         0,0,1,0,
         0,0,0,1,
-        }
-    );
+        });
     
     coordinate *= screenMatrix.tab;
 
     return coordinate;
+}
+
+Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
+{
+    Vec4 coordinate = {vertex.GetPosition() * -1};
+    return VertexGraphicPipeline(coordinate);
 }
 
 
@@ -294,6 +305,24 @@ void Renderer::DrawTriangleWireFrame(Vec4* vertices)
     DrawLine(vertices[2],vertices[0],color2);
 }
 
+void Renderer::TransformLights(std::vector<Light>& _lights)
+{
+    for(int i=0;i<(int)_lights.size();i++)
+    {
+        Vec4 newPosition = _lights[i].GetPosition();
+        newPosition*=viewMatrix.tab;
+        Mat4 screenMatrix = Mat4(
+        {
+        400,0,0,(float)fb->GetWidth()/2,
+        0,400,0,(float)fb->GetHeight()/2,
+        0,0,1,0,
+        0,0,0,1,
+        });
+        newPosition *= screenMatrix.tab;
+
+        _lights[i].SetPosition(newPosition);
+    }
+}
 
 void Renderer::DrawTriangle(rdrVertex* vertices)
 {
