@@ -172,54 +172,16 @@ float Renderer::GetLightIntensity(rdrVertex& p)
 {
     float ambientLight = lights[0].GetAmbient();  
     float intensity = 0;
+
     Vec3 normal = p.GetNormal();
-    normal.Normalize();
-
     Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[0][3], viewMatrix.tab[0][3]) - p.GetPosition();
-    viewRay.Normalize();
-
-    /*
-    Vec4 color = {1,1,1,1};
-    Vec4 positionLight = {lights[0].GetPosition().x,lights[0].GetPosition().y,lights[0].GetPosition().z,1};
-    Vec4 positionPoint = {p.GetPosition().x,p.GetPosition().y,p.GetPosition().z,1};
-    DrawLine(positionLight,positionPoint,color);
-    */
-   
     Vec3 lightRay = lights[0].GetPosition() - p.GetPosition();
-    lightRay.Normalize();
-
     Vec3 reflectionRay = 2 * (normal * lightRay) * normal - lightRay;
-    reflectionRay.Normalize();
-    
-    float specularLight = lights[0].GetSpecular() * GetCrossProduct(reflectionRay, viewRay);
-    float diffuseLight = lights[0].GetDiffuse()*GetCrossProduct(lightRay,normal);  
-    
-    /*
-    for (int i = 0; i < (int) lights.size(); i++)
-    {
-        if (lights[i].GetAmbient() > ambientLight)
-        {
-            ambientLight = lights[i].GetAmbient();
-        }
 
-        Vec3 lightRay = lights[i].GetPosition() - p.GetPosition();
-        Vec3 reflectionRay = 2 * (normal * lightRay) * normal - lightRay;
-        
-        lightRay.Normalize();
-        reflectionRay.Normalize();    
-       
-        float diffuseLight = lights[i].GetDiffuse() * GetCrossProduct(lightRay, normal);
-        float specularLight = lights[i].GetSpecular() * GetCrossProduct(reflectionRay, viewRay);
-    
-        intensity += diffuseLight + specularLight;
-       
-        printf("Specular Light = %f\n",specularLight);
-        printf("Diffuse Light = %f\n\n",diffuseLight);
-    }
-    */
+    float diffuseLight = lights[0].GetDiffuse() * GetDotProduct(lightRay, normal)/(normal.GetMagnitude() * lightRay.GetMagnitude());
+    float specularLight = lights[0].GetSpecular() * GetDotProduct(reflectionRay, viewRay)/(reflectionRay.GetMagnitude() * viewRay.GetMagnitude());
+
     intensity = ambientLight + diffuseLight + specularLight;
-
-  //  printf("Intensity = %f\n\n",intensity);
 
     return intensity;
 }
@@ -247,6 +209,9 @@ void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
                 Vec4 w = pointChecked.GetBarycentricCoords(vertices[0],vertices[1],vertices[2]);
                 float depth =  w.x * p0.GetDepth() + w.y * p1.GetDepth() + w.z * p2.GetDepth();
                 rdrVertex point(Vec3(i, j, depth), GetNormalVector(Vec3(i, j, depth), p0.GetPosition(), p1.GetPosition()), {0,0,0}, {0,0});
+
+                if (point.GetNormal() == Vec3(0,0,0))
+                        point.SetNormal(p0.GetNormal());
 
                 float alpha = w.x * p0.GetColor().w + w.y * p1.GetColor().w + w.z * p2.GetColor().w;
                 

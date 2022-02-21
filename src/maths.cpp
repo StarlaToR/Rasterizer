@@ -44,6 +44,14 @@ Vec3 Vec3::GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2)
     return barycentricCoords;
 }
 
+bool Vec3::operator==(const Vec3& a)
+{
+    if(this->x == a.x && this->y == a.y && this->z == a.z)
+        return true;
+
+    return false;
+}
+
 Vec3 operator+(const Vec3& a, const Vec3& b)
 {
     Vec3 c(

@@ -102,7 +102,7 @@ Scene::Scene()
     // HERE: Load the scene
     // Setup some vertices to test
 
-    lights.push_back(Light({400,300,0},0.2f,0.4f,0.4f));
+    lights.push_back(Light({400,300, 0},0.2f,0.4f,0.4f));
 
     cubeVertices = GetCubeVertices();
     sphereVertices = GetSphereVertices();

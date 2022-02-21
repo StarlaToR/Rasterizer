@@ -61,6 +61,8 @@ public:
     float GetCrossProduct(const Vec3& a, const Vec3& b);
 
     void GetNewZForZBuffer();
+
+    bool operator==(const Vec3& a);
 };
 
 
@@ -202,7 +204,7 @@ Vec3 operator-(const Vec3& a, const Vec3& b);
 
 inline Vec3 GetNormalVector(const Vec3& p0, const Vec3& p1, const Vec3& p2)
 {
-    Vec3 normal = (p1-p0)*(p2-p0);
+    Vec3 normal = (p1 - p0) * (p2 - p0);
     return normal;
 }
 
@@ -316,6 +318,11 @@ inline float GetCrossProduct(const Vec3& a, const Vec3& b)
 {
     Vec3 d = a * b;
     return d.GetMagnitude();
+}
+
+inline float GetDotProduct(const Vec3& a, const Vec3& b)
+{
+    return (a.x * b.x + a.y * b.y + a.z * b.z) ;
 }
 
 /////////////////////////////////////////////           Inline functions            /////////////////////////////////////////////////////
