@@ -127,6 +127,10 @@ void Scene::Update(float deltaTime, Renderer& renderer)
         Scene2(renderer);
     else if(currentScene==3)
         Scene3(renderer);
+    else if(currentScene==4)
+        Scene4(renderer);
+    else if(currentScene==5)
+        Scene5(renderer);
 
     time += deltaTime;
 }
@@ -151,6 +155,7 @@ void Scene::ShowImGuiControls()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////            Scene functions             /////////////////////////////////////////////////////
 
+//Color and Draw test
 void Scene::Scene1(Renderer& renderer)
 {
     renderer.lightsOn=false;
@@ -166,11 +171,18 @@ void Scene::Scene1(Renderer& renderer)
 
     renderer.SetModel(CreateTransformMatrix({0,0,0},{0,0,0}, {1,1,1}));
     renderer.DrawTriangles(triangleVertices.data(), triangleVertices.size());
+
+    cubeMesh.vertices=cubeVertices;
+    for(int i=0;i<(int)cubeMesh.vertices.size();i++)
+        cubeMesh.index.push_back(i);
+
 }
 
+//Z-buffer test
 void Scene::Scene2(Renderer& renderer)
 {
     renderer.lightsOn=false;
+    renderer.perspectiveOn=false;
 
     renderer.SetLights(lights);
 
@@ -183,20 +195,51 @@ void Scene::Scene2(Renderer& renderer)
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
 }
 
+//Light test
 void Scene::Scene3(Renderer& renderer)
 {
     renderer.lightsOn=true;
+    renderer.perspectiveOn=false;
+
     renderer.SetLights(lights);
 
 
-    renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,0,0}, {0.5f,0.5f,0.5f}));
+    renderer.SetModel(CreateTransformMatrix({1,0,0}, {0,0,0}, {0.5f,0.5f,0.5f}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
 
 
-/*
     renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,(float)time/2,(float)time}, {0.1f,0.1f,0.1f}));
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
-*/
+}
+
+//Perspective test
+void Scene::Scene4(Renderer& renderer)
+{
+    renderer.lightsOn=false;
+    renderer.perspectiveOn=true;
+
+    renderer.SetLights(lights);
+
+    renderer.SetModel(CreateTransformMatrix({0.5f,0,0}, {(float)time,(float)time*1.5f,0}, {0.5f,0.5f,0.5f}));
+    renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
+
+
+    renderer.SetModel(CreateTransformMatrix({-0.5f,0,0}, {0,(float)time/2,(float)time}, {0.2f,0.2f,0.2f}));
+    renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
+}
+
+
+// Mesh and Texture test
+void Scene::Scene5(Renderer& renderer)
+{
+    renderer.lightsOn=false;
+    renderer.perspectiveOn=false;
+
+    renderer.SetLights(lights);
+
+    cubeMesh.CreateCube();
+
+
 }
 
 /////////////////////////////////////////////            Scene functions             /////////////////////////////////////////////////////

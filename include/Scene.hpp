@@ -2,6 +2,7 @@
 #include <vector>
 #include <Renderer.hpp>
 #include <Light.hpp>
+#include <Mesh.hpp>
 
 class Scene
 {
@@ -19,6 +20,7 @@ private:
     std::vector<rdrVertex> sphereVertices;
     std::vector<rdrVertex> cubeVertices;
     std::vector<Light> lights;
+    Mesh cubeMesh;
 
     float scale = 1.f;
     int currentScene=3;
@@ -28,7 +30,8 @@ private:
     void Scene1(Renderer& renderer);
     void Scene2(Renderer& renderer);
     void Scene3(Renderer& renderer);
-
+    void Scene4(Renderer& renderer);
+    void Scene5(Renderer& renderer);
 };
 
 
