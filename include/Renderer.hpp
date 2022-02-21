@@ -121,6 +121,7 @@ public:
 
     bool wireFrameOn=false;
     bool lightsOn = false;
+    bool perspectiveOn = false;
 
 private:
     void DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color);

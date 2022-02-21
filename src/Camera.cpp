@@ -9,6 +9,12 @@ Camera::Camera(const uint width, const uint height)
 {
     //TODO
     // width and height are useful to compute projection matrix with the right aspect ratio
+    projectionMatrix = {
+        -1, 0, 0, 0,
+        0, -1, 0, 0,
+        0, 0, -(-100 + -1)/(-100 - -1), -2*(-100)*(-1)/ (-100 - (- 1)),
+        0, 0, -1, 0
+    };
 }
 
 void Camera::Update(const float p_deltaTime, const CameraInputs& inputs)

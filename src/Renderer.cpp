@@ -278,7 +278,8 @@ Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
 
     // Eye space to Clip space
     
-    //coordinate *= projectionMatrix.tab;
+    if (perspectiveOn)
+        coordinate *= projectionMatrix.tab;
 
     // Clip space NDC space
     coordinate.GetHomogenizedVec();
