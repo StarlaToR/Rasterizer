@@ -1,0 +1,2 @@
+On fait les calculs de lumière sur les coordonnées de l'écran !
+C'est caca, faut pas faire ça
