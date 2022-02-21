@@ -1,4 +1,0 @@
-- Si on est stylé ajouter des sliders qui permettent de modifier la scène pendant l'exécution du 
-    programme (changer les coordonnées des points, la rotation)
-
-- Ajouter l'effet de perspective (Version 5)
