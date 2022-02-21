@@ -32,11 +32,16 @@ void Camera::Update(const float p_deltaTime, const CameraInputs& inputs)
 
     // Rotations
     if(inputs.rotateWorldRight==true)
-        angle-=0.1f;
+        rotation.y-=0.1f;
     if(inputs.rotateWorldLeft==true)
-        angle+=0.1f;
+        rotation.y+=0.1f;
 
-    viewMatrix = CreateTransformMatrix(position,{0,angle,0},{1,1,1});
+    if(inputs.rotateWorldUp==true)
+        rotation.x-=0.1f;
+    if(inputs.rotateWorldDown==true)
+        rotation.x+=0.1f;
+
+    viewMatrix = CreateTransformMatrix(position,rotation,{1,1,1});
 
 }
 

@@ -11,7 +11,6 @@
 
 rdrVertex operator*(const rdrVertex& vertex, const Mat4& transformMat)
 {
-
     rdrVertex newVertex = vertex;
     Vec4 newPosition = vertex.position * transformMat;
     Vec4 newNormal = vertex.normal * transformMat;
@@ -322,10 +321,9 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
 
         FillTriangle(vertex[0],vertex[1],vertex[2]);
 
-        //Vec4 color= {1,1,1,1};
-    //    DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal()*100,color);
+        Vec4 color= {1,1,1,1};
+        DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal()*100,color);
 
-      //  DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal()*100,color);
 
     }
 

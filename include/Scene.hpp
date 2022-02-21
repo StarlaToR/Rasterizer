@@ -21,7 +21,7 @@ private:
     std::vector<Light> lights;
 
     float scale = 1.f;
-    int currentScene=2;
+    int currentScene=3;
     void ShowImGuiControls();
     
     // Scene functions
