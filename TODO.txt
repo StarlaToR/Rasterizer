@@ -2,9 +2,3 @@
     programme (changer les coordonnées des points, la rotation)
 
 - Ajouter l'effet de perspective (Version 5)
-
-
-
-
-
-- GetHomogenize => Homogenize

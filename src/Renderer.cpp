@@ -98,6 +98,11 @@ Renderer::Renderer(float* p_colorBuffer32Bits, float* p_depthBuffer, const uint 
 
 }
 
+void Renderer::ToggleWireFrame()
+{
+    wireFrameOn = !wireFrameOn;
+}
+
 Renderer::Renderer(Framebuffer* f, const uint p_width, const uint p_height):viewport(0,0,p_width, p_height)
 {
     fb = f;
@@ -168,8 +173,28 @@ float Renderer::GetLightIntensity(rdrVertex& p)
     float ambientLight = lights[0].GetAmbient();  
     float intensity = 0;
     Vec3 normal = p.GetNormal();
-    Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[0][3], viewMatrix.tab[0][3]) - p.GetPosition();
+    normal.Normalize();
 
+    Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[0][3], viewMatrix.tab[0][3]) - p.GetPosition();
+    viewRay.Normalize();
+
+    /*
+    Vec4 color = {1,1,1,1};
+    Vec4 positionLight = {lights[0].GetPosition().x,lights[0].GetPosition().y,lights[0].GetPosition().z,1};
+    Vec4 positionPoint = {p.GetPosition().x,p.GetPosition().y,p.GetPosition().z,1};
+    DrawLine(positionLight,positionPoint,color);
+    */
+   
+    Vec3 lightRay = lights[0].GetPosition() - p.GetPosition();
+    lightRay.Normalize();
+
+    Vec3 reflectionRay = 2 * (normal * lightRay) * normal - lightRay;
+    reflectionRay.Normalize();
+    
+    float specularLight = lights[0].GetSpecular() * GetCrossProduct(reflectionRay, viewRay);
+    float diffuseLight = lights[0].GetDiffuse()*GetCrossProduct(lightRay,normal);  
+    
+    /*
     for (int i = 0; i < (int) lights.size(); i++)
     {
         if (lights[i].GetAmbient() > ambientLight)
@@ -180,16 +205,22 @@ float Renderer::GetLightIntensity(rdrVertex& p)
         Vec3 lightRay = lights[i].GetPosition() - p.GetPosition();
         Vec3 reflectionRay = 2 * (normal * lightRay) * normal - lightRay;
         
-        //lightRay.Normalize();
-        //reflectionRay.Normalize();
-
+        lightRay.Normalize();
+        reflectionRay.Normalize();    
+       
         float diffuseLight = lights[i].GetDiffuse() * GetCrossProduct(lightRay, normal);
         float specularLight = lights[i].GetSpecular() * GetCrossProduct(reflectionRay, viewRay);
     
         intensity += diffuseLight + specularLight;
+       
+        printf("Specular Light = %f\n",specularLight);
+        printf("Diffuse Light = %f\n\n",diffuseLight);
     }
-    intensity += ambientLight;
-   // printf("intensity = %f\n\n",intensity);
+    */
+    intensity = ambientLight + diffuseLight + specularLight;
+
+  //  printf("Intensity = %f\n\n",intensity);
+
     return intensity;
 }
 
@@ -218,16 +249,17 @@ void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
                 rdrVertex point(Vec3(i, j, depth), GetNormalVector(Vec3(i, j, depth), p0.GetPosition(), p1.GetPosition()), {0,0,0}, {0,0});
 
                 float alpha = w.x * p0.GetColor().w + w.y * p1.GetColor().w + w.z * p2.GetColor().w;
+                
                 if (lightsOn)
                     alpha = GetLightIntensity(point);
 
-                Vec4 color = {
+                Vec4 col = {
                     w.x * p0.GetColor().x + w.y * p1.GetColor().x + w.z * p2.GetColor().x,
                     w.x * p0.GetColor().y + w.y * p1.GetColor().y + w.z * p2.GetColor().y,
                     w.x * p0.GetColor().z + w.y * p1.GetColor().z + w.z * p2.GetColor().z,
                     alpha,
-                    };
-                DrawPixel(i,j,depth,color);
+                };
+                DrawPixel(i,j,depth,col);
             }
         }
     }
@@ -245,15 +277,14 @@ Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
 
 
     // Eye space to Clip space
-    // TODO
+    
+    //coordinate *= projectionMatrix.tab;
 
     // Clip space NDC space
     coordinate.GetHomogenizedVec();
 
-
-
     // NDC space Screen space   
-    Mat4 mat = Mat4(
+    Mat4 screenMatrix = Mat4(
         {
         400,0,0,(float)fb->GetWidth()/2,
         0,400,0,(float)fb->GetHeight()/2,
@@ -261,7 +292,8 @@ Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
         0,0,0,1,
         }
     );
-    coordinate *= mat.tab;
+    
+    coordinate *= screenMatrix.tab;
 
     return coordinate;
 }
@@ -308,23 +340,36 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     if(wireFrameOn)
         DrawTriangleWireFrame(screenCoords);
     else
-    {
-        vertices[0].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
-        vertices[1].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
-        vertices[2].SetNormal(GetNormalVector(vertices[0].GetPosition(),vertices[1].GetPosition(),vertices[2].GetPosition()));
+    {       
+        for(int i=0;i<3;i++)
+        {
+            vertices[i].SetNormal(GetNormalVector(
+                {screenCoords[0].x,screenCoords[0].y,screenCoords[0].z},
+                {screenCoords[1].x,screenCoords[1].y,screenCoords[1].z},
+                {screenCoords[2].x,screenCoords[2].y,screenCoords[2].z}            
+                ));
+
+        }
+
 
         rdrVertex vertex[3] = {
             {{screenCoords[0].x, screenCoords[0].y, screenCoords[0].z}, vertices[0].GetNormal(), vertices[0].GetColor(), vertices[0].GetTexCoord()},
             {{screenCoords[1].x, screenCoords[1].y, screenCoords[1].z}, vertices[1].GetNormal(), vertices[1].GetColor(), vertices[1].GetTexCoord()},
             {{screenCoords[2].x, screenCoords[2].y, screenCoords[2].z}, vertices[2].GetNormal(), vertices[2].GetColor(), vertices[2].GetTexCoord()}
         };
-
+    
         FillTriangle(vertex[0],vertex[1],vertex[2]);
 
         Vec4 color= {1,1,1,1};
-        DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal()*100,color);
+        DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal(),color);
 
-
+        /*
+        Vec4 color= {1,1,1,1};
+        DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal(),color);
+        DrawLine(vertex[1].GetPosition(),vertex[1].GetPosition() + vertex[1].GetNormal(),color);
+        DrawLine(vertex[2].GetPosition(),vertex[2].GetPosition() + vertex[2].GetNormal(),color);
+        printf("normal = { %f, %f, %f }\n", vertex[0].GetNormal().x,vertex[0].GetNormal().y,vertex[0].GetNormal().z);
+        */
     }
 
 

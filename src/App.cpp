@@ -169,6 +169,9 @@ void App::Update()
         // Render scene
         scene.Update(ImGui::GetIO().DeltaTime, renderer);
 
+        if (ImGui::IsKeyPressed(GLFW_KEY_F1))
+            renderer.ToggleWireFrame();
+
         // Upload texture
         framebuffer.UpdateTexture();
 
