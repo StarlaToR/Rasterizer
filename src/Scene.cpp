@@ -204,19 +204,17 @@ void Scene::Scene3(Renderer& renderer)
     lights.pop_back();
     lights.push_back(Light({0,0, 0},0.2f,0.4f,0.4f));
 
-    printf("light position = { %f, %f, %f }\n",lights[0].GetPosition().x,lights[0].GetPosition().y,lights[0].GetPosition().z);
+    //printf("light position = { %f, %f, %f }\n",lights[0].GetPosition().x,lights[0].GetPosition().y,lights[0].GetPosition().z);
     renderer.TransformLights(lights);
-    printf("light position = { %f, %f, %f }\n\n",lights[0].GetPosition().x,lights[0].GetPosition().y,lights[0].GetPosition().z);
+    //printf("light position = { %f, %f, %f }\n\n",lights[0].GetPosition().x,lights[0].GetPosition().y,lights[0].GetPosition().z);
     renderer.SetLights(lights);
 
 
     renderer.SetModel(CreateTransformMatrix({1,0,0}, {0,0,0}, {0.5f,0.5f,0.5f}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
 
-/*
     renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,(float)time/2,(float)time}, {0.1f,0.1f,0.1f}));
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
-*/
 }
 
 //Perspective test

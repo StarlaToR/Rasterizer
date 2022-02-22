@@ -54,7 +54,7 @@ public:
         z = 0;
     }
 
-    float GetMagnitude();
+    float GetMagnitude() const;
     void Normalize();
     bool IsInTriangle(Vec3 p0,Vec3 p1, Vec3 p2);
     Vec3 GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2);

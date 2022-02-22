@@ -129,14 +129,12 @@ public:
 private:
     void DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color);
     void TransformVertices(Vec3& vertices);
-    void FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2);
+    void FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal);
     bool CheckDepth(int x, int y, float z);
     void DrawTriangle(rdrVertex* p_vertices);
 
-    float GetLightIntensity(rdrVertex& p);
+    float GetLightIntensity(const Vec3& position, const Vec3& normal);
     void ShowImGuiControls();
-    Vec4 VertexGraphicPipeline(rdrVertex& vertex);
-    Vec4 VertexGraphicPipeline(Vec4& coordinate);
     void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);
     void DrawTriangleWireFrame(Vec4* vertices);
 

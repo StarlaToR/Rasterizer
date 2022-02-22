@@ -168,14 +168,13 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
     }
 }
 
-float Renderer::GetLightIntensity(rdrVertex& p)
+float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
 {
     float ambientLight = lights[0].GetAmbient();  
     float intensity = 0;
 
-    Vec3 normal = p.GetNormal();
-    Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[0][3], viewMatrix.tab[0][3]) - p.GetPosition();
-    Vec3 lightRay = lights[0].GetPosition() - p.GetPosition();
+    Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[0][3], viewMatrix.tab[0][3]) - worldPosition;
+    Vec3 lightRay = lights[0].GetPosition() - worldPosition;
     Vec3 reflectionRay = 2 * (normal * lightRay) * normal - lightRay;
 
     float diffuseLight = lights[0].GetDiffuse() * GetDotProduct(lightRay, normal)/(normal.GetMagnitude() * lightRay.GetMagnitude());
@@ -186,19 +185,18 @@ float Renderer::GetLightIntensity(rdrVertex& p)
     return intensity;
 }
 
-void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
+void Renderer::FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal)
 {   
     std::vector<Vec3> vertices;
-    vertices.push_back(p0.GetPosition());
-    vertices.push_back(p1.GetPosition());
-    vertices.push_back(p2.GetPosition());
+    vertices.push_back(screenCoords[0]);
+    vertices.push_back(screenCoords[1]);
+    vertices.push_back(screenCoords[2]);
 
     Vec4 maxPoint = GetMaximumXandY(vertices);
     Vec4 minPoint = GetMinimumXandY(vertices);
 
     for(float i=minPoint.x;i<maxPoint.x;i++)
     {
-
         for(float j=minPoint.y;j<maxPoint.y;j++)
         {
             Vec4 pointChecked = {i,j,0,1};
@@ -206,76 +204,23 @@ void Renderer::FillTriangle(rdrVertex& p0, rdrVertex& p1, rdrVertex& p2)
             if(pointChecked.IsInTriangle(vertices[0],vertices[1],vertices[2]))
             {
                 
+                float lightIntensity = GetLightIntensity({pointChecked.x,pointChecked.y,pointChecked.z},normal);
+
                 Vec4 w = pointChecked.GetBarycentricCoords(vertices[0],vertices[1],vertices[2]);
-                float depth =  w.x * p0.GetDepth() + w.y * p1.GetDepth() + w.z * p2.GetDepth();
-                rdrVertex point(Vec3(i, j, depth), GetNormalVector(Vec3(i, j, depth), p0.GetPosition(), p1.GetPosition()), {0,0,0}, {0,0});
-
-                if (point.GetNormal() == Vec3(0,0,0))
-                        point.SetNormal(p0.GetNormal());
-
-                float alpha = w.x * p0.GetColor().w + w.y * p1.GetColor().w + w.z * p2.GetColor().w;
-                
-                if (lightsOn)
-                    alpha = GetLightIntensity(point);
+                float depth =  w.x * screenCoords[0].z + w.y * screenCoords[1].z + w.z * screenCoords[2].z;
 
                 Vec4 col = {
-                    w.x * p0.GetColor().x + w.y * p1.GetColor().x + w.z * p2.GetColor().x,
-                    w.x * p0.GetColor().y + w.y * p1.GetColor().y + w.z * p2.GetColor().y,
-                    w.x * p0.GetColor().z + w.y * p1.GetColor().z + w.z * p2.GetColor().z,
-                    alpha,
+                    w.x * color[0].x + w.y * color[1].x + w.z * color[2].x,
+                    w.x * color[0].y + w.y * color[1].y + w.z * color[2].y,
+                    w.x * color[0].z + w.y * color[1].z + w.z * color[2].z,
+                    1.0f,
                 };
+                col=col*lightIntensity;
                 DrawPixel(i,j,depth,col);
-
-                /*
-                Vec4 color = {1,1,1,1};
-                Vec4 positionLight = {lights[0].GetPosition().x,lights[0].GetPosition().y,lights[0].GetPosition().z,1};
-                Vec4 positionPoint = {point.GetPosition().x,point.GetPosition().y,point.GetPosition().z,1};
-                DrawLine(positionLight,positionPoint,color);
-                */
             }
         }
     }
 }
-
-Vec4 Renderer::VertexGraphicPipeline(Vec4& coordinate)
-{
-    // Local space to World space
-    Mat4 transformMat = viewMatrix * modelMatrix;
-    coordinate*=transformMat.tab;
-
-    // World space to Eye space
-
-
-    // Eye space to Clip space
-    
-    if (perspectiveOn)
-        coordinate *= projectionMatrix.tab;
-
-    // Clip space NDC space
-    coordinate.GetHomogenizedVec();
-
-    // NDC space Screen space   
-
-    Mat4 screenMatrix = Mat4(
-        {
-        400,0,0,(float)fb->GetWidth()/2,
-        0,400,0,(float)fb->GetHeight()/2,
-        0,0,1,0,
-        0,0,0,1,
-        });
-    
-    coordinate *= screenMatrix.tab;
-
-    return coordinate;
-}
-
-Vec4 Renderer::VertexGraphicPipeline(rdrVertex& vertex)
-{
-    Vec4 coordinate = {vertex.GetPosition() * -1};
-    return VertexGraphicPipeline(coordinate);
-}
-
-
 
 void Renderer::DrawLine(const Vec4& p0, const Vec4& p1, Vec4& color)
 {
@@ -307,6 +252,7 @@ void Renderer::DrawTriangleWireFrame(Vec4* vertices)
 
 void Renderer::TransformLights(std::vector<Light>& _lights)
 {
+    /*
     for(int i=0;i<(int)_lights.size();i++)
     {
         Vec4 newPosition = _lights[i].GetPosition();
@@ -322,20 +268,76 @@ void Renderer::TransformLights(std::vector<Light>& _lights)
 
         _lights[i].SetPosition(newPosition);
     }
+    */
 }
 
 void Renderer::DrawTriangle(rdrVertex* vertices)
 {
-    Vec4 screenCoords[3]= {
-        VertexGraphicPipeline(vertices[0]),
-        VertexGraphicPipeline(vertices[1]),
-        VertexGraphicPipeline(vertices[2]),
-    };
+
+    Vec4 worldCoords[3];
+    Vec4 worldNormals[3];
+    
+    Vec4 viewCoords[3] ;
+    Vec4 viewNormals[3] ;
+
+    Vec4 clipCoords[3] ;
+    Vec4 clipNormals[3] ;
+
+    Vec4 ndcCoords[3]  ;
+    Vec4 ndcNormals[3]  ;
+
+    Vec4 colors[3];
+    
+    Vec4 screenCoords[3]  ;
+    Vec4 screenNormals[3]  ;
+
+    Vec3 usableScreenCoords[3];
+    Vec3 usableScreenNormals[3];
+
+    Mat4 screenMatrix = Mat4(
+    {
+        400,0,0,(float)fb->GetWidth()/2,
+        0,400,0,(float)fb->GetHeight()/2,
+        0,0,1,0,
+        0,0,0,1,
+    });
+
+    for(int i=0;i<3;i++)
+    {
+        colors[i]=vertices[i].GetColor();
+        
+        worldCoords[i] = Vec4(vertices[i].GetPosition(), 1.f) * modelMatrix;
+
+        worldNormals[i] = Vec4(vertices[i].GetNormal(), 0.f) * modelMatrix;
+        worldNormals[i] = Vec4(vertices[i].GetNormal(), 0.f) * modelMatrix;
+
+        
+        viewCoords[i] = worldCoords[i] * viewMatrix;
+        viewNormals[i] = worldNormals[i] * viewMatrix;
+        
+        clipCoords[i] = viewCoords[i] /** projectionMatrix*/;
+        clipNormals[i] = viewNormals[i] /** projectionMatrix*/;
+        
+        ndcCoords[i] = clipCoords[i].GetHomogenizedVec();
+        ndcNormals[i] = clipNormals[i].GetHomogenizedVec();
+        
+        screenCoords[i] = ndcCoords[i] * screenMatrix;
+        screenCoords[i].z = ndcCoords[i].z;
+
+        screenNormals[i] = ndcNormals[i] * screenMatrix;
+        screenNormals[i].z = ndcNormals[i].z;
+
+        usableScreenCoords[i]={screenCoords[i].x,screenCoords[i].y,screenCoords[i].z};
+        usableScreenNormals[i]={screenNormals[i].x,screenNormals[i].y,screenNormals[i].z};
+
+    }
 
     if(wireFrameOn)
         DrawTriangleWireFrame(screenCoords);
+
     else
     {       
+/*
         for(int i=0;i<3;i++)
         {
             vertices[i].SetNormal(GetNormalVector(
@@ -346,17 +348,18 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
 
         }
 
-
         rdrVertex vertex[3] = {
             {{screenCoords[0].x, screenCoords[0].y, screenCoords[0].z}, vertices[0].GetNormal(), vertices[0].GetColor(), vertices[0].GetTexCoord()},
             {{screenCoords[1].x, screenCoords[1].y, screenCoords[1].z}, vertices[1].GetNormal(), vertices[1].GetColor(), vertices[1].GetTexCoord()},
             {{screenCoords[2].x, screenCoords[2].y, screenCoords[2].z}, vertices[2].GetNormal(), vertices[2].GetColor(), vertices[2].GetTexCoord()}
         };
-    
-        FillTriangle(vertex[0],vertex[1],vertex[2]);
+*/   
+
+
+        FillTriangle(usableScreenCoords,colors,{worldNormals[0].x,worldNormals[0].y,worldNormals[0].z});
 
         Vec4 color= {1,1,1,1};
-        DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal(),color);
+        DrawLine(screenCoords[0],screenCoords[0] + screenNormals[0],color);
 
         /*
         Vec4 color= {1,1,1,1};
@@ -366,7 +369,6 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         printf("normal = { %f, %f, %f }\n", vertex[0].GetNormal().x,vertex[0].GetNormal().y,vertex[0].GetNormal().z);
         */
     }
-
 
 
 }
