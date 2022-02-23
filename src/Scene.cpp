@@ -202,7 +202,7 @@ void Scene::Scene3(Renderer& renderer)
     renderer.perspectiveOn=false;
 
     lights.pop_back();
-    lights.push_back(Light({0,0, 0},0.2f,0.4f,0.4f));
+    lights.push_back(Light({ 400, 300, 0},0.2f,0.4f,0.4f));
 
     //printf("light position = { %f, %f, %f }\n",lights[0].GetPosition().x,lights[0].GetPosition().y,lights[0].GetPosition().z);
     renderer.TransformLights(lights);

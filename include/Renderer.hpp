@@ -127,6 +127,8 @@ public:
     bool perspectiveOn = false;
 
 private:
+
+    void DrawLightRay(const Vec3& vertexPos);
     void DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color);
     void TransformVertices(Vec3& vertices);
     void FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal);

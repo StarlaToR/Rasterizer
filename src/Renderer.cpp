@@ -168,6 +168,12 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
     }
 }
 
+void Renderer::DrawLightRay(const Vec3& vertexPos)
+{
+    Vec4 color={1,1,1,1};
+    DrawLine(vertexPos,lights[0].GetPosition(),color);
+}
+
 float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
 {
     float ambientLight = lights[0].GetAmbient();  
@@ -180,8 +186,10 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
     float diffuseLight = lights[0].GetDiffuse() * GetDotProduct(lightRay, normal)/(normal.GetMagnitude() * lightRay.GetMagnitude());
     float specularLight = lights[0].GetSpecular() * GetDotProduct(reflectionRay, viewRay)/(reflectionRay.GetMagnitude() * viewRay.GetMagnitude());
 
-    intensity = ambientLight + diffuseLight /*+ specularLight*/;
+    intensity = ambientLight + diffuseLight + specularLight;
 
+    DrawLightRay(worldPosition);
+    
 /*
     printf("ambientLight = %f\n",ambientLight);
     printf("diffuseLight = %f\n",diffuseLight);
@@ -189,6 +197,7 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
     printf("specularLight= %f\n",specularLight);
     printf("intensity = %f\n\n",intensity);
 */
+
     return intensity;
 }
 
