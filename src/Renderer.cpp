@@ -318,7 +318,6 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         
         worldCoords[i] = Vec4(vertices[i].GetPosition(), 1.f) * modelMatrix;
         worldNormals[i] = Vec4(vertices[i].GetNormal(), 0.f) * modelMatrix;
-
         
         viewCoords[i] = worldCoords[i] * viewMatrix;
         viewNormals[i] = worldNormals[i] * viewMatrix;
