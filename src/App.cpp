@@ -143,17 +143,18 @@ void App::Update()
         {
             inputs.deltaX = mouseDeltaX;
             inputs.deltaY = mouseDeltaY;
-            inputs.moveForward  = ImGui::IsKeyDown(GLFW_KEY_E);
-            inputs.moveBackward = ImGui::IsKeyDown(GLFW_KEY_Q);
-            inputs.moveUp  = ImGui::IsKeyDown(GLFW_KEY_UP);
-            inputs.moveDown = ImGui::IsKeyDown(GLFW_KEY_DOWN);
-            inputs.moveLeft  = ImGui::IsKeyDown(GLFW_KEY_LEFT);
-            inputs.moveRight = ImGui::IsKeyDown(GLFW_KEY_RIGHT);
-
-            inputs.rotateWorldLeft = ImGui::IsKeyDown(GLFW_KEY_A);
-            inputs.rotateWorldRight = ImGui::IsKeyDown(GLFW_KEY_D);
-            inputs.rotateWorldUp = ImGui::IsKeyDown(GLFW_KEY_W);
-            inputs.rotateWorldDown = ImGui::IsKeyDown(GLFW_KEY_S);
+            inputs.moveForward  = ImGui::IsKeyDown(GLFW_KEY_W);
+            inputs.moveBackward = ImGui::IsKeyDown(GLFW_KEY_S);
+            /*
+            inputs.moveUp  = ImGui::IsKeyDown(GLFW_KEY_Q);
+            inputs.moveDown = ImGui::IsKeyDown(GLFW_KEY_E);
+            inputs.moveLeft  = ImGui::IsKeyDown(GLFW_KEY_A);
+            inputs.moveRight = ImGui::IsKeyDown(GLFW_KEY_D);
+            */
+            inputs.rotateWorldLeft = ImGui::IsKeyDown(GLFW_KEY_LEFT);
+            inputs.rotateWorldRight = ImGui::IsKeyDown(GLFW_KEY_RIGHT);
+            inputs.rotateWorldUp = ImGui::IsKeyDown(GLFW_KEY_UP);
+            inputs.rotateWorldDown = ImGui::IsKeyDown(GLFW_KEY_DOWN);
 
         }
         camera.Update(ImGui::GetIO().DeltaTime, inputs);

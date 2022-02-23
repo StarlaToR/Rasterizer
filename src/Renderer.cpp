@@ -186,11 +186,12 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
     float specularLight = lights[0].GetSpecular() * GetDotProduct(reflectionRay, viewRay)/(reflectionRay.GetMagnitude() * viewRay.GetMagnitude());
 
     intensity = ambientLight + diffuseLight + specularLight;
-
+    
 /*
+    DrawLightRay(worldPosition);
+
     printf("ambientLight = %f\n",ambientLight);
     printf("diffuseLight = %f\n",diffuseLight);
-
     printf("specularLight= %f\n",specularLight);
     printf("intensity = %f\n\n",intensity);
 */
@@ -373,8 +374,8 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         }
         else
         {
-            clipCoords[i] = viewCoords[i] /** projectionMatrix*/;
-            clipNormals[i] = viewNormals[i] /** projectionMatrix*/ ;
+            clipCoords[i] = viewCoords[i];
+            clipNormals[i] = viewNormals[i] ;
         }
 
 
@@ -446,6 +447,51 @@ void Renderer::DrawTriangles(rdrVertex* p_vertices, const uint p_count)
     }
 }
 
+void Renderer::DrawGizmo()
+{
+    Vec4 worldCoords[4] = {
+        {0,0,0,1}, {0.5f,0,0,1},
+        {0,0.5f,0,1}, {0,0,0.5f,1},
+    };
+    Vec4 viewCoords[4]  ;
+    Vec4 clipCoords[4]  ;
+    Vec4 ndcCoords[4]   ;
+    Vec4 screenCoords[4];
+
+    Mat4 screenMatrix = Mat4(
+    {
+        400,0,0,(float)fb->GetWidth()/2,
+        0,400,0,(float)fb->GetHeight()/2,
+        0,0,1,0,
+        0,0,0,1,
+    });
+
+    for(int i=0;i<4;i++)
+    {   
+        viewCoords[i] = worldCoords[i] * viewMatrix;
+
+        if(perspectiveOn)
+        {
+            clipCoords[i] = viewCoords[i] * projectionMatrix;
+        }
+        else
+        {
+            clipCoords[i] = viewCoords[i];
+        }
+
+        ndcCoords[i] = clipCoords[i].GetHomogenizedVec();
+        
+        screenCoords[i] = ndcCoords[i] * screenMatrix;
+        screenCoords[i].z = ndcCoords[i].z;
+    }
+    Vec4 col1 = {1,0,0,1};
+    Vec4 col2 = {0,1,0,1};
+    Vec4 col3 = {0,0,1,1};
+
+    DrawLine(screenCoords[0], screenCoords[1], col1);
+    DrawLine(screenCoords[0], screenCoords[2], col2);
+    DrawLine(screenCoords[0], screenCoords[3], col3);
+}
 
 
 /////////////////////////////////////////////                 Renderer               /////////////////////////////////////////////////////

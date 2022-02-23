@@ -50,12 +50,16 @@ void Camera::Update(const float p_deltaTime, const CameraInputs& inputs)
         rotation.y+=0.1f;
 
     if(inputs.rotateWorldUp==true)
+    {
         rotation.x-=0.1f;
+    }
+
     if(inputs.rotateWorldDown==true)
+    {
         rotation.x+=0.1f;
+    }
 
     viewMatrix = CreateTransformMatrix(position,rotation,{1,1,1});
-
 }
 
 Mat4 Camera::GetViewMatrix()
