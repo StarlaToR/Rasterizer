@@ -173,15 +173,22 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
     float ambientLight = lights[0].GetAmbient();  
     float intensity = 0;
 
-    Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[0][3], viewMatrix.tab[0][3]) - worldPosition;
+    Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[1][3], viewMatrix.tab[2][3]) - worldPosition;
     Vec3 lightRay = lights[0].GetPosition() - worldPosition;
     Vec3 reflectionRay = 2 * (normal * lightRay) * normal - lightRay;
 
     float diffuseLight = lights[0].GetDiffuse() * GetDotProduct(lightRay, normal)/(normal.GetMagnitude() * lightRay.GetMagnitude());
     float specularLight = lights[0].GetSpecular() * GetDotProduct(reflectionRay, viewRay)/(reflectionRay.GetMagnitude() * viewRay.GetMagnitude());
 
-    intensity = ambientLight + diffuseLight + specularLight;
+    intensity = ambientLight + diffuseLight /*+ specularLight*/;
 
+  /*
+    printf("ambientLight = %f\n",ambientLight);
+    printf("diffuseLight = %f\n",diffuseLight);
+    printf("specularLight= %f\n",specularLight);
+
+    printf("intensity = %f\n\n",intensity);
+*/
     return intensity;
 }
 
@@ -307,8 +314,6 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         colors[i]=vertices[i].GetColor();
         
         worldCoords[i] = Vec4(vertices[i].GetPosition(), 1.f) * modelMatrix;
-
-        worldNormals[i] = Vec4(vertices[i].GetNormal(), 0.f) * modelMatrix;
         worldNormals[i] = Vec4(vertices[i].GetNormal(), 0.f) * modelMatrix;
 
         
@@ -319,13 +324,12 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         clipNormals[i] = viewNormals[i] /** projectionMatrix*/;
         
         ndcCoords[i] = clipCoords[i].GetHomogenizedVec();
-        ndcNormals[i] = clipNormals[i].GetHomogenizedVec();
         
         screenCoords[i] = ndcCoords[i] * screenMatrix;
         screenCoords[i].z = ndcCoords[i].z;
 
-        screenNormals[i] = ndcNormals[i] * screenMatrix;
-        screenNormals[i].z = ndcNormals[i].z;
+        screenNormals[i] = clipNormals[i] * screenMatrix;
+        screenNormals[i].z = clipNormals[i].z;
 
         usableScreenCoords[i]={screenCoords[i].x,screenCoords[i].y,screenCoords[i].z};
         usableScreenNormals[i]={screenNormals[i].x,screenNormals[i].y,screenNormals[i].z};
@@ -368,6 +372,7 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         DrawLine(vertex[2].GetPosition(),vertex[2].GetPosition() + vertex[2].GetNormal(),color);
         printf("normal = { %f, %f, %f }\n", vertex[0].GetNormal().x,vertex[0].GetNormal().y,vertex[0].GetNormal().z);
         */
+
     }
 
 
