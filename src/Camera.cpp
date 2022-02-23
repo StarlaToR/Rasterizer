@@ -54,8 +54,6 @@ void Camera::Update(const float p_deltaTime, const CameraInputs& inputs)
     if(inputs.rotateWorldDown==true)
         rotation.x+=0.1f;
 
-    printf("position =%f\n",position.z);
-
     viewMatrix = CreateTransformMatrix(position,rotation,{1,1,1});
 
 }
