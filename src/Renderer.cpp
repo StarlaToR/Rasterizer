@@ -203,7 +203,7 @@ void Renderer::DrawLightRay(const Vec3& vertexPos)
     DrawLine(vertexPos,lights[0].GetScreenCoords(),color);
 }
 
-float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
+float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal, const Vec3& screenCoords)
 {
  //   printf("normal = {%f,%f,%f}\n",normal.x,normal.y,normal.z);
     float ambientLight = lights[0].GetAmbient();  
@@ -223,7 +223,7 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
     intensity = ambientLight + diffuseLight + specularLight;
     
     if (lightRayOn)
-        DrawLightRay(worldPosition);
+        DrawLightRay(screenCoords);
 
     return intensity;
 }
@@ -260,7 +260,7 @@ void Renderer::FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal, Ve
                 if(lightsOn)
                 {
                     normal.Normalize();
-                    float lightIntensity = GetLightIntensity({worldCoords[0].x,worldCoords[0].y,worldCoords[0].z},normal);
+                    float lightIntensity = GetLightIntensity({worldCoords[0].x,worldCoords[0].y,worldCoords[0].z},normal,{screenCoords[0].x,screenCoords[0].y,screenCoords[0].z});
                     col=col*lightIntensity;
                 }
                 DrawPixel(i,j,depth,col);

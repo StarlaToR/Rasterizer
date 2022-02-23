@@ -155,7 +155,7 @@ private:
     bool CheckDepth(int x, int y, float z);
     void DrawTriangle(rdrVertex* p_vertices);
 
-    float GetLightIntensity(const Vec3& position, const Vec3& normal);
+    float GetLightIntensity(const Vec3& worldPosition, const Vec3& normal, const Vec3& screenCoords);
     void ShowImGuiControls();
     void DrawLine(const Vec4& p_0, const Vec4& p_1, Vec4& p_color);
     void DrawTriangleWireFrame(Vec4* vertices);
