@@ -14,6 +14,13 @@ ___
 - Axe X : 'S' (positif),'W' (négatif)
 - Axe Y : 'S' (positif),'W' (négatif)
 
+## Menu :
+
+- Activer/Désactiver WireFrame : 'F1'
+- Activer/Désactiver Lights : 'F2'
+- Activer/Désactiver Normales : 'F3'
+- Activer/Désactiver Perspective : 'F4'
+- Activer/Désactiver LightRay : 'F6'
 ___
 # Scène
 
