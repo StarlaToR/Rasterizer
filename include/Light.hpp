@@ -5,9 +5,10 @@ class Light
 {
 public:
     Light(Vec3 parPosition, float parAmbient, float parDiffuse, float parSpecular)
-    {position=parPosition; ambient=parAmbient; diffuse=parDiffuse; specular=parSpecular;}
+    {worldCoords=parPosition; ambient=parAmbient; diffuse=parDiffuse; specular=parSpecular;}
 
-    Vec3 GetPosition();
+    Vec3 GetScreenCoords();
+    Vec3 GetWorldCoords();
     float GetAmbient();
     float GetDiffuse();
     float GetSpecular();
@@ -15,6 +16,8 @@ public:
     void SetPosition(Vec4 _position);
   
 private:
-    Vec3 position;
+    Vec3 worldCoords;
+    Vec3 screenCoords;
+
     float ambient, diffuse, specular;
 };

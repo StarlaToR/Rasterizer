@@ -129,6 +129,7 @@ public:
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
     void ToggleWireFrame();
     void TransformLights(std::vector<Light>& _lights);
+    void UpdateLight();
 
     bool wireFrameOn=false;
     bool lightsOn = false;

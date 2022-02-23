@@ -1,9 +1,14 @@
 #include<Light.hpp>
 
 
-Vec3 Light::GetPosition()
+Vec3 Light::GetWorldCoords()
 {
-    return position;
+    return worldCoords;
+}
+
+Vec3 Light::GetScreenCoords()
+{
+    return screenCoords;
 }
 
 float Light::GetAmbient()
@@ -23,7 +28,9 @@ float Light::GetSpecular()
 
 void Light::SetPosition(Vec3 _position)
 {
-    position=_position;
+    worldCoords=_position;
+
+    
 }
 
 void Light::SetPosition(Vec4 _position)

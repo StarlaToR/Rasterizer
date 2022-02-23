@@ -171,7 +171,7 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
 void Renderer::DrawLightRay(const Vec3& vertexPos)
 {
     Vec4 color={1,1,1,1};
-    DrawLine(vertexPos,lights[0].GetPosition(),color);
+    DrawLine(vertexPos,lights[0].GetWorldCoords(),color);
 }
 
 float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
@@ -180,15 +180,13 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
     float intensity = 0;
 
     Vec3 viewRay = Vec3(viewMatrix.tab[0][3], viewMatrix.tab[1][3], viewMatrix.tab[2][3]) - worldPosition;
-    Vec3 lightRay = lights[0].GetPosition() - worldPosition;
+    Vec3 lightRay = lights[0].GetWorldCoords() - worldPosition;
     Vec3 reflectionRay = 2 * (normal * lightRay) * normal - lightRay;
 
     float diffuseLight = lights[0].GetDiffuse() * GetDotProduct(lightRay, normal)/(normal.GetMagnitude() * lightRay.GetMagnitude());
     float specularLight = lights[0].GetSpecular() * GetDotProduct(reflectionRay, viewRay)/(reflectionRay.GetMagnitude() * viewRay.GetMagnitude());
 
     intensity = ambientLight + diffuseLight + specularLight;
-
-    //DrawLightRay(worldPosition);
 
 /*
     printf("ambientLight = %f\n",ambientLight);
@@ -270,7 +268,7 @@ void Renderer::TransformLights(std::vector<Light>& _lights)
 {
     for(int i=0;i<(int)_lights.size();i++)
     {
-        Vec4 newPosition = _lights[i].GetPosition();
+        Vec4 newPosition = _lights[i].GetWorldCoords();
         newPosition*=viewMatrix.tab;
         Mat4 screenMatrix = Mat4(
         {
@@ -284,6 +282,45 @@ void Renderer::TransformLights(std::vector<Light>& _lights)
         _lights[i].SetPosition(newPosition);
     }
     
+}
+
+void Renderer::UpdateLight()
+{
+    
+    Vec4 worldLight;
+    Vec4 viewLight ;
+    Vec4 clipLight ;
+    Vec4 ndcLight  ;
+    Vec4 screenLight  ;
+    Vec3 usableScreenLight;
+
+    Mat4 screenMatrix = Mat4(
+    {
+        400,0,0,(float)fb->GetWidth()/2,
+        0,400,0,(float)fb->GetHeight()/2,
+        0,0,1,0,
+        0,0,0,1,
+    });
+
+    worldLight = Vec4(lights[0].GetWorldCoords(), 1.f) * modelMatrix;
+        
+    viewLight = worldLight * viewMatrix;
+        
+    if(perspectiveOn)
+        clipLight = viewLight * projectionMatrix;
+    else
+        clipLight = viewLight /** projectionMatrix*/;
+
+
+    ndcLight = clipLight.GetHomogenizedVec();
+    
+    screenLight = ndcLight * screenMatrix;
+    screenLight.z = ndcLight.z;
+
+
+    usableScreenLight={screenLight.x,screenLight.y,screenLight.z};
+    DrawLightRay(usableScreenLight);
+
 }
 
 void Renderer::DrawTriangle(rdrVertex* vertices)
@@ -351,7 +388,6 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         usableScreenNormals[i]={screenNormals[i].x,screenNormals[i].y,screenNormals[i].z};
 
     }
-    //wireFrameOn=true;
 
     if(wireFrameOn)
     {
@@ -401,6 +437,7 @@ void Renderer::DrawTriangles(rdrVertex* p_vertices, const uint p_count)
 {
     // calculate mvp from matrices
     // Transform vertex list to triangles into colorBuffer
+
     for (uint i = 0; i < p_count; i += 3)
     {
         DrawTriangle(&p_vertices[i]);

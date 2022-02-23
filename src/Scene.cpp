@@ -207,9 +207,6 @@ void Scene::Scene3(Renderer& renderer)
     lights.pop_back();
     lights.push_back(Light({ 0, 0, 0},0.2f,0.4f,0.4f));
 
-    //printf("light position = { %f, %f, %f }\n",lights[0].GetPosition().x,lights[0].GetPosition().y,lights[0].GetPosition().z);
-    renderer.TransformLights(lights);
-    //printf("light position = { %f, %f, %f }\n\n",lights[0].GetPosition().x,lights[0].GetPosition().y,lights[0].GetPosition().z);
     renderer.SetLights(lights);
 
 
@@ -218,6 +215,8 @@ void Scene::Scene3(Renderer& renderer)
 
     renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,(float)time/2,(float)time}, {0.2f,0.2f,0.2f}));
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
+    
+
 }
 
 //Perspective test
@@ -241,11 +240,12 @@ void Scene::Scene4(Renderer& renderer)
 void Scene::Scene5(Renderer& renderer)
 {
     renderer.lightsOn=false;
-    renderer.perspectiveOn=false;
+    renderer.perspectiveOn=true;
     renderer.normalsOn=false;
 
     renderer.SetLights(lights);
 
+    renderer.SetModel(CreateTransformMatrix({0,-0.5f,0}, {0,time,0}, {1,1,1}));
     renderer.DrawTriangles(blacksmith_mesh, (uint)blacksmith_size);
     renderer.DrawTriangles(floor_mesh, (uint)floor_size);
     renderer.DrawTriangles(anvil_mesh, (uint)anvil_size);
