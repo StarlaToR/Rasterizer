@@ -25,6 +25,7 @@ void Light::SetPosition(Vec3 _position)
 {
     position=_position;
 }
+
 void Light::SetPosition(Vec4 _position)
 {
     SetPosition({_position.x,_position.y,_position.z});

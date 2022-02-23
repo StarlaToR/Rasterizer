@@ -210,7 +210,7 @@ void Scene::Scene3(Renderer& renderer)
     renderer.SetLights(lights);
 
 
-    renderer.SetModel(CreateTransformMatrix({1,0,0}, {0,0,0}, {0.5f,0.5f,0.5f}));
+    renderer.SetModel(CreateTransformMatrix({0,0,-1}, {0,time,0}, {0.5f,0.5f,0.5f}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
 
     renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,(float)time/2,(float)time}, {0.1f,0.1f,0.1f}));
