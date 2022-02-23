@@ -188,7 +188,7 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
 
     intensity = ambientLight + diffuseLight + specularLight;
 
-    DrawLightRay(worldPosition);
+    //DrawLightRay(worldPosition);
 
 /*
     printf("ambientLight = %f\n",ambientLight);
@@ -327,9 +327,18 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         viewCoords[i] = worldCoords[i] * viewMatrix;
         viewNormals[i] = worldNormals[i] * viewMatrix;
         
-        clipCoords[i] = viewCoords[i] /** projectionMatrix*/;
-        clipNormals[i] = viewNormals[i] /** projectionMatrix*/ ;
-        
+        if(perspectiveOn)
+        {
+            clipNormals[i] = viewNormals[i] * projectionMatrix ;
+            clipCoords[i] = viewCoords[i] * projectionMatrix;
+        }
+        else
+        {
+            clipCoords[i] = viewCoords[i] /** projectionMatrix*/;
+            clipNormals[i] = viewNormals[i] /** projectionMatrix*/ ;
+        }
+
+
         ndcCoords[i] = clipCoords[i].GetHomogenizedVec();
         
         screenCoords[i] = ndcCoords[i] * screenMatrix;
@@ -352,9 +361,10 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     {       
         FillTriangle(usableScreenCoords,colors,{worldNormals[0].x,worldNormals[0].y,worldNormals[0].z});
         Vec4 color= {1,1,1,1};
-        for(int i=0;i<3;i++)
+        if(normalsOn)
         {
-            DrawLine(screenCoords[i],screenCoords[i] + screenNormals[i],color);
+            for(int i=0;i<3;i++)
+                DrawLine(screenCoords[i],screenCoords[i] + screenNormals[i],color);
         }
     }
 }

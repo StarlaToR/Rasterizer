@@ -159,6 +159,8 @@ void Scene::ShowImGuiControls()
 void Scene::Scene1(Renderer& renderer)
 {
     renderer.lightsOn=false;
+    renderer.normalsOn=false;
+    renderer.perspectiveOn=false;
 
     renderer.SetLights(lights);
 
@@ -183,6 +185,7 @@ void Scene::Scene2(Renderer& renderer)
 {
     renderer.lightsOn=false;
     renderer.perspectiveOn=false;
+    renderer.normalsOn=false;
 
     renderer.SetLights(lights);
 
@@ -200,7 +203,7 @@ void Scene::Scene3(Renderer& renderer)
 {
     renderer.lightsOn=true;
     renderer.perspectiveOn=false;
-
+    renderer.normalsOn=true;
     lights.pop_back();
     lights.push_back(Light({ 0, 0, 0},0.2f,0.4f,0.4f));
 
@@ -210,7 +213,7 @@ void Scene::Scene3(Renderer& renderer)
     renderer.SetLights(lights);
 
 
-    renderer.SetModel(CreateTransformMatrix({0,0,-1}, {0,time,0}, {0.5f,0.5f,0.5f}));
+    renderer.SetModel(CreateTransformMatrix({-0.5f,0,0}, {0,time,0}, {0.5f,0.5f,0.5f}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
 
     renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,(float)time/2,(float)time}, {0.1f,0.1f,0.1f}));
@@ -222,12 +225,12 @@ void Scene::Scene4(Renderer& renderer)
 {
     renderer.lightsOn=false;
     renderer.perspectiveOn=true;
+    renderer.normalsOn=false;
 
     renderer.SetLights(lights);
 
     renderer.SetModel(CreateTransformMatrix({0.5f,0,0}, {(float)time,(float)time*1.5f,0}, {0.5f,0.5f,0.5f}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
-
 
     renderer.SetModel(CreateTransformMatrix({-0.5f,0,0}, {0,(float)time/2,(float)time}, {0.2f,0.2f,0.2f}));
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
@@ -239,6 +242,7 @@ void Scene::Scene5(Renderer& renderer)
 {
     renderer.lightsOn=false;
     renderer.perspectiveOn=false;
+    renderer.normalsOn=false;
 
     renderer.SetLights(lights);
 

@@ -34,8 +34,9 @@ public:
 
 private:
     Vec3 rotation={0,0,0};
-    Vec3 position={0,0,0};
+    Vec3 position={0,0,2};
     Mat4 viewMatrix=GetIdentityMat4();
-    Mat4 projectionMatrix;
+
+    Mat4 projectionMatrix= GetIdentityMat4();
 
 };

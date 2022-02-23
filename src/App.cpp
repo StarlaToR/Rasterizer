@@ -155,8 +155,8 @@ void App::Update()
             inputs.rotateWorldUp = ImGui::IsKeyDown(GLFW_KEY_W);
             inputs.rotateWorldDown = ImGui::IsKeyDown(GLFW_KEY_S);
 
-            camera.Update(ImGui::GetIO().DeltaTime, inputs);
         }
+        camera.Update(ImGui::GetIO().DeltaTime, inputs);
 
         // Clear buffers
         framebuffer.Clear();

@@ -125,6 +125,8 @@ public:
     bool wireFrameOn=false;
     bool lightsOn = false;
     bool perspectiveOn = false;
+    bool normalsOn = false;
+
 
 private:
 
