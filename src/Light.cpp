@@ -29,8 +29,6 @@ float Light::GetSpecular()
 void Light::SetPosition(Vec3 _position)
 {
     worldCoords=_position;
-
-    
 }
 
 void Light::SetPosition(Vec4 _position)

@@ -24,7 +24,7 @@ static void TransformVertices(std::vector<rdrVertex>& dest, const std::vector<rd
     // multiply all verts by transform and return them
     for(int i=0; i< (int) vert.size(); i++)
     {
-        dest.push_back(vert[i]*transform);
+        dest.push_back(vert[i] * transform);
     }
 }
 
@@ -114,9 +114,46 @@ Scene::~Scene()
     // HERE: Unload the scene
 }
 
-void Scene::SetCurrentScene(const int& sceneNumber)
+void Scene::SetCurrentScene(const int& sceneNumber, Renderer& renderer)
 {
     currentScene=sceneNumber;
+    if(sceneNumber == 1)
+    {
+        renderer.lightsOn=false;
+        renderer.normalsOn=false;
+        renderer.perspectiveOn=false;
+        renderer.texturesOn=false;
+    }
+    if(sceneNumber == 2)
+    {
+        renderer.lightsOn=false;
+        renderer.perspectiveOn=false;
+        renderer.normalsOn=false;
+        renderer.texturesOn=false;
+
+    }
+    if(sceneNumber == 3)
+    {
+        renderer.lightsOn=true;
+        renderer.perspectiveOn=true;
+        renderer.normalsOn=false;
+        renderer.texturesOn=false;
+    }
+    if(sceneNumber == 4)
+    {
+        renderer.lightsOn=false;
+        renderer.perspectiveOn=true;
+        renderer.normalsOn=false;
+        renderer.texturesOn=false;
+    }
+    if(sceneNumber == 5)
+    {
+        renderer.lightsOn=false;
+        renderer.perspectiveOn=true;
+        renderer.normalsOn=false;
+        renderer.texturesOn=true;
+    }
+
 }
 
 void Scene::Update(float deltaTime, Renderer& renderer)
@@ -158,11 +195,6 @@ void Scene::ShowImGuiControls()
 //Color and Draw test
 void Scene::Scene1(Renderer& renderer)
 {
-    renderer.lightsOn=false;
-    renderer.normalsOn=false;
-    renderer.perspectiveOn=false;
-    renderer.texturesOn=false;
-
     renderer.SetLights(lights);
 
     triangleVertices = {
@@ -184,11 +216,6 @@ void Scene::Scene1(Renderer& renderer)
 //Z-buffer test
 void Scene::Scene2(Renderer& renderer)
 {
-    renderer.lightsOn=false;
-    renderer.perspectiveOn=false;
-    renderer.normalsOn=false;
-    renderer.texturesOn=false;
-
     renderer.SetLights(lights);
 
 
@@ -203,41 +230,34 @@ void Scene::Scene2(Renderer& renderer)
 //Light test
 void Scene::Scene3(Renderer& renderer)
 {
-    renderer.lightsOn=true;
-    renderer.perspectiveOn=true;
-    renderer.normalsOn=false;
-    renderer.texturesOn=false;
-
     lights.pop_back();
     lights.push_back(Light({ 0, 0, 0},0.2f,0.4f,0.4f));
+    renderer.TransformLights(lights);
 
     renderer.SetLights(lights);
 
 
     renderer.SetModel(CreateTransformMatrix({0,0,1}, {0,0,0}, {0.5f,0.5f,0.5f}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
-/*
+
     renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,(float)time/2,(float)time}, {0.1f,0.1f,0.1f}));
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
-    */
 }
 
 //Perspective test
 void Scene::Scene4(Renderer& renderer)
 {
-    renderer.lightsOn=false;
-    renderer.perspectiveOn=true;
-    renderer.normalsOn=false;
-    renderer.texturesOn=false;
-
+    lights.pop_back();
+    lights.push_back(Light({ 0, 0, 0},0.2f,0.4f,0.4f));
+    renderer.TransformLights(lights);
     renderer.SetLights(lights);
 
     renderer.SetModel(CreateTransformMatrix({0.5f,1,0}, {(float)time,(float)time*1.5f,0}, {0.5f,0.5f,0.5f}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
-
+/*
     renderer.SetModel(CreateTransformMatrix({-0.5f,1,0}, {0,(float)time/2,(float)time}, {0.2f,0.2f,0.2f}));
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
-
+*/
     renderer.DrawGizmo();
 }
 
@@ -245,11 +265,6 @@ void Scene::Scene4(Renderer& renderer)
 // Mesh and Texture test
 void Scene::Scene5(Renderer& renderer)
 {
-    renderer.lightsOn=false;
-    renderer.perspectiveOn=true;
-    renderer.normalsOn=false;
-    renderer.texturesOn=true;
-
     renderer.SetLights(lights);
 
     renderer.SetModel(CreateTransformMatrix({0,-0.5f,0}, {0,time,0}, {1,1,1}));

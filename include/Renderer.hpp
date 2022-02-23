@@ -121,7 +121,7 @@ public:
     void SetProjection(Mat4 p_projectionMatrix);
     void SetView(Mat4 p_viewMatrix);
     void SetModel(Mat4 p_modelMatrix);
-    void SetLights(const std::vector<Light>& p_lights) { lights = p_lights; }
+    void SetLights(const std::vector<Light>& p_lights);
     Mat4 GetProjection();
     Mat4 GetView();
     Mat4 GetModel();
@@ -129,16 +129,22 @@ public:
     void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
     void DrawGizmo();
-    void ToggleWireFrame();
     void TransformLights(std::vector<Light>& _lights);
     void UpdateLight();
+
+    void ToggleWireFrame();
+    void ToggleLights();
+    void TogglePerspective();
+    void ToggleNormals();
+    void ToggleTextures();
+    void ToggleLightRay();
 
     bool wireFrameOn=false;
     bool lightsOn = false;
     bool perspectiveOn = false;
     bool normalsOn = false;
     bool texturesOn = false;
-
+    bool lightRayOn = false;
 
 private:
 

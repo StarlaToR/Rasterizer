@@ -111,15 +111,15 @@ void App::Update()
     {
 
         if (ImGui::IsKeyPressed(GLFW_KEY_1))
-            scene.SetCurrentScene(1);
+            scene.SetCurrentScene(1, renderer);
         if (ImGui::IsKeyPressed(GLFW_KEY_2))
-            scene.SetCurrentScene(2);
+            scene.SetCurrentScene(2, renderer);
         if (ImGui::IsKeyPressed(GLFW_KEY_3))
-            scene.SetCurrentScene(3);
+            scene.SetCurrentScene(3, renderer);
         if (ImGui::IsKeyPressed(GLFW_KEY_4))
-            scene.SetCurrentScene(4);
+            scene.SetCurrentScene(4, renderer);
         if (ImGui::IsKeyPressed(GLFW_KEY_5))
-            scene.SetCurrentScene(5);
+            scene.SetCurrentScene(5, renderer);
 
         NewFrame(mouseCaptured); //ImGui
         {
@@ -175,6 +175,17 @@ void App::Update()
 
         if (ImGui::IsKeyPressed(GLFW_KEY_F1))
             renderer.ToggleWireFrame();
+        if (ImGui::IsKeyPressed(GLFW_KEY_F2))
+            renderer.ToggleLights();
+        if (ImGui::IsKeyPressed(GLFW_KEY_F3))
+            renderer.ToggleNormals();
+        if (ImGui::IsKeyPressed(GLFW_KEY_F4))
+            renderer.TogglePerspective();
+        if (ImGui::IsKeyPressed(GLFW_KEY_F6))
+            renderer.ToggleTextures(); 
+        if (ImGui::IsKeyPressed(GLFW_KEY_F7))
+            renderer.ToggleLightRay();
+
 
         // Upload texture
         framebuffer.UpdateTexture();

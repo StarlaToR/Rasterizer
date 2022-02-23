@@ -11,7 +11,7 @@ public:
     Scene();
     ~Scene();
     void Update(float p_deltaTime, Renderer& p_renderer);
-    void SetCurrentScene(const int& sceneNumber);
+    void SetCurrentScene(const int& sceneNumber, Renderer& renderer);
 
 
 private:

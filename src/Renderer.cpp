@@ -102,6 +102,31 @@ void Renderer::ToggleWireFrame()
     wireFrameOn = !wireFrameOn;
 }
 
+void Renderer::ToggleLights()
+{
+    lightsOn = !lightsOn;
+}
+
+void Renderer::TogglePerspective()
+{
+    perspectiveOn = !perspectiveOn;
+}
+
+void Renderer::ToggleNormals()
+{
+    normalsOn = !normalsOn;
+}
+
+void Renderer::ToggleTextures()
+{
+    texturesOn = !texturesOn;
+}
+
+void Renderer::ToggleLightRay()
+{
+    lightRayOn = !lightRayOn;
+}
+
 Renderer::Renderer(Framebuffer* f, const uint p_width, const uint p_height):viewport(0,0,p_width, p_height)
 {
     fb = f;
@@ -125,6 +150,11 @@ void Renderer::SetView(Mat4 p_viewMatrix)
 void Renderer::SetModel(Mat4 p_modelMatrix)
 {
     modelMatrix = p_modelMatrix;
+}
+
+void Renderer::SetLights(const std::vector<Light>& p_lights)
+{
+    lights = p_lights; 
 }
 
 Mat4 Renderer::GetProjection()
@@ -187,14 +217,8 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
 
     intensity = ambientLight + diffuseLight + specularLight;
     
-/*
-    DrawLightRay(worldPosition);
-
-    printf("ambientLight = %f\n",ambientLight);
-    printf("diffuseLight = %f\n",diffuseLight);
-    printf("specularLight= %f\n",specularLight);
-    printf("intensity = %f\n\n",intensity);
-*/
+    if (lightRayOn)
+        DrawLightRay(worldPosition);
 
     return intensity;
 }
