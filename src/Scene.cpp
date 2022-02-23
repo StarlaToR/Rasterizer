@@ -203,7 +203,7 @@ void Scene::Scene3(Renderer& renderer)
 {
     renderer.lightsOn=true;
     renderer.perspectiveOn=true;
-    renderer.normalsOn=true;
+    renderer.normalsOn=false;
     lights.pop_back();
     lights.push_back(Light({ 0, 0, 0},0.2f,0.4f,0.4f));
 
@@ -213,7 +213,7 @@ void Scene::Scene3(Renderer& renderer)
     renderer.SetLights(lights);
 
 
-    renderer.SetModel(CreateTransformMatrix({-1,0,0}, {0,time,0}, {0.5f,0.5f,0.5f}));
+    renderer.SetModel(CreateTransformMatrix({-1,0,0}, {0,(float)time,0}, {0.5f,0.5f,0.5f}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
 
     renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,(float)time/2,(float)time}, {0.2f,0.2f,0.2f}));
@@ -246,7 +246,10 @@ void Scene::Scene5(Renderer& renderer)
 
     renderer.SetLights(lights);
 
-    cubeMesh.CreateCube();
+    renderer.DrawTriangles(blacksmith_mesh, (uint)blacksmith_size);
+    renderer.DrawTriangles(floor_mesh, (uint)floor_size);
+    renderer.DrawTriangles(anvil_mesh, (uint)anvil_size);
+    renderer.DrawTriangles(spark_mesh, (uint)spark_size);
 
 }
 

@@ -3,6 +3,7 @@
 #include <Renderer.hpp>
 #include <Light.hpp>
 #include <Mesh.hpp>
+#include <Data_TheNobleCraftsman.hpp>
 
 class Scene
 {

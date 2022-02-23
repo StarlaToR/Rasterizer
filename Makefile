@@ -16,7 +16,7 @@ LDLIBS=-lglfw3 -ldl -lX11 -lssl -lpthread -lGLU
 endif
 
 # PROGRAM OBJS
-OBJS=src/App.o src/Camera.o src/Framebuffer.o src/main.o src/maths.o src/Renderer.o src/Scene.o src/test.o src/Light.o src/Mesh.o
+OBJS=src/App.o src/Camera.o src/Framebuffer.o src/main.o src/maths.o src/Renderer.o src/Scene.o src/test.o src/Light.o src/Mesh.o src/Data_TheNobleCraftsman.o
 
 # DO NOT MODIFY
 # GLAD

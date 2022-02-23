@@ -30,6 +30,14 @@ public:
         texCoord = {j, k};
     }
 
+    rdrVertex(double a, double b, double c, double d, double e, double f, double g, double h, double i, double j, double k, double l)
+    {
+        position = {(float)a, (float)b, (float)c};
+        normal = {(float)d, (float)e, (float)f};
+        color = {(float)g, (float)h, (float)i, (float)j};
+        texCoord = {(float)k,(float)l};
+    }
+
     rdrVertex(const Vec3& pos, const Vec3& norm, const Vec3& col, const Vec2& coord)
     {
         position = pos;
