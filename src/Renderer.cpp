@@ -182,11 +182,11 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
 
     intensity = ambientLight + diffuseLight /*+ specularLight*/;
 
-  /*
+/*
     printf("ambientLight = %f\n",ambientLight);
     printf("diffuseLight = %f\n",diffuseLight);
-    printf("specularLight= %f\n",specularLight);
 
+    printf("specularLight= %f\n",specularLight);
     printf("intensity = %f\n\n",intensity);
 */
     return intensity;
@@ -211,19 +211,22 @@ void Renderer::FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal)
             if(pointChecked.IsInTriangle(vertices[0],vertices[1],vertices[2]))
             {
                 
-                float lightIntensity = GetLightIntensity({pointChecked.x,pointChecked.y,pointChecked.z},normal);
-
                 Vec4 w = pointChecked.GetBarycentricCoords(vertices[0],vertices[1],vertices[2]);
                 float depth =  w.x * screenCoords[0].z + w.y * screenCoords[1].z + w.z * screenCoords[2].z;
-
                 Vec4 col = {
                     w.x * color[0].x + w.y * color[1].x + w.z * color[2].x,
                     w.x * color[0].y + w.y * color[1].y + w.z * color[2].y,
                     w.x * color[0].z + w.y * color[1].z + w.z * color[2].z,
                     1.0f,
                 };
-                col=col*lightIntensity;
+
+                if(lightsOn)
+                {
+                    float lightIntensity = GetLightIntensity({pointChecked.x,pointChecked.y,pointChecked.z},normal);
+                    col=col*lightIntensity;
+                }
                 DrawPixel(i,j,depth,col);
+
             }
         }
     }
@@ -321,7 +324,7 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         viewNormals[i] = worldNormals[i] * viewMatrix;
         
         clipCoords[i] = viewCoords[i] /** projectionMatrix*/;
-        clipNormals[i] = viewNormals[i] /** projectionMatrix*/;
+        clipNormals[i] = viewNormals[i] /** projectionMatrix*/ ;
         
         ndcCoords[i] = clipCoords[i].GetHomogenizedVec();
         
@@ -335,49 +338,22 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         usableScreenNormals[i]={screenNormals[i].x,screenNormals[i].y,screenNormals[i].z};
 
     }
+    //wireFrameOn=true;
 
     if(wireFrameOn)
+    {
         DrawTriangleWireFrame(screenCoords);
-
+    }
     else
     {       
-/*
+        FillTriangle(usableScreenCoords,colors,{worldNormals[0].x,worldNormals[0].y,worldNormals[0].z});
+        Vec4 color= {1,1,1,1};
         for(int i=0;i<3;i++)
         {
-            vertices[i].SetNormal(GetNormalVector(
-                {screenCoords[0].x,screenCoords[0].y,screenCoords[0].z},
-                {screenCoords[1].x,screenCoords[1].y,screenCoords[1].z},
-                {screenCoords[2].x,screenCoords[2].y,screenCoords[2].z}            
-                ));
-
+            DrawLine(screenCoords[i],screenCoords[i] + screenNormals[i],color);
         }
-
-        rdrVertex vertex[3] = {
-            {{screenCoords[0].x, screenCoords[0].y, screenCoords[0].z}, vertices[0].GetNormal(), vertices[0].GetColor(), vertices[0].GetTexCoord()},
-            {{screenCoords[1].x, screenCoords[1].y, screenCoords[1].z}, vertices[1].GetNormal(), vertices[1].GetColor(), vertices[1].GetTexCoord()},
-            {{screenCoords[2].x, screenCoords[2].y, screenCoords[2].z}, vertices[2].GetNormal(), vertices[2].GetColor(), vertices[2].GetTexCoord()}
-        };
-*/   
-
-
-        FillTriangle(usableScreenCoords,colors,{worldNormals[0].x,worldNormals[0].y,worldNormals[0].z});
-
-        Vec4 color= {1,1,1,1};
-        DrawLine(screenCoords[0],screenCoords[0] + screenNormals[0],color);
-
-        /*
-        Vec4 color= {1,1,1,1};
-        DrawLine(vertex[0].GetPosition(),vertex[0].GetPosition() + vertex[0].GetNormal(),color);
-        DrawLine(vertex[1].GetPosition(),vertex[1].GetPosition() + vertex[1].GetNormal(),color);
-        DrawLine(vertex[2].GetPosition(),vertex[2].GetPosition() + vertex[2].GetNormal(),color);
-        printf("normal = { %f, %f, %f }\n", vertex[0].GetNormal().x,vertex[0].GetNormal().y,vertex[0].GetNormal().z);
-        */
-
     }
-
-
 }
-
 
 /*
 void rdrSetImGuiContext(rdrImpl* renderer, struct ImGuiContext* context)
@@ -415,7 +391,6 @@ void Renderer::DrawTriangles(rdrVertex* p_vertices, const uint p_count)
     {
         DrawTriangle(&p_vertices[i]);
     }
-
 }
 
 
