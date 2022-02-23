@@ -1,6 +1,5 @@
 # Rasterizer
 
-
 Outil développé par Antoine Mordant et Maël Jammet.
 ___
 # Contrôle
@@ -14,3 +13,17 @@ ___
 ## Pivoter : 
 - Axe X : 'S' (positif),'W' (négatif)
 - Axe Y : 'S' (positif),'W' (négatif)
+
+___
+# Scène
+
+## Scène 1 : Triangle aux couleurs interpolées
+
+## Scène 2 : Z-Buffer
+
+## Scène 3 : Lumière
+
+## Scène 4 : Perspective
+
+## Scène 5 : Forgeron
+
