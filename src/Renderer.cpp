@@ -189,7 +189,7 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
     intensity = ambientLight + diffuseLight + specularLight;
 
     DrawLightRay(worldPosition);
-    
+
 /*
     printf("ambientLight = %f\n",ambientLight);
     printf("diffuseLight = %f\n",diffuseLight);
@@ -268,7 +268,6 @@ void Renderer::DrawTriangleWireFrame(Vec4* vertices)
 
 void Renderer::TransformLights(std::vector<Light>& _lights)
 {
-    /*
     for(int i=0;i<(int)_lights.size();i++)
     {
         Vec4 newPosition = _lights[i].GetPosition();
@@ -284,7 +283,7 @@ void Renderer::TransformLights(std::vector<Light>& _lights)
 
         _lights[i].SetPosition(newPosition);
     }
-    */
+    
 }
 
 void Renderer::DrawTriangle(rdrVertex* vertices)
