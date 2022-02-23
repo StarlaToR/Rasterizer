@@ -27,7 +27,6 @@ rdrVertex operator*(const rdrVertex& vertex, const Mat4& transformMat)
 }
 
 
-
 Vec3 rdrVertex::GetPosition()
 {
     return position;
@@ -219,12 +218,15 @@ void Renderer::FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal)
             {
                 Vec4 w = pointChecked.GetBarycentricCoords(vertices[0],vertices[1],vertices[2]);
                 float depth =  w.x * screenCoords[0].z + w.y * screenCoords[1].z + w.z * screenCoords[2].z;
+
                 Vec4 col = {
                     w.x * color[0].x + w.y * color[1].x + w.z * color[2].x,
                     w.x * color[0].y + w.y * color[1].y + w.z * color[2].y,
                     w.x * color[0].z + w.y * color[1].z + w.z * color[2].z,
                     1.0f,
                 };
+                
+
                 if(lightsOn)
                 {
                     float lightIntensity = GetLightIntensity({pointChecked.x,pointChecked.y,pointChecked.z},normal);

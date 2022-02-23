@@ -161,6 +161,7 @@ void Scene::Scene1(Renderer& renderer)
     renderer.lightsOn=false;
     renderer.normalsOn=false;
     renderer.perspectiveOn=false;
+    renderer.texturesOn=false;
 
     renderer.SetLights(lights);
 
@@ -186,6 +187,7 @@ void Scene::Scene2(Renderer& renderer)
     renderer.lightsOn=false;
     renderer.perspectiveOn=false;
     renderer.normalsOn=false;
+    renderer.texturesOn=false;
 
     renderer.SetLights(lights);
 
@@ -204,6 +206,8 @@ void Scene::Scene3(Renderer& renderer)
     renderer.lightsOn=true;
     renderer.perspectiveOn=true;
     renderer.normalsOn=false;
+    renderer.texturesOn=false;
+
     lights.pop_back();
     lights.push_back(Light({ 0, 0, 0},0.2f,0.4f,0.4f));
 
@@ -225,6 +229,7 @@ void Scene::Scene4(Renderer& renderer)
     renderer.lightsOn=false;
     renderer.perspectiveOn=true;
     renderer.normalsOn=false;
+    renderer.texturesOn=false;
 
     renderer.SetLights(lights);
 
@@ -242,6 +247,7 @@ void Scene::Scene5(Renderer& renderer)
     renderer.lightsOn=false;
     renderer.perspectiveOn=true;
     renderer.normalsOn=false;
+    renderer.texturesOn=true;
 
     renderer.SetLights(lights);
 

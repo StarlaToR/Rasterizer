@@ -3,6 +3,7 @@
 
 #include <Framebuffer.hpp>
 #include <Light.hpp>
+#include <stb_image.hpp>
 
 // Vertex format (only one supported for now)
 class rdrVertex
@@ -135,6 +136,7 @@ public:
     bool lightsOn = false;
     bool perspectiveOn = false;
     bool normalsOn = false;
+    bool texturesOn = false;
 
 
 private:
