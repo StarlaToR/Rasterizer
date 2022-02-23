@@ -26,12 +26,22 @@ float Light::GetSpecular()
     return specular;
 }
 
-void Light::SetPosition(Vec3 _position)
+void Light::SetWorldCoords(Vec3 _position)
 {
     worldCoords=_position;
 }
 
-void Light::SetPosition(Vec4 _position)
+void Light::SetScreenCoords(Vec3 _position)
 {
-    SetPosition({_position.x,_position.y,_position.z});
+    screenCoords=_position;
+}
+
+void Light::SetWorldCoords(Vec4 _position)
+{
+    SetWorldCoords({_position.x,_position.y,_position.z});
+}
+
+void Light::SetScreenCoords(Vec4 _position)
+{
+    SetScreenCoords({_position.x,_position.y,_position.z});
 }

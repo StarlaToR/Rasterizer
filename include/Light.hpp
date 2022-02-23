@@ -12,9 +12,11 @@ public:
     float GetAmbient();
     float GetDiffuse();
     float GetSpecular();
-    void SetPosition(Vec3 _position);
-    void SetPosition(Vec4 _position);
-  
+    void SetWorldCoords(Vec3 _position);
+    void SetScreenCoords(Vec3 _position);
+    void SetWorldCoords(Vec4 _position);
+    void SetScreenCoords(Vec4 _position);
+
 private:
     Vec3 worldCoords;
     Vec3 screenCoords;

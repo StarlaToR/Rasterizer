@@ -200,11 +200,12 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
 void Renderer::DrawLightRay(const Vec3& vertexPos)
 {
     Vec4 color={1,1,1,1};
-    DrawLine(vertexPos,lights[0].GetWorldCoords(),color);
+    DrawLine(vertexPos,lights[0].GetScreenCoords(),color);
 }
 
 float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
 {
+ //   printf("normal = {%f,%f,%f}\n",normal.x,normal.y,normal.z);
     float ambientLight = lights[0].GetAmbient();  
     float intensity = 0;
 
@@ -212,7 +213,11 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
     Vec3 lightRay = lights[0].GetWorldCoords() - worldPosition;
     Vec3 reflectionRay = 2 * (normal * lightRay) * normal - lightRay;
 
-    float diffuseLight = lights[0].GetDiffuse() * GetDotProduct(lightRay, normal)/(normal.GetMagnitude() * lightRay.GetMagnitude());
+    float dividende = lights[0].GetDiffuse() * abs(GetDotProduct(lightRay, normal));
+    float diviseur =(lightRay.GetMagnitude());
+    float diffuseLight = dividende/diviseur;
+
+
     float specularLight = lights[0].GetSpecular() * GetDotProduct(reflectionRay, viewRay)/(reflectionRay.GetMagnitude() * viewRay.GetMagnitude());
 
     intensity = ambientLight + diffuseLight + specularLight;
@@ -223,7 +228,7 @@ float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal)
     return intensity;
 }
 
-void Renderer::FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal)
+void Renderer::FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal, Vec4 worldCoords[3])
 {   
     std::vector<Vec3> vertices;
     vertices.push_back(screenCoords[0]);
@@ -254,10 +259,12 @@ void Renderer::FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal)
 
                 if(lightsOn)
                 {
-                    float lightIntensity = GetLightIntensity({pointChecked.x,pointChecked.y,pointChecked.z},normal);
+                    normal.Normalize();
+                    float lightIntensity = GetLightIntensity({worldCoords[0].x,worldCoords[0].y,worldCoords[0].z},normal);
                     col=col*lightIntensity;
                 }
                 DrawPixel(i,j,depth,col);
+              //  printf("col = {%f,%f,%f,%f}\n",col.x,col.y,col.z,col.w);
             }
         }
     }
@@ -296,7 +303,10 @@ void Renderer::TransformLights(std::vector<Light>& _lights)
     for(int i=0;i<(int)_lights.size();i++)
     {
         Vec4 newPosition = _lights[i].GetWorldCoords();
+        _lights[i].SetWorldCoords(newPosition);
         newPosition*=viewMatrix.tab;
+
+
         Mat4 screenMatrix = Mat4(
         {
         400,0,0,(float)fb->GetWidth()/2,
@@ -305,8 +315,8 @@ void Renderer::TransformLights(std::vector<Light>& _lights)
         0,0,0,1,
         });
         newPosition *= screenMatrix.tab;
+        _lights[i].SetScreenCoords(newPosition);
 
-        _lights[i].SetPosition(newPosition);
     }
     
 }
@@ -422,7 +432,7 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
     }
     else
     {       
-        FillTriangle(usableScreenCoords,colors,{worldNormals[0].x,worldNormals[0].y,worldNormals[0].z});
+        FillTriangle(usableScreenCoords,colors,{viewNormals[0].x,viewNormals[0].y,viewNormals[0].z},worldCoords);
         Vec4 color= {1,1,1,1};
         if(normalsOn)
         {
