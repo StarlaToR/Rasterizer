@@ -200,7 +200,7 @@ Vec4 operator-(const Vec4& a, const Vec4& b)
     return c;
 }
 
-Vec4 operator*(const Vec4& a, const float& b)
+Vec4 operator*(const Vec4& a, const float b)
 {
     Vec4 c(
         a.x * b,
@@ -242,7 +242,7 @@ void Mat4::Translate(const Vec3& translation)
     printf("\n\n\n\n");
 }
 
-void Mat4::Rotate(const float& angle, const Vec3& rotationAxis)
+void Mat4::Rotate(const float angle, const Vec3& rotationAxis)
 {
     printf("BEFORE:\n");
     PrintMatrix();
@@ -270,7 +270,7 @@ Mat4::Mat4(const float a[4][4])
     }
 }
 
-Mat4::Mat4(const float& a, const float& b, const float& c, const float& d, const float& e, const float& f, const float& g, const float& h, const float& i, const float& j, const float& k, const float& l, const float& m, const float& n, const float& o, const float& p)
+Mat4::Mat4(const float a, const float b, const float c, const float d, const float e, const float f, const float g, const float h, const float i, const float j, const float k, const float l, const float m, const float n, const float o, const float p)
 {
     tab[0][0] = a;
     tab[0][1] = b;
@@ -349,7 +349,7 @@ Mat4 Mat4::GetInvertibleMat4()
 }
 
 
-float GetDeterminantMat2(const float& a, const float& b, const float& c, const float& d)
+float GetDeterminantMat2(const float a, const float b, const float c, const float d)
 {
     return (a * d - b * c);
 }
@@ -407,7 +407,7 @@ void Mat4::operator*=(const Mat4& a)
 }
 
 //Working
-void Mat4::operator*=(const float& a)
+void Mat4::operator*=(const float a)
 {
     for (int i = 0; i < 4; i++)
     {
@@ -437,7 +437,7 @@ Mat4 operator*(const Mat4& a, const Mat4& b)
 }
 
 
-Mat4 operator*(const Mat4& a, const float& b)
+Mat4 operator*(const Mat4& a, const float b)
 {
     Mat4 c = Mat4();
 
@@ -480,7 +480,7 @@ Vec4 operator*(const Vec4& b, const Mat4& a)
     return c;
 }
 
-float GetMaximumDifference(const float& a, const float& b, const float& c)
+float GetMaximumDifference(const float a, const float b, const float c)
 {
     float maxDiff = 0;
     float tab[6] = {a - b, a - c, b - a, b - c, c - a, c - b};

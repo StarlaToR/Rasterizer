@@ -13,7 +13,7 @@ public:
     float y;
 
 
-    Vec2(const float& a, const float& b)
+    Vec2(const float a, const float b)
     {
         x = a;
         y = b;
@@ -40,7 +40,7 @@ public:
     float y;
     float z;
 
-    Vec3(const float& a, const float& b, const float& c)
+    Vec3(const float a, const float b, const float c)
     {
         x = a;
         y = b;
@@ -92,15 +92,15 @@ public:
     Mat4(const float a[4][4]);
 
     Mat4(
-        const float& a, const float& b, const float& c, const float& d,
-        const float& e, const float& f, const float& g, const float& h,
-        const float& i, const float& j, const float& k, const float& l,
-        const float& m, const float& n, const float& o, const float& p
+        const float a, const float b, const float c, const float d,
+        const float e, const float f, const float g, const float h,
+        const float i, const float j, const float k, const float l,
+        const float m, const float n, const float o, const float p
         );
 
 
     void Translate(const Vec3& translation);
-    void Rotate(const float& angle, const Vec3& rotationAxis);
+    void Rotate(const float angle, const Vec3& rotationAxis);
     
     void PrintMatrix();
     Mat4 GetTransposeMat4();
@@ -108,7 +108,7 @@ public:
     Mat4 GetInvertibleMat4();
 
     void operator*=(const Mat4& a);
-    void operator*=(const float& a);
+    void operator*=(const float a);
     void operator=(const Mat4& a);
 };
 
@@ -136,7 +136,7 @@ public:
         w = _w;
     }
 
-    Vec4(const float& a, const float& b, const float& c, const float& d)
+    Vec4(const float a, const float b, const float c, const float d)
     {
         x = a;
         y = b;
@@ -163,7 +163,7 @@ public:
     friend Vec4 operator+(const Vec4& a, const Vec4& b);
     friend Vec4 operator-(const Vec4& a, const Vec4& b);
 
-    friend Vec4 operator*(const Vec4& a, const float& b);
+    friend Vec4 operator*(const Vec4& a, const float b);
     
     void operator*=(const float tab[4][4]);
 
@@ -180,10 +180,10 @@ public:
 
 
 Mat4 operator*(const Mat4& a, const Mat4& b);
-Mat4 operator*(const Mat4& a, const float& b);
+Mat4 operator*(const Mat4& a, const float b);
 
 Vec4 operator+(const Vec4& a, const Vec4& b);
-Vec4 operator*(const Vec4& a, const float& b);
+Vec4 operator*(const Vec4& a, const float b);
 Vec4 operator*(const Vec4& b, const Mat4& a);
 Vec4 operator*(const Mat4& a, const Vec4& b);
 
@@ -235,7 +235,7 @@ inline Vec4 GetMinimumXandY(const std::vector<Vec3>& vertices)
     return {x,y,0,1};
 }
 
-inline Vec3 getSphericalCoords(const float& r, const float& theta, const float& phi)
+inline Vec3 getSphericalCoords(const float r, const float theta, const float phi)
 {
     return { r * sinf(theta) * cosf(phi),
              r * cosf(theta),
@@ -271,7 +271,7 @@ inline Mat4 CreateScaleMatrix(const Vec3& scale)
     return matrix;
 }
 
-inline Mat4 CreateXRotationMatrix(const float& angle) // ! radian !
+inline Mat4 CreateXRotationMatrix(const float angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[1][1] = cos(angle);
@@ -281,7 +281,7 @@ inline Mat4 CreateXRotationMatrix(const float& angle) // ! radian !
     return matrix;
 }
 
-inline Mat4 CreateYRotationMatrix(const float& angle) // ! radian !
+inline Mat4 CreateYRotationMatrix(const float angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][0] = cos(angle);
@@ -291,7 +291,7 @@ inline Mat4 CreateYRotationMatrix(const float& angle) // ! radian !
     return matrix;
 }
 
-inline Mat4 CreateZRotationMatrix(const float& angle) // ! radian !
+inline Mat4 CreateZRotationMatrix(const float angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][0] = cos(angle);
@@ -329,8 +329,8 @@ inline float GetDotProduct(const Vec3& a, const Vec3& b)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-float GetDeterminantMat2(const float& a, const float& b, const float& c, const float& d);
+float GetDeterminantMat2(const float a, const float b, const float c, const float d);
 float GetDeterminantMat3(const Vec3& a, const Vec3& b, const Vec3& c);
 float GetDeterminantMat4(const Mat4& a);
 
-float GetMaximumDifference(const float& a, const float& b, const float& c);
+float GetMaximumDifference(const float a, const float b, const float c);
