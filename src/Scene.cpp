@@ -279,7 +279,7 @@ void Scene::Scene5(Renderer& renderer)
 {
     renderer.SetLights(lights);
 
-    renderer.SetModel(CreateTransformMatrix({0,-0.5f,0}, {0,time,0}, {1,1,1}));
+    renderer.SetModel(CreateTransformMatrix({0,-0.5f,1.f}, {0,time,0}, {1,1,1}));
     renderer.DrawTriangles(blacksmith_mesh, (uint)blacksmith_size);
     renderer.DrawTriangles(floor_mesh, (uint)floor_size);
     renderer.DrawTriangles(anvil_mesh, (uint)anvil_size);
