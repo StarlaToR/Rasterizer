@@ -90,11 +90,8 @@ void rdrVertex::SetTexCoord(Vec2 coord)
 /////////////////////////////////////////////                 Renderer               /////////////////////////////////////////////////////
 
 Renderer::Renderer(float* p_colorBuffer32Bits, float* p_depthBuffer, const uint p_width, const uint p_height):
-/*fb(p_width, p_height),*/viewport(0,0,p_width, p_height)
+viewport(0,0,p_width, p_height)
 {
-    //fb.colorBuffer = reinterpret_cast<Vec4*>(p_colorBuffer32Bits);
-    //fb.depthBuffer = p_depthBuffer;
-
 }
 
 void Renderer::ToggleWireFrame()
@@ -167,16 +164,6 @@ Mat4 Renderer::GetModel()
     return modelMatrix;
 }
 
-void Renderer::SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height)
-{
-    // TODO
-}
-
-void Renderer::SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height)
-{
-    // TODO
-}
-
 void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
 {
     if (p_x >= 0 && p_x < (u_int) fb->GetWidth()
@@ -185,10 +172,10 @@ void Renderer::DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color)
     {
         float* colorBuffer = fb->GetColorBuffer();
 
-        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4] = p_color.x; //p_color.x;
-        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4 + 1] = p_color.y; //p_color.y;
-        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4 + 2] = p_color.z; //p_color.z;
-        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4 + 3] = p_color.w; //p_color.w;
+        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4] = p_color.x; 
+        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4 + 1] = p_color.y; 
+        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4 + 2] = p_color.z; 
+        colorBuffer[(int)(p_x + p_y * fb->GetWidth()) * 4 + 3] = p_color.w; 
     }
 }
 
@@ -275,10 +262,10 @@ void Renderer::DrawLine(const Vec4& p0, const Vec4& p1, Vec4& color)
     int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
     int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1; 
     int dz = abs(z1-z0), sz = z0<z1 ? 1 : -1; 
-    int dm = GetMaximumDifference(dx,dy,dz), i = dm; /* maximum difference */
-    x1 = y1 = z1 = dm/2; /* error offset */
+    int dm = GetMaximumDifference(dx,dy,dz), i = dm; 
+    x1 = y1 = z1 = dm/2; 
     
-    for(;;) {  /* loop */
+    for(;;) {  
         DrawPixel(x0, y0, z0, color);
         if (i-- == 0) break;
         x1 -= dx; if (x1 < 0) { x1 += dm; x0 += sx; } 
@@ -471,9 +458,6 @@ bool Renderer::CheckDepth(int x, int y, float z)
 
 void Renderer::DrawTriangles(rdrVertex* p_vertices, const uint p_count)
 {
-    // calculate mvp from matrices
-    // Transform vertex list to triangles into colorBuffer
-
     for (uint i = 0; i < p_count; i += 3)
     {
         DrawTriangle(&p_vertices[i]);

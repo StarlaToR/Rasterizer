@@ -125,8 +125,6 @@ public:
     Mat4 GetProjection();
     Mat4 GetView();
     Mat4 GetModel();
-    void SetViewport(const int p_x, const int p_y, const uint p_width, const uint p_height);
-    void SetTexture(float* p_colors32Bits, const uint p_width, const uint p_height);
     void DrawTriangles(rdrVertex* p_vertices, const uint p_count);
     void DrawGizmo();
     void TransformLights(std::vector<Light>& _lights);
