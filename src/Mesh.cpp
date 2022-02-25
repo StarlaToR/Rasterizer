@@ -1,15 +1,5 @@
 #include <Mesh.hpp>
 
-Mesh* Mesh::CreateCube()
-{
-    
-}
-
-Mesh* Mesh::CreateSphere(int latitudeCount, int longitudeCount)
-{
-    
-}
-
 static unsigned char* loadFile(const char* filename, size_t* fileSizeOut)
 {
     unsigned char* data = nullptr;
