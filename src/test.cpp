@@ -105,8 +105,6 @@ bool testMat4()
     bool working=true;
     Mat4 identityMat = GetIdentityMat4();
 
-    //identityMat.PrintMatrix();
-
     for(int i=0;i<4;i++)
     {
         for(int j=0;j<4;j++)
