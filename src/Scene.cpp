@@ -204,7 +204,7 @@ void Scene::Scene1(Renderer& renderer)
         { 0.0f, 0.5f, 0.0f,      0.0f, 0.0f, 1.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
     };
 
-    renderer.SetModel(CreateTransformMatrix({0,0,0},{0,0,0}, {1,1,1}));
+    renderer.SetModel(CreateTransformMatrix({0,0,0},{M_PI,0,0}, {1,1,1}));
     renderer.DrawTriangles(triangleVertices.data(), triangleVertices.size());
 
     cubeMesh.vertices=cubeVertices;
@@ -230,6 +230,8 @@ void Scene::Scene2(Renderer& renderer)
 //Light test
 void Scene::Scene3(Renderer& renderer)
 {
+    renderer.lightsOn=true;
+
     lights.pop_back();
     lights.push_back(Light({ 0, 0, 0},0.2f,0.4f,0.4f));
     renderer.TransformLights(lights);
@@ -259,6 +261,8 @@ void Scene::Scene3(Renderer& renderer)
 //Perspective test
 void Scene::Scene4(Renderer& renderer)
 {
+    renderer.perspectiveOn=true;
+
     lights.pop_back();
     lights.push_back(Light({ 0, 0, 0},0.2f,0.4f,0.4f));
     renderer.TransformLights(lights);
@@ -277,6 +281,9 @@ void Scene::Scene4(Renderer& renderer)
 // Mesh and Texture test
 void Scene::Scene5(Renderer& renderer)
 {
+    renderer.lightsOn=true;
+    renderer.perspectiveOn=true;
+
     renderer.SetLights(lights);
 
     renderer.SetModel(CreateTransformMatrix({0,-0.5f,1.f}, {0,time,0}, {1,1,1}));
