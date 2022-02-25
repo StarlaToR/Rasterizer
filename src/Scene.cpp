@@ -283,7 +283,7 @@ void Scene::Scene5(Renderer& renderer)
 {
     renderer.lightsOn=true;
     renderer.perspectiveOn=true;
-
+    renderer.blacksmithPatch=true;
     renderer.SetLights(lights);
 
     renderer.SetModel(CreateTransformMatrix({0,-0.5f,1.f}, {0,time,0}, {1,1,1}));
@@ -292,6 +292,7 @@ void Scene::Scene5(Renderer& renderer)
     renderer.DrawTriangles(anvil_mesh, (uint)anvil_size);
     renderer.DrawTriangles(spark_mesh, (uint)spark_size);
 
+    renderer.blacksmithPatch=false;
 }
 
 /////////////////////////////////////////////            Scene functions             /////////////////////////////////////////////////////

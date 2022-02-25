@@ -428,8 +428,12 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         DrawTriangleWireFrame(screenCoords);
     }
     else
-    {       
-        FillTriangle(screenTest,colors,{viewNormals[0].x,viewNormals[0].y,viewNormals[0].z},worldTest);
+    {   
+        if(blacksmithPatch)    
+            FillTriangle(screenTest,colors,{viewNormals[0].x,viewNormals[0].y,viewNormals[0].z},worldTest);
+        else
+            FillTriangle(usableScreenCoords,colors,{viewNormals[0].x,viewNormals[0].y,viewNormals[0].z},worldCoords);
+
         Vec4 color= {1,1,1,1};
         if(normalsOn)
         {

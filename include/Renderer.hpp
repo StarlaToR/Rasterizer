@@ -145,6 +145,7 @@ public:
     bool normalsOn = false;
     bool texturesOn = false;
     bool lightRayOn = false;
+    bool blacksmithPatch=false;
 
 private:
 
