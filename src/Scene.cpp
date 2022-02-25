@@ -230,7 +230,6 @@ void Scene::Scene2(Renderer& renderer)
 //Light test
 void Scene::Scene3(Renderer& renderer)
 {
-    renderer.lightsOn=true;
 
     lights.pop_back();
     lights.push_back(Light({ 0, 0, 0},0.2f,0.4f,0.4f));
@@ -238,30 +237,17 @@ void Scene::Scene3(Renderer& renderer)
 
     renderer.SetLights(lights);
 
-/*
-    triangleVertices = {
-        //       pos                  normal                  color              uv
-        {-0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 1.0f,      1.0f, 0.0f, 0.0f,     0.0f, 0.0f },
-        { 0.5f,-0.5f, 0.0f,      0.0f, 0.0f, 1.0f,      0.0f, 1.0f, 0.0f,     0.0f, 0.0f },
-        { 0.0f, 0.5f, 0.0f,      0.0f, 0.0f, 1.0f,      0.0f, 0.0f, 1.0f,     0.0f, 0.0f },
-    };
-
-    renderer.SetModel(CreateTransformMatrix({0,0,1},{0,0,0}, {1,1,1}));
-    renderer.DrawTriangles(triangleVertices.data(), triangleVertices.size());
-*/
     renderer.SetModel(CreateTransformMatrix({0,0,1}, {0,0,0}, {0.5f,0.5f,0.5f}));
     renderer.DrawTriangles(cubeVertices.data(), cubeVertices.size());
-/*
 
     renderer.SetModel(CreateTransformMatrix({0,0,0}, {0,(float)time/2,(float)time}, {0.1f,0.1f,0.1f}));
     renderer.DrawTriangles(sphereVertices.data(), sphereVertices.size());
-*/
+
 }
 
 //Perspective test
 void Scene::Scene4(Renderer& renderer)
 {
-    renderer.perspectiveOn=true;
 
     lights.pop_back();
     lights.push_back(Light({ 0, 0, 0},0.2f,0.4f,0.4f));
@@ -281,8 +267,7 @@ void Scene::Scene4(Renderer& renderer)
 // Mesh and Texture test
 void Scene::Scene5(Renderer& renderer)
 {
-    renderer.lightsOn=true;
-    renderer.perspectiveOn=true;
+
     renderer.blacksmithPatch=true;
     renderer.SetLights(lights);
 
