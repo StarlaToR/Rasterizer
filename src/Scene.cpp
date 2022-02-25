@@ -70,6 +70,11 @@ static std::vector<rdrVertex> GetSphereVertices()
             vertices[2].SetPosition({c2.x,c2.y,c2.z});
             vertices[3].SetPosition({c3.x,c3.y,c3.z});
 
+            vertices[0].SetNormal(GetNormalVector(vertices[0].GetPosition(), vertices[1].GetPosition(), vertices[2].GetPosition()));
+            vertices[1].SetNormal(GetNormalVector(vertices[1].GetPosition(), vertices[2].GetPosition(), vertices[3].GetPosition()));
+            vertices[2].SetNormal(GetNormalVector(vertices[2].GetPosition(), vertices[3].GetPosition(), vertices[0].GetPosition()));
+            vertices[3].SetNormal(GetNormalVector(vertices[3].GetPosition(), vertices[0].GetPosition(), vertices[1].GetPosition()));
+
             vertices[0].SetColor({0,0,1});
             vertices[1].SetColor({0,0,1});
             vertices[2].SetColor({0,0,1});
