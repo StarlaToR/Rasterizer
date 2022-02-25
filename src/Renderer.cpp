@@ -254,7 +254,12 @@ void Renderer::FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal, Ve
                 if(lightsOn)
                 {
                     normal.Normalize();
-                    float lightIntensity = GetLightIntensity({worldCoords[0].x,worldCoords[0].y,worldCoords[0].z},normal,{screenCoords[0].x,screenCoords[0].y,screenCoords[0].z});
+                    Vec3 pos = {
+                        w.x * worldCoords[0].x + w.y * worldCoords[1].x + w.z * worldCoords[2].x,
+                        w.x * worldCoords[0].y + w.y * worldCoords[1].y + w.z * worldCoords[2].y,
+                        w.x * worldCoords[0].z + w.y * worldCoords[1].z + w.z * worldCoords[2].z,
+                    };
+                    float lightIntensity = GetLightIntensity(pos,normal,{screenCoords[0].x,screenCoords[0].y,screenCoords[0].z});
                     col=col*lightIntensity;
                 }
                 DrawPixel(i,j,depth,col);
