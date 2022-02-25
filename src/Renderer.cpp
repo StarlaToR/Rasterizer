@@ -420,13 +420,16 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
 
     }
 
+    Vec3 screenTest[3] = {usableScreenCoords[2],usableScreenCoords[1],usableScreenCoords[0]};
+    Vec4 worldTest[3] = {worldCoords[2],worldCoords[1],worldCoords[0]};
+
     if(wireFrameOn)
     {
         DrawTriangleWireFrame(screenCoords);
     }
     else
     {       
-        FillTriangle(usableScreenCoords,colors,{viewNormals[0].x,viewNormals[0].y,viewNormals[0].z},worldCoords);
+        FillTriangle(screenTest,colors,{viewNormals[0].x,viewNormals[0].y,viewNormals[0].z},worldTest);
         Vec4 color= {1,1,1,1};
         if(normalsOn)
         {
