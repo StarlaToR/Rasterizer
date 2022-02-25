@@ -23,7 +23,7 @@ public:
         texCoord = Vec2();
     }
 
-    rdrVertex(float a, float b, float c, float d, float e, float f, float g, float h, float i, float j, float k)
+    rdrVertex(const float& a, const float& b, const float& c, const float& d, const float& e, const float& f, const float& g, const float& h, const float& i, const float& j, const float& k)
     {
         position = {a, b, c};
         normal = {d, e, f};
@@ -31,7 +31,7 @@ public:
         texCoord = {j, k};
     }
 
-    rdrVertex(double a, double b, double c, double d, double e, double f, double g, double h, double i, double j, double k, double l)
+    rdrVertex(const double& a, const double& b, const double& c, const double& d, const double& e, const double& f, const double& g, const double& h, const double& i, const double& j, const double& k, const double& l)
     {
         position = {(float)a, (float)b, (float)c};
         normal = {(float)d, (float)e, (float)f};
@@ -47,7 +47,7 @@ public:
         texCoord = coord;
     }
 
-    rdrVertex(Vec3 pos, Vec3 norm, Vec4 col, Vec2 coord)
+    rdrVertex(const Vec3& pos, const Vec3& norm, const Vec4& col, const Vec2& coord)
     {
         position = pos;
         normal = norm;
@@ -60,12 +60,12 @@ public:
     Vec4 GetColor();
     Vec2 GetTexCoord();
     float GetDepth();
-    void SetPosition(Vec3 pos);
-    void SetPosition(Vec4 pos);
-    void SetNormal(Vec3 norm);
-    void SetColor(Vec3 col);
-    void SetColor(Vec4 col);
-    void SetTexCoord(Vec2 coord);
+    void SetPosition(const Vec3 pos);
+    void SetPosition(const Vec4 pos);
+    void SetNormal(const Vec3 norm);
+    void SetColor(const Vec3 col);
+    void SetColor(const Vec4 col);
+    void SetTexCoord(const Vec2 coord);
 
     friend rdrVertex operator*(const rdrVertex& vertex, const Mat4& transformMat);
 
@@ -116,11 +116,11 @@ public:
 // Depth buffer is a buffer of 32bits floats
     Renderer(float* p_colorBuffer32Bits, float* p_depthBuffer, uint p_width, uint p_height);
     Renderer(Framebuffer* f, const uint p_width, const uint p_height);
-    ~Renderer();
+    ~Renderer(){};
 
-    void SetProjection(Mat4 p_projectionMatrix);
-    void SetView(Mat4 p_viewMatrix);
-    void SetModel(Mat4 p_modelMatrix);
+    void SetProjection(const Mat4 p_projectionMatrix);
+    void SetView(const Mat4 p_viewMatrix);
+    void SetModel(const Mat4 p_modelMatrix);
     void SetLights(const std::vector<Light>& p_lights);
     Mat4 GetProjection();
     Mat4 GetView();
@@ -152,7 +152,7 @@ private:
     void DrawPixel(uint p_x, uint p_y, float p_z, const Vec4& p_color);
     void TransformVertices(Vec3& vertices);
     void FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal, Vec4 worldCoords[3]);
-    bool CheckDepth(int x, int y, float z);
+    bool CheckDepth(const int x, const int y, const float z);
     void DrawTriangle(rdrVertex* p_vertices);
 
     float GetLightIntensity(const Vec3& worldPosition, const Vec3& normal, const Vec3& screenCoords);

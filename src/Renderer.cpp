@@ -132,11 +132,6 @@ Renderer::Renderer(Framebuffer* f, const uint p_width, const uint p_height):view
     fb = f;
 }
 
-Renderer::~Renderer()
-{
-
-}
-
 void Renderer::SetProjection(Mat4 p_projectionMatrix)
 {
     projectionMatrix = p_projectionMatrix;
