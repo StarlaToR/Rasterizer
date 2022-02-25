@@ -263,7 +263,6 @@ void Renderer::FillTriangle(Vec3 screenCoords[3], Vec4 color[3], Vec3 normal, Ve
                     col=col*lightIntensity;
                 }
                 DrawPixel(i,j,depth,col);
-              //  printf("col = {%f,%f,%f,%f}\n",col.x,col.y,col.z,col.w);
             }
         }
     }
@@ -345,7 +344,7 @@ void Renderer::UpdateLight()
     if(perspectiveOn)
         clipLight = viewLight * projectionMatrix;
     else
-        clipLight = viewLight /** projectionMatrix*/;
+        clipLight = viewLight;
 
 
     ndcLight = clipLight.GetHomogenizedVec();
@@ -447,12 +446,6 @@ void Renderer::DrawTriangle(rdrVertex* vertices)
         }
     }
 }
-
-/*
-void rdrSetImGuiContext(rdrImpl* renderer, struct ImGuiContext* context)
-{
-    ImGui::SetCurrentContext(context);
-}*/
 
 void Renderer::ShowImGuiControls()
 {
