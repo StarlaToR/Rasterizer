@@ -18,9 +18,8 @@ ___
 
 - Activer/Désactiver WireFrame : 'F1'
 - Activer/Désactiver Lights : 'F2'
-- Activer/Désactiver Normales : 'F3'
-- Activer/Désactiver Perspective : 'F4'
-- Activer/Désactiver LightRay : 'F6'
+- Activer/Désactiver Perspective : 'F3'
+- Activer/Désactiver LightRay : 'F4'
 ___
 # Scène
 

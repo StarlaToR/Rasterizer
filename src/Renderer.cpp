@@ -205,7 +205,6 @@ void Renderer::DrawLightRay(const Vec3& vertexPos)
 
 float Renderer::GetLightIntensity(const Vec3& worldPosition, const Vec3& normal, const Vec3& screenCoords)
 {
- //   printf("normal = {%f,%f,%f}\n",normal.x,normal.y,normal.z);
     float ambientLight = lights[0].GetAmbient();  
     float intensity = 0;
 

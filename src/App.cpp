@@ -178,12 +178,8 @@ void App::Update()
         if (ImGui::IsKeyPressed(GLFW_KEY_F2))
             renderer.ToggleLights();
         if (ImGui::IsKeyPressed(GLFW_KEY_F3))
-            renderer.ToggleNormals();
-        if (ImGui::IsKeyPressed(GLFW_KEY_F4))
             renderer.TogglePerspective();
-        if (ImGui::IsKeyPressed(GLFW_KEY_F6))
-            renderer.ToggleTextures(); 
-        if (ImGui::IsKeyPressed(GLFW_KEY_F7))
+        if (ImGui::IsKeyPressed(GLFW_KEY_F4))
             renderer.ToggleLightRay();
 
 
