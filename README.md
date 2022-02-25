@@ -1,18 +1,21 @@
 # Rasterizer
 
-Outil développé par Antoine Mordant et Maël Jammet.
-___
-# Contrôle
+Outil de rendu 3D développé par Antoine Mordant et Maël Jammet.
 
-## Déplacer la caméra : 
+
+
+___
+# Contrôles
+
+## Faire pivoter le monde : 
 - Droite : 'Flèche droite'
 - Gauche : 'Flèche gauche'
 - Haut : 'Flèche du haut'
 - Bas : 'Flèche du bas'
 
-## Pivoter : 
-- Axe X : 'S' (positif),'W' (négatif)
-- Axe Y : 'S' (positif),'W' (négatif)
+## Déplacer la caméra : 
+- Reculer : 'S'
+- Avancer : 'W'
 
 ## Menu :
 
@@ -20,16 +23,19 @@ ___
 - Activer/Désactiver Lights : 'F2'
 - Activer/Désactiver Perspective : 'F3'
 - Activer/Désactiver LightRay : 'F4'
+
+
+
 ___
-# Scène
+# Scènes
 
-## Scène 1 : Triangle aux couleurs interpolées
+- Scène 1 : Triangle aux couleurs interpolées
 
-## Scène 2 : Z-Buffer
+- Scène 2 : Z-Buffer
 
-## Scène 3 : Lumière
+- Scène 3 : Lumière
 
-## Scène 4 : Perspective
+- Scène 4 : Perspective
 
-## Scène 5 : Forgeron
+- Scène 5 : Forgeron
 
