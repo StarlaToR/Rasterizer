@@ -13,7 +13,7 @@ public:
     float y;
 
 
-    Vec2(float a, float b)
+    Vec2(const float& a, const float& b)
     {
         x = a;
         y = b;
@@ -40,7 +40,7 @@ public:
     float y;
     float z;
 
-    Vec3(float a, float b, float c)
+    Vec3(const float& a, const float& b, const float& c)
     {
         x = a;
         y = b;
@@ -56,8 +56,8 @@ public:
 
     float GetMagnitude() const;
     void Normalize();
-    bool IsInTriangle(Vec3 p0,Vec3 p1, Vec3 p2);
-    Vec3 GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2);
+    bool IsInTriangle(const Vec3& p0,const Vec3& p1, const Vec3& p2);
+    Vec3 GetBarycentricCoords(const Vec3& p0,const Vec3& p1, const Vec3& p2);
     float GetCrossProduct(const Vec3& a, const Vec3& b);
 
     void GetNewZForZBuffer();
@@ -89,13 +89,13 @@ public:
         }
     }
 
-    Mat4(float a[4][4]);
+    Mat4(const float a[4][4]);
 
     Mat4(
-        float a, float b, float c, float d,
-        float e, float f, float g, float h,
-        float i, float j, float k, float l,
-        float m, float n, float o, float p
+        const float& a, const float& b, const float& c, const float& d,
+        const float& e, const float& f, const float& g, const float& h,
+        const float& i, const float& j, const float& k, const float& l,
+        const float& m, const float& n, const float& o, const float& p
         );
 
 
@@ -107,9 +107,9 @@ public:
     Mat4 GetAdjugateMat4();
     Mat4 GetInvertibleMat4();
 
-    void operator*=(Mat4 a);
-    void operator*=(float a);
-    void operator=(Mat4 a);
+    void operator*=(const Mat4& a);
+    void operator*=(const float& a);
+    void operator=(const Mat4& a);
 };
 
 ///////////////////////////////////                       Mat4                       /////////////////////////////////////////////////////
@@ -136,7 +136,7 @@ public:
         w = _w;
     }
 
-    Vec4(float a, float b, float c, float d)
+    Vec4(const float& a, const float& b, const float& c, const float& d)
     {
         x = a;
         y = b;
@@ -156,8 +156,8 @@ public:
     Vec4 GetHomogenizedVec();
     float GetMagnitude();
     void Normalize();
-    bool IsInTriangle(Vec4 p0,Vec4 p1, Vec4 p2);
-    Vec4 GetBarycentricCoords(Vec4 p0,Vec4 p1, Vec4 p2);
+    bool IsInTriangle(const Vec4& p0,const Vec4& p1, const Vec4& p2);
+    Vec4 GetBarycentricCoords(const Vec4& p0,const Vec4& p1, const Vec4& p2);
     void GetNewZForZBuffer();
 
     friend Vec4 operator+(const Vec4& a, const Vec4& b);
@@ -179,7 +179,7 @@ public:
 /////////////////////////////////////////////                Operator                /////////////////////////////////////////////////////
 
 
-Mat4 operator*(Mat4 a, Mat4 b);
+Mat4 operator*(const Mat4& a, const Mat4& b);
 Mat4 operator*(const Mat4& a, const float& b);
 
 Vec4 operator+(const Vec4& a, const Vec4& b);
@@ -222,7 +222,7 @@ inline Vec4 GetMaximumXandY(const std::vector<Vec3>& vertices)
 }
 
 
-inline Vec4 GetMinimumXandY(std::vector<Vec3> vertices)
+inline Vec4 GetMinimumXandY(const std::vector<Vec3>& vertices)
 {
     float x=9999,y=9999;
     for(int i=0; i < (int) vertices.size(); i++)
@@ -235,7 +235,7 @@ inline Vec4 GetMinimumXandY(std::vector<Vec3> vertices)
     return {x,y,0,1};
 }
 
-inline Vec3 getSphericalCoords(const float r, const float theta, const float phi)
+inline Vec3 getSphericalCoords(const float& r, const float& theta, const float& phi)
 {
     return { r * sinf(theta) * cosf(phi),
              r * cosf(theta),
@@ -271,7 +271,7 @@ inline Mat4 CreateScaleMatrix(const Vec3& scale)
     return matrix;
 }
 
-inline Mat4 CreateXRotationMatrix(float angle) // ! radian !
+inline Mat4 CreateXRotationMatrix(const float& angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[1][1] = cos(angle);
@@ -281,7 +281,7 @@ inline Mat4 CreateXRotationMatrix(float angle) // ! radian !
     return matrix;
 }
 
-inline Mat4 CreateYRotationMatrix(float angle) // ! radian !
+inline Mat4 CreateYRotationMatrix(const float& angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][0] = cos(angle);
@@ -291,7 +291,7 @@ inline Mat4 CreateYRotationMatrix(float angle) // ! radian !
     return matrix;
 }
 
-inline Mat4 CreateZRotationMatrix(float angle) // ! radian !
+inline Mat4 CreateZRotationMatrix(const float& angle) // ! radian !
 {
     Mat4 matrix = GetIdentityMat4();
     matrix.tab[0][0] = cos(angle);
@@ -329,8 +329,8 @@ inline float GetDotProduct(const Vec3& a, const Vec3& b)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-float GetDeterminantMat2(float a, float b, float c, float d);
-float GetDeterminantMat3(Vec3 a, Vec3 b, Vec3 c);
-float GetDeterminantMat4(Mat4 a);
+float GetDeterminantMat2(const float& a, const float& b, const float& c, const float& d);
+float GetDeterminantMat3(const Vec3& a, const Vec3& b, const Vec3& c);
+float GetDeterminantMat4(const Mat4& a);
 
-float GetMaximumDifference(const float a, const float b, const float c);
+float GetMaximumDifference(const float& a, const float& b, const float& c);

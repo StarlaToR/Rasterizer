@@ -26,7 +26,7 @@ float edgeFunction(const Vec4 &a, const Vec4 &b, const Vec4 &c)
     return (c.x - a.x) * (b.y - a.y) - (c.y - a.y) * (b.x - a.x); 
 }
 
-Vec3 Vec3::GetBarycentricCoords(Vec3 p0,Vec3 p1, Vec3 p2)
+Vec3 Vec3::GetBarycentricCoords(const Vec3& p0,const Vec3& p1, const Vec3& p2)
 {
     Vec3 barycentricCoords;
 
@@ -143,7 +143,7 @@ void Vec4::Normalize()
   //  w /= GetMagnitude();
 }
 
-bool Vec4::IsInTriangle(Vec4 p0,Vec4 p1, Vec4 p2)
+bool Vec4::IsInTriangle(const Vec4& p0,const Vec4& p1, const Vec4& p2)
 {
     float e01 = (this->x - p0.x) * (p1.y - p0.y) - (this->y - p0.y) * (p1.x - p0.x);
     float e12 = (this->x - p1.x) * (p2.y - p1.y) - (this->y - p1.y) * (p2.x - p1.x);
@@ -160,7 +160,7 @@ void Vec4::GetNewZForZBuffer()
     this->z = 2 * (this->z - 10) / (100 - 10) - 1;
 }
 
-Vec4 Vec4::GetBarycentricCoords(Vec4 p0, Vec4 p1, Vec4 p2)
+Vec4 Vec4::GetBarycentricCoords(const Vec4& p0, const Vec4& p1, const Vec4& p2)
 {
     Vec4 barycentricCoords;
 
@@ -259,7 +259,7 @@ void Mat4::Rotate(const float& angle, const Vec3& rotationAxis)
     printf("\n\n");
 }
 
-Mat4::Mat4(float a[4][4])
+Mat4::Mat4(const float a[4][4])
 {
     for (int i = 0; i < 4; i++)
     {
@@ -270,7 +270,7 @@ Mat4::Mat4(float a[4][4])
     }
 }
 
-Mat4::Mat4(float a, float b, float c, float d, float e, float f, float g, float h, float i, float j, float k, float l, float m, float n, float o, float p)
+Mat4::Mat4(const float& a, const float& b, const float& c, const float& d, const float& e, const float& f, const float& g, const float& h, const float& i, const float& j, const float& k, const float& l, const float& m, const float& n, const float& o, const float& p)
 {
     tab[0][0] = a;
     tab[0][1] = b;
@@ -349,12 +349,12 @@ Mat4 Mat4::GetInvertibleMat4()
 }
 
 
-float GetDeterminantMat2(float a, float b, float c, float d)
+float GetDeterminantMat2(const float& a, const float& b, const float& c, const float& d)
 {
     return (a * d - b * c);
 }
 
-float GetDeterminantMat3(Vec3 a, Vec3 b, Vec3 c)
+float GetDeterminantMat3(const Vec3& a, const Vec3& b, const Vec3& c)
 {
     return (
         a.x * GetDeterminantMat2(b.y, b.z, c.y, c.z)
@@ -363,7 +363,7 @@ float GetDeterminantMat3(Vec3 a, Vec3 b, Vec3 c)
     );
 }
 
-float GetDeterminantMat4(Mat4 a)
+float GetDeterminantMat4(const Mat4& a)
 {
     return(
         a.tab[0][0] * GetDeterminantMat3({a.tab[1][1], a.tab[1][2], a.tab[1][3]}, {a.tab[2][1], a.tab[2][2], a.tab[2][3]}, {a.tab[3][1], a.tab[3][2], a.tab[3][3]})
@@ -376,7 +376,7 @@ float GetDeterminantMat4(Mat4 a)
 
 
 
-void Mat4::operator=(Mat4 a)
+void Mat4::operator=(const Mat4& a)
 {
     for (int i = 0; i < 4; i++)
     {
@@ -388,7 +388,7 @@ void Mat4::operator=(Mat4 a)
 }
 
 
-void Mat4::operator*=(Mat4 a)
+void Mat4::operator*=(const Mat4& a)
 {
     Mat4 c = Mat4();
 
@@ -407,7 +407,7 @@ void Mat4::operator*=(Mat4 a)
 }
 
 //Working
-void Mat4::operator*=(float a)
+void Mat4::operator*=(const float& a)
 {
     for (int i = 0; i < 4; i++)
     {
@@ -418,7 +418,7 @@ void Mat4::operator*=(float a)
     }
 }
 
-Mat4 operator*(Mat4 a, Mat4 b)
+Mat4 operator*(const Mat4& a, const Mat4& b)
 {
     Mat4 c = Mat4();
     
@@ -480,7 +480,7 @@ Vec4 operator*(const Vec4& b, const Mat4& a)
     return c;
 }
 
-float GetMaximumDifference(const float a, const float b, const float c)
+float GetMaximumDifference(const float& a, const float& b, const float& c)
 {
     float maxDiff = 0;
     float tab[6] = {a - b, a - c, b - a, b - c, c - a, c - b};
